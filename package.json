@@ -1,0 +1,30 @@
+{
+  "name": "eco.json.tooling",
+  "version": "1.0.0",
+  "description": "Tooling for maintaining eco.json ",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/JeffML/eco.json.tooling.git"
+  },
+  "keywords": [
+    "chess",
+    "openings",
+    "eco.json",
+    "maintenance"
+  ],
+  "author": "Jeff Lowery (jeffML)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JeffML/eco.json.tooling/issues"
+  },
+  "homepage": "https://github.com/JeffML/eco.json.tooling#readme",
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "octokit": "^4.1.3"
+  }
+}
