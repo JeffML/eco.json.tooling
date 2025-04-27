@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/JeffML/eco.json.tooling#readme",
   "dependencies": {
+    "chess.js": "^1.2.0",
     "node-fetch": "^3.3.2",
     "octokit": "^4.1.3"
   }
