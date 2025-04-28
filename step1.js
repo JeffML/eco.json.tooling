@@ -66,7 +66,7 @@ const filterIncoming = (incoming, existing) => {
                 const { name, moves, eco } = inc;
                 modified[fen] = { ...existing, name, moves, eco }; //assume rest may have changed, too
             } else if (existing.src === 'interpolated') {
-                delete existing.rootSrc
+                delete existing.rootSrc;
                 added[fen] = { ...existing, src };
                 toRemove.push(fen);
             } else if (
@@ -146,3 +146,63 @@ console.log({
 fs.writeFileSync('./output/added.json', JSON.stringify(added, null, 2));
 fs.writeFileSync('./output/modified.json', JSON.stringify(modified, null, 2));
 fs.writeFileSync('./output/toRemove.json', JSON.stringify(toRemove, null, 4));
+
+const findOrphans = (added, fromTo) => {
+    const orphans = [];
+
+    for (const a of Object.keys(added)) {
+        const isOrphan = !fromTo.find((ft) => ft[1] === a);
+        if (isOrphan) orphans.push(a);
+    }
+
+    return orphans;
+};
+
+const checkCandidates = (candidateRoots, orphan) => {
+    const orphanAdapters = {}
+
+    for (const root of candidateRoots) {
+        const fens = getContinuations(root)
+        if (fens.findIndexOf(orphan) > -1) orphanAdapters[orphan] = root
+    }
+
+    return orphanAdapters
+}
+
+// ChatGPTs analysis of FEN string changes after one move: https://chatgpt.com/share/680fba75-b210-8001-baff-ad777444b97f
+const findRoots = (newOrphans, allOpenings) => {
+    const maxL = 9;
+
+    for (const orphan of newOrphans) {
+        const candidateRoots = Object.keys(allOpenings).find((fen) => {
+            const ldist = levenshtein(fen, orphan);
+            if (ldist > 9) return false;
+
+            const [, toMove, ...rest] = orphan.split(' ');
+            const moveNum = rest.at(-1);
+
+            if (toMove === fen.split(' ')[1]) return false;
+            if (
+                Integer.parseInt(moveNum) -
+                    Integer.parseInt(fen.split(' ').at(-1)) >
+                1
+            )
+                return false;
+            return true;
+        });
+
+        const trueRoots = checkCandidates(candidateRoots, orphan);
+    }
+};
+
+// TODO: for each added, look for continuations among existing and other addeds
+
+// Now look for orphan addeds, and find a parent
+const newOrphans = findOrphans(added, existingOpenings.FT.json);
+
+const newRoots = findRoots(newOrphans, allOpenings);
+
+// if no new roots for an orphan, need to interpolate
+// now do continuations (to) of added
+
+console.log({ newOrphans });
