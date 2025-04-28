@@ -1,28 +1,6 @@
-import fetch from 'node-fetch';
 import fs from 'fs';
 import { Chess } from 'chess.js';
-
-// pulls the opening data from eco.json github repo
-async function getLatestEcoJson() {
-    const ROOT =
-        'https://raw.githubusercontent.com/hayatbiralem/eco.json/master/';
-    const openingsByCat = {
-        A: { url: ROOT + 'ecoA.json' },
-        B: { url: ROOT + 'ecoB.json' },
-        C: { url: ROOT + 'ecoC.json' },
-        D: { url: ROOT + 'ecoD.json' },
-        E: { url: ROOT + 'ecoE.json' },
-        IN: { url: ROOT + 'eco_interpolated.json' },
-        FT: { url: ROOT + 'fromTo.json' },
-    };
-
-    for (const cat in openingsByCat) {
-        const res = await fetch(openingsByCat[cat].url);
-        openingsByCat[cat].json = await res.json();
-    }
-
-    return openingsByCat;
-}
+import { getLatestEcoJson } from './getLatestEcoJson.js';
 
 // checks that all the required stuff is there
 const validate = (incoming) => {
@@ -82,15 +60,18 @@ const filterIncoming = (incoming, existing) => {
 
         if (existing) {
             // check for changes/addl info
-            if (existing.src === src && existing.name !== inc.name) {
+            const redundant = existing.name.endsWith(inc.name);
+
+            if (existing.src === src && !reduntant) {
                 const { name, moves, eco } = inc;
                 modified[fen] = { ...existing, name, moves, eco }; //assume rest may have changed, too
             } else if (existing.src === 'interpolated') {
+                delete existing.rootSrc
                 added[fen] = { ...existing, src };
                 toRemove.push(fen);
             } else if (
-                !existing.aliases ||
-                existing.aliases[src] !== inc.name
+                !redundant &&
+                (!existing.aliases || !existing.aliases[src])
             ) {
                 const aliases = existing.aliases ?? {};
                 aliases[src] = inc.name;
@@ -131,11 +112,11 @@ const updateInterpolated = (toRemove, added, modified, existing) => {
                 updateContinuations(c, src, name);
             } else break;
         }
-    }
+    };
 
     for (const fen of toRemove) {
         const { src, name } = added[fen];
-        updateContinuations(fen, src, name)
+        updateContinuations(fen, src, name);
     }
 
     return updated;
@@ -150,7 +131,7 @@ const { added, modified, excluded, toRemove } = filterIncoming(
     existingOpenings
 );
 
-// for all the interpolateds to be removed, we need to update the names and root sources of any interpolated children
+// for all the interpolateds to be removed, we need to update the names and root sources of any interpolated continuations
 const updated = updateInterpolated(toRemove, added, modified, existingOpenings);
 
 console.log({
@@ -159,5 +140,9 @@ console.log({
     added: keyLen(added),
     modified: keyLen(modified),
     toRemove,
-    updatedInterpolations: updated,
+    updated,
 });
+
+fs.writeFileSync('./output/added.json', JSON.stringify(added, null, 2));
+fs.writeFileSync('./output/modified.json', JSON.stringify(modified, null, 2));
+fs.writeFileSync('./output/toRemove.json', JSON.stringify(toRemove, null, 4));
