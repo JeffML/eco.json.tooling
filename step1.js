@@ -1,126 +1,9 @@
 import fs from 'fs';
-import { Chess } from 'chess.js';
 import { getLatestEcoJson } from './getLatestEcoJson.js';
-
-// checks that all the required stuff is there
-const validate = (incoming) => {
-    const source = incoming[0].src;
-    if (!source) {
-        console.error('Missing src component');
-        return false;
-    }
-
-    for (const opening of incoming.slice(1)) {
-        const { name, eco, moves } = opening;
-        if (!(name || eco || moves)) {
-            console.error('Invalid opening: ' + JSON.stringify(opening));
-            return false;
-        }
-    }
-
-    return true;
-};
-
-// parses and validates the opening.json file
-const getIncomingOpenings = () => {
-    const text = fs.readFileSync(process.cwd() + '/input/opening.json');
-    const json = JSON.parse(text);
-
-    if (!validate(json)) process.exit(-1);
-    return json;
-};
-
-const keyLen = (o) => Object.keys(o).length;
-
-// removed extraneous incoming openings that already exist in eco.json
-// this will assign FEN strings to incoming openings
-const filterIncoming = (incoming, existing) => {
-    const { A, B, C, D, E, IN } = existing;
-    const allOpenings = {
-        ...A.json,
-        ...B.json,
-        ...C.json,
-        ...D.json,
-        ...E.json,
-        ...IN.json,
-    };
-    const chess = new Chess();
-
-    const src = incoming[0].src;
-
-    let excluded = 0;
-    const added = {};
-    const modified = {};
-    const toRemove = []; // interpolated openings to remove
-
-    for (let inc of incoming.slice(1)) {
-        chess.loadPgn(inc.moves);
-        const fen = chess.fen();
-        const existing = allOpenings[fen];
-
-        if (existing) {
-            // check for changes/addl info
-            const redundant = existing.name.endsWith(inc.name);
-
-            if (existing.src === src && !reduntant) {
-                const { name, moves, eco } = inc;
-                modified[fen] = { ...existing, name, moves, eco }; //assume rest may have changed, too
-            } else if (existing.src === 'interpolated') {
-                delete existing.rootSrc;
-                added[fen] = { ...existing, src };
-                toRemove.push(fen);
-            } else if (
-                !redundant &&
-                (!existing.aliases || !existing.aliases[src])
-            ) {
-                const aliases = existing.aliases ?? {};
-                aliases[src] = inc.name;
-                modified[fen] = { ...existing, aliases };
-            } else {
-                excluded++;
-            }
-        } else {
-            added[fen] = { ...inc, src };
-        }
-    }
-
-    return { added, modified, excluded, toRemove };
-};
-
-// Note that an interpolated opening may have multiple continuations, and there for appear multiple times in the fromTo data
-const updateInterpolated = (toRemove, added, modified, existing) => {
-    const fromTo = existing.FT.json;
-    const interpolated = existing.IN.json;
-    const fromToIndexed = fromTo.reduce((a, [from, to]) => {
-        a[from] ??= [];
-        a[from].push(to);
-        return a;
-    }, {});
-
-    let updated = 0;
-
-    const updateContinuations = (fen, src, name) => {
-        let continuations = fromToIndexed[fen];
-
-        for (let c of continuations) {
-            const IN = interpolated[c];
-            if (IN) {
-                IN.rootSrc = src;
-                IN.name = name;
-                modified[fen] = IN;
-                updated++;
-                updateContinuations(c, src, name);
-            } else break;
-        }
-    };
-
-    for (const fen of toRemove) {
-        const { src, name } = added[fen];
-        updateContinuations(fen, src, name);
-    }
-
-    return updated;
-};
+import { keyLen } from './utils.js';
+import { filterIncoming, getIncomingOpenings } from './incoming.js';
+import { updateInterpolated } from './updateInterpolated.js';
+import { findRoots } from './findRoots.js';
 
 const incomingOpenings = getIncomingOpenings();
 
@@ -158,51 +41,35 @@ const findOrphans = (added, fromTo) => {
     return orphans;
 };
 
-const checkCandidates = (candidateRoots, orphan) => {
-    const orphanAdapters = {}
+const addedContinuations = (added) => {
+    const continuations = []
 
-    for (const root of candidateRoots) {
-        const fens = getContinuations(root)
-        if (fens.findIndexOf(orphan) > -1) orphanAdapters[orphan] = root
-    }
+    added.forEach(a => {
+        chess.loadFen(a)
+        const legalMoves = chess.moves()
+        legalMoves.forEach(m => {
+            chess.move(m)
+            const fen = chess.fen()
+            if (allOpenings[fen]) {
+                continuations.push([a, fen])
+            }
+        })
+    })
 
-    return orphanAdapters
+    return continuations
 }
 
-// ChatGPTs analysis of FEN string changes after one move: https://chatgpt.com/share/680fba75-b210-8001-baff-ad777444b97f
-const findRoots = (newOrphans, allOpenings) => {
-    const maxL = 9;
-
-    for (const orphan of newOrphans) {
-        const candidateRoots = Object.keys(allOpenings).find((fen) => {
-            const ldist = levenshtein(fen, orphan);
-            if (ldist > 9) return false;
-
-            const [, toMove, ...rest] = orphan.split(' ');
-            const moveNum = rest.at(-1);
-
-            if (toMove === fen.split(' ')[1]) return false;
-            if (
-                Integer.parseInt(moveNum) -
-                    Integer.parseInt(fen.split(' ').at(-1)) >
-                1
-            )
-                return false;
-            return true;
-        });
-
-        const trueRoots = checkCandidates(candidateRoots, orphan);
-    }
-};
-
-// TODO: for each added, look for continuations among existing and other addeds
+// for each added, look for continuations among existing and other addeds
+const newContinuations = addedContinuations(added)
+fs.writeFileSync('./output/continuations', JSON.stringify(newContinuations, null, 2))
 
 // Now look for orphan addeds, and find a parent
 const newOrphans = findOrphans(added, existingOpenings.FT.json);
 
-const newRoots = findRoots(newOrphans, allOpenings);
+const {allRoots, noRoots} = findRoots(newOrphans, allOpenings);
+fs.writeFileSync('./output/orphanRoots.json', JSON.stringify({allRoots, noRoots}, null, 2))
 
 // if no new roots for an orphan, need to interpolate
-// now do continuations (to) of added
+const interpolations = noRoots.map(orphan => addInterpolations(orphan))
+fs.writeFileSync('./output/orphanRoots.json', JSON.stringify(interpolations, null, 2))
 
-console.log({ newOrphans });

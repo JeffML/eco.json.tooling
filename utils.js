@@ -19,5 +19,7 @@ async function getDownloadUrls() {
     return downloads;
 }
 
-export {getDownloadUrls}
 
+ const keyLen = (o) => Object.keys(o).length;
+
+export {getDownloadUrls, keyLen}
