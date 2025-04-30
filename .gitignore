@@ -1,6 +1,6 @@
 # temporary and intermediate data files
-output/**
-input/**
+output/*.json
+input/*.json
 
 # Logs
 logs
