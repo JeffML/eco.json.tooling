@@ -1,3 +1,5 @@
+import leven from 'leven';
+
 const checkCandidates = (candidateRoots, orphan) => {
     const orphanAdopters = {};
 
@@ -8,6 +10,7 @@ const checkCandidates = (candidateRoots, orphan) => {
 
     return orphanAdopters;
 };
+
 // ChatGPTs analysis of FEN string changes after one move: https://chatgpt.com/share/680fba75-b210-8001-baff-ad777444b97f
 export const findRoots = (newOrphans, allOpenings) => {
     const maxL = 9;
@@ -15,20 +18,25 @@ export const findRoots = (newOrphans, allOpenings) => {
 
     for (const orphan of newOrphans) {
         const candidateRoots = Object.keys(allOpenings).find((fen) => {
-            const ldist = levenshtein(fen, orphan);
-            if (ldist > 9) return false;
+            const ldist = leven(fen, orphan);
+            if (ldist > maxL) return false;
 
             const [, toMove, ...rest] = orphan.split(' ');
             const moveNum = rest.at(-1);
 
             if (toMove === fen.split(' ')[1]) return false;
-            if (Integer.parseInt(moveNum) -
-                Integer.parseInt(fen.split(' ').at(-1)) >
-                1)
+            if (
+                Integer.parseInt(moveNum) -
+                    Integer.parseInt(fen.split(' ').at(-1)) >
+                1
+            )
                 return false;
             return true;
         });
-        if (!candidateRoots.length) { noRoots.push(orphan); continue; }
+        if (!candidateRoots.length) {
+            noRoots.push(orphan);
+            continue;
+        }
 
         trueRoots = checkCandidates(candidateRoots, orphan);
         if (!trueRoots.length) {

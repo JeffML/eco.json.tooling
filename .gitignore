@@ -1,3 +1,7 @@
+# temporary and intermediate data files
+output/**
+input/**
+
 # Logs
 logs
 *.log
