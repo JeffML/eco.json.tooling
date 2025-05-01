@@ -13,7 +13,6 @@ const filterIncoming = (incoming, existing) => {
         ...E.json,
         ...IN.json,
     };
-    const chess = new Chess();
 
     const src = incoming[0].src;
 
@@ -23,16 +22,14 @@ const filterIncoming = (incoming, existing) => {
     const toRemove = []; // interpolated openings to remove
 
     for (let inc of incoming.slice(1)) {
-        chess.loadPgn(inc.moves);
-        const fen = chess.fen();
+        const {fen, name, moves, eco} = inc
         const existing = allOpenings[fen];
 
         if (existing) {
             // check for changes/addl info
-            const redundant = existing.name.endsWith(inc.name);
+            const redundant = existing.name.endsWith(name);
 
             if (existing.src === src && !reduntant) {
-                const { name, moves, eco } = inc;
                 modified[fen] = { ...existing, name, moves, eco }; //assume rest may have changed, too
             } else if (existing.src === 'interpolated') {
                 delete existing.rootSrc;
@@ -41,12 +38,13 @@ const filterIncoming = (incoming, existing) => {
             } else if (!redundant &&
                 (!existing.aliases || !existing.aliases[src])) {
                 const aliases = existing.aliases ?? {};
-                aliases[src] = inc.name;
+                aliases[src] = name;
                 modified[fen] = { ...existing, aliases };
             } else {
                 excluded++;
             }
         } else {
+            // delete inc.fen
             added[fen] = { ...inc, src };
         }
     }
@@ -55,6 +53,7 @@ const filterIncoming = (incoming, existing) => {
 };// checks that all the required stuff is there
 
 const validate = (incoming) => {
+    const chess = new Chess();
     const source = incoming[0].src;
     if (!source) {
         console.error('Missing src component');
@@ -66,6 +65,14 @@ const validate = (incoming) => {
         if (!(name || eco || moves)) {
             console.error('Invalid opening: ' + JSON.stringify(opening));
             return false;
+        }
+
+        try {
+            chess.loadPgn(opening.moves);
+            opening.fen = chess.fen()
+        } catch (e) {
+            console.error(e.message)
+            return false
         }
     }
 

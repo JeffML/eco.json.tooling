@@ -1,4 +1,7 @@
-// Note that an interpolated opening may have multiple continuations, and therefore appear multiple times in the fromTo data
+/*
+For all the interpolateds to be removed, we need to update the names and root sources of any interpolated continuations.
+Note that an interpolated opening may have multiple continuations, and therefore appear multiple times in the 'from' data in fromTo.json
+*/
 export const updateInterpolated = (toRemove, added, modified, existing) => {
     const fromTo = existing.FT.json;
     const interpolated = existing.IN.json;
