@@ -3,7 +3,7 @@ import { getLatestEcoJson } from './getLatestEcoJson.js';
 import { keyLen, prompt } from './utils.js';
 import { filterIncoming, getIncomingOpenings } from './incoming.js';
 import { updateInterpolated } from './updateInterpolated.js';
-import { findRoots } from './findRoots.js';
+import { findRoots, newFromTos } from './findRoots.js';
 import { findOrphans } from './findOrphans.js';
 import { addedContinuations } from './addedContinuations.js';
 import { concatData, writeNew } from './createEcoJsonFiles.js';
@@ -129,11 +129,11 @@ writeln('Step 6: A new fromTo.json file + new interpolated openings are ready to
 await confirmStep('Continue');
 
 // For orphans that are merely missng connections to their parent, add a fromTo from parent -> orphan
-const newFromTos = newFromTos(allRoots);
+const newFromTos = newFromTos(allRoots, added);
 
 // for true orphans, need to create new interpolated openings, and connect them in newFromTo
 const interpolations = noRoots.map((orphan) =>
-    addInterpolations(orphan, newFromTos)
+    addInterpolations(orphan, newFromTos, added)
 );
 
 fs.writeFileSync(
