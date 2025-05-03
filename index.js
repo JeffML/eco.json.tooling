@@ -16,6 +16,8 @@ const confirmStep = async (message) => {
     if (!/[Yy]/.test(answer)) {
         writeln('Operation canceled. Exiting.');
         process.exit(-1);
+    } else {
+        writeln('\n')
     }
 };
 
@@ -38,7 +40,7 @@ writeln('Step 2: Filter out any redundantant openings.');
 await confirmStep('Ready');
 
 const existingOpenings = await getLatestEcoJson(); // requests eco.json data from github
-const { added, modified, excluded, toRemove } = filterIncoming(
+const { added, modified, excluded, toRemove: formerInterpolated } = filterIncoming(
     incomingOpenings,
     existingOpenings
 );
@@ -47,7 +49,7 @@ writeln(`Of the ${incomingOpenings.length - 1} in opening.json, there were:
     ${keyLen(added)} new openings
     ${excluded} redundant openings
     ${keyLen(modified)} modifications to existing eco.json openings
-    ${toRemove.length} formerly interpolated openings`);
+    ${formerInterpolated.length} formerly interpolated openings\n`);
 
 /******** */
 /* STEP 3 */
@@ -57,14 +59,14 @@ writeln(
 );
 await confirmStep('Ready');
 
-const updated = updateInterpolated(toRemove, added, modified, existingOpenings);
+const updated = updateInterpolated(formerInterpolated, added, modified, existingOpenings);
 
 // write intermediate data for review
 fs.writeFileSync('./output/added.json', JSON.stringify(added, null, 2));
 fs.writeFileSync('./output/modified.json', JSON.stringify(modified, null, 2));
 fs.writeFileSync(
     './output/formerlyInterpolated.json',
-    JSON.stringify(toRemove, null, 4)
+    JSON.stringify(formerInterpolated, null, 4)
 );
 
 writeln(`Review #1: Look over the following files in the output folder for obvious errors:
@@ -79,7 +81,7 @@ await confirmStep('Have you completed your review');
 /* STEP 4 */
 /******** */
 writeln(
-    'On to Step 4: For all added openings, look for continuations to existing or within the newly added openings'
+    'On to Step 4: For all added openings, look for continuations to existing or newly added openings\n'
 );
 await confirmStep('Ready');
 
@@ -89,7 +91,7 @@ fs.writeFileSync(
     JSON.stringify(newContinuations, null, 2)
 );
 writeln(
-    `${newContinuations} continuations have been recorded among the added openings.`
+    `${newContinuations.length} continuations have been recorded among the added openings.\n`
 );
 
 /******** */
@@ -108,7 +110,7 @@ For each orphan, determine:
     if it has any roots in the existing openings (allRoots)
     if it is truly an orphan (noRoots)
 */
-const { allRoots, noRoots } = findRoots(newOrphans, allOpenings);
+const { allRoots, noRoots } = findRoots(newOrphans);
 fs.writeFileSync(
     './output/orphanRoots.json',
     JSON.stringify({ allRoots, noRoots }, null, 2)
@@ -123,7 +125,7 @@ True orphans will need to have interpolations generated.`);
 /******** */
 /* STEP 6 */
 /******** */
-writeln('Step 6: A new fromTo.json file is ready to be generated.');
+writeln('Step 6: A new fromTo.json file + new interpolated openings are ready to be generated.');
 await confirmStep('Continue');
 
 // For orphans that are merely missng connections to their parent, add a fromTo from parent -> orphan

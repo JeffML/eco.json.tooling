@@ -1,7 +1,6 @@
 import { writeFileSync } from 'fs';
-import { newFromTos } from './step1';
 
-export const concatData = (existing, added, fromTo) => {
+export const concatData = (existing, added, newFromTos) => {
     added.forEach(a => {
         if (a.src === 'interpolated') {
             existing.IN.concat(a);

@@ -1,11 +1,13 @@
 import { Chess } from 'chess.js';
 import fs from 'fs';
 
+let allOpenings;
+
 // removed extraneous incoming openings that already exist in eco.json
 // this will assign FEN strings to incoming openings
 const filterIncoming = (incoming, existing) => {
     const { A, B, C, D, E, IN } = existing;
-    const allOpenings = {
+    allOpenings = {
         ...A.json,
         ...B.json,
         ...C.json,
@@ -44,7 +46,7 @@ const filterIncoming = (incoming, existing) => {
                 excluded++;
             }
         } else {
-            // delete inc.fen
+            delete inc.fen
             added[fen] = { ...inc, src };
         }
     }
@@ -87,5 +89,5 @@ const getIncomingOpenings = () => {
     return json;
 };
 
-export {validate, getIncomingOpenings, filterIncoming}
+export {validate, getIncomingOpenings, filterIncoming, allOpenings}
 
