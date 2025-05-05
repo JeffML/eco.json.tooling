@@ -3,7 +3,13 @@ import { allOpenings } from './incoming.js';
 
 const chess = new Chess() 
 
-// look for any continuations from the new openings
+/**
+ * Finds continuations from newly added openings.
+ * 
+ * @param {Object} added - An object where keys are FEN strings of newly added openings.
+ * @param {Object} allOpenings - An object containing all existing openings.
+ * @returns {Array} An array of continuations, where each continuation is a tuple [fromFEN, toFEN].
+ */
 export const addedContinuations = (added) => {
     const continuations = [];
 

@@ -1,6 +1,7 @@
 # temporary and intermediate data files
 output/*.json
 input/*.json
+output/toMerge/*.json
 
 # Logs
 logs

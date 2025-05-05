@@ -1,19 +1,22 @@
 import fs from 'fs';
 import { getLatestEcoJson } from './getLatestEcoJson.js';
 import { keyLen, prompt } from './utils.js';
-import { filterIncoming, getIncomingOpenings } from './incoming.js';
-import { updateInterpolated } from './updateInterpolated.js';
-import { findRoots, newFromTos } from './findRoots.js';
+import { filterIncoming, getIncomingOpenings, allOpenings } from './incoming.js';
+import { updateInterpolated, addInterpolations } from './interpolations.js';
+import { findRoots } from './findRoots.js';
 import { findOrphans } from './findOrphans.js';
 import { addedContinuations } from './addedContinuations.js';
 import { concatData, writeNew } from './createEcoJsonFiles.js';
 
 const writeln = (str) => process.stdout.write(str + '\n');
 
+// TEMP TEMP!
+const alwaysYes = true;
+
 // Helper function to handle prompts and exit if the user declines
 const confirmStep = async (message) => {
     const answer = await prompt(`${message} (y/N)? `);
-    if (!/[Yy]/.test(answer)) {
+    if (!/[Yy]/.test(answer) && !alwaysYes) {
         writeln('Operation canceled. Exiting.');
         process.exit(-1);
     } else {
@@ -94,6 +97,10 @@ writeln(
     `${newContinuations.length} continuations have been recorded among the added openings.\n`
 );
 
+const newFromTos = newContinuations.map(([from, to]) => {
+    return [from, to, added[from].src, allOpenings[to].src]
+})
+
 /******** */
 /* STEP 5 */
 /******** */
@@ -102,24 +109,25 @@ writeln(
 );
 await confirmStep('Ready');
 
-// Now look for orphan addeds; they may not be true orphans, but merely unconnected in fromTo.json
-const newOrphans = findOrphans(added, existingOpenings.FT.json);
+// Now look for orphan addeds; they may not be true orphans, but merely continuations not attached
+// to an existing root variation
+const newOrphans = 
+findOrphans(added, [...existingOpenings.FT.json, ...newFromTos]);
 
 /*
 For each orphan, determine:
-    if it has any roots in the existing openings (allRoots)
+    if it has any roots in the existing openings (unattached)
     if it is truly an orphan (noRoots)
 */
-const { allRoots, noRoots } = findRoots(newOrphans);
+const { unattached, noRoots } = findRoots(newOrphans);
+
 fs.writeFileSync(
     './output/orphanRoots.json',
-    JSON.stringify({ allRoots, noRoots }, null, 2)
+    JSON.stringify({ unattached, noRoots }, null, 2)
 );
 
-writeln(`There were ${newOrphans.length} orphans found. 
-Some of these are true orphans (no parent could be found),
-and some were merely lost children (unattached continuations of existing parents).
-True orphans will need to have interpolations generated.`);
+writeln(`Of the ${newOrphans.length} orphans found, ${unattached.length??0} were unattached to a known root variation,
+and ${keyLen(noRoots)} had no known root and will need to be interpolated.\n`);
 
 
 /******** */
@@ -128,25 +136,17 @@ True orphans will need to have interpolations generated.`);
 writeln('Step 6: A new fromTo.json file + new interpolated openings are ready to be generated.');
 await confirmStep('Continue');
 
-// For orphans that are merely missng connections to their parent, add a fromTo from parent -> orphan
-const newFromTos = newFromTos(allRoots, added);
+const oldFtLen = newFromTos.length
+// attach new openings to root variations, adding interpolations if necessary
+let interpolations = {}
 
-// for true orphans, need to create new interpolated openings, and connect them in newFromTo
-const interpolations = noRoots.map((orphan) =>
-    addInterpolations(orphan, newFromTos, added)
-);
-
-fs.writeFileSync(
-    './output/newlyRooted.json',
-    JSON.stringify({ interpolations, newFromTos }, null, 2)
-);
+for (const orphanFen of noRoots) {
+    addInterpolations(orphanFen, newFromTos, added, interpolations)
+};
 
 writeln(`${
-    newFromTos.length
-} parents have been found for lost children; ${keyLen(
-    interpolations
-)} interpolations have been 
-created for the true orphans.`);
+    newFromTos.length - oldFtLen
+} parents have been found for lost children; ${interpolations.length} interpolations have been created for the true orphans.`);
 
 
 /******** */
@@ -158,7 +158,7 @@ writeln(
 await confirmStep('Ready');
 
 // Concatenate the new data to existing structures and output to eco?.json, eco_interpolated.json and fromTo.json files
-const newExisting = concatData(existingOpenings, added, newFromTos);
+const newExisting = concatData(existingOpenings, added, newFromTos, interpolations);
 writeNew(newExisting);
 
 writeln(`

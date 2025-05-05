@@ -1,33 +1,37 @@
 import leven from 'leven';
 import { allOpenings } from './incoming.js';
-import {Chess} from 'chess.js'
-import { chunker } from './utils.js';
+import { Chess } from 'chess.js';
+import { keyLen } from './utils.js';
 
-const chess = new Chess()
+const chess = new Chess();
 
 const getContinuations = (root) => {
-    const continuations = []
-    chess.load(root)
-    const legalMoves = chess.moves()
+    const continuations = [];
+    chess.load(root);
+    const legalMoves = chess.moves();
 
-    legalMoves.forEach(move => {
-        chess.move(move)
-        const to = chess.fen()
+    legalMoves.forEach((move) => {
+        chess.move(move);
+        const to = chess.fen();
         if (allOpenings[to]) {
-            continuations.push[to]
+            continuations.push(to);
         }
-        chess.undo()
-    })
+        chess.undo();
+    });
 
-    return continuations
-}
+    return continuations;
+};
 
 const checkCandidates = (candidateRoots, orphan) => {
+    if (!Array.isArray(candidateRoots) || typeof orphan !== 'string') {
+        throw new Error('Invalid input: candidateRoots must be an array and orphan must be a string.');
+    }
+    
     const orphanAdopters = {};
 
     for (const root of candidateRoots) {
         const continuations = getContinuations(root);
-        const parent = continuations.indexOf(orphan) > -1
+        const parent = continuations.indexOf(orphan) > -1;
         if (parent) orphanAdopters[orphan] = root;
     }
 
@@ -37,7 +41,7 @@ const checkCandidates = (candidateRoots, orphan) => {
 // ChatGPTs analysis of FEN string changes after one move: https://chatgpt.com/share/680fba75-b210-8001-baff-ad777444b97f
 const findRoots = (newOrphans) => {
     const maxL = 9;
-    const allRoots = [];
+    const unattached = {};
     const noRoots = [];
 
     // check all "orphans" to see if they are really orphans or just lost children
@@ -48,6 +52,7 @@ const findRoots = (newOrphans) => {
 
             const [, toMove, ...rest] = orphan.split(' ');
             const moveNum = rest.at(-1);
+            2;
 
             if (toMove === fen.split(' ')[1]) return false;
 
@@ -61,72 +66,23 @@ const findRoots = (newOrphans) => {
         });
 
         // a true orphan has no candidate roots
-        if (!candidateRoots?.length) {
+        if (candidateRoots.length === 0) {
             noRoots.push(orphan);
             continue;
         }
 
         const trueRoots = checkCandidates(candidateRoots, orphan);
-        
-        if (!trueRoots.length) { // a true orphan has no parent among the candidates
+
+        if (keyLen(trueRoots) === 0) {
+            // a true orphan has no parent among the candidates
             noRoots.push(orphan);
-        } else allRoots[orphan] = trueRoots;    // parent found 
+        } else {
+            unattached[orphan] = trueRoots; // parent(s) found, needs attaching in fromTo.json
+        }
     }
 
-    return { allRoots, noRoots };
+    return { unattached, noRoots };
 };
 
-const newFromTos = (parents, added) => {
-    const fromTos = []
-    const parentFens = Object.keys(parents)
 
-    for (const pfen in parentFens) {
-        const child = parentFens[pfen]
-        const fromTo = [pfen, added, allOpenings[pfen].src, added[child].src ]
-        fromTos.push(fromTo)
-    }
-
-    return fromTos
-}
-
-const movesFromHistory = (history) => {
-    const fullMoves = chunker(history, 2).map((twoPly,i) => {
-        return (`${i}. ${twoPly.join(' ')}`)
-    })
-    return fullMoves;
-}
-
-// add interpolations for each true orphan, updating fromTo to reflect the new connections
-const addInterpolations = (orphanFen, newFromTos, added) => {
-
-    const makeInterpolated = () => {
-        const interpolated = {...orphan, src: 'interpolated', moves: movesFromHistory(chess.history())}
-        return interpolated
-    }
-
-    const orphan = added[orphanFen]
-    const interpolations = {}
-
-    chess.loadPgn(orphan.moves)
-    let parent;
-    
-    do {
-        chess.undo() 
-        const fen = chess.fen()
-        parent = [fen, allOpenings[fen]]
-
-        if (!parent) {
-            const interpolated = makeInterpolated()
-            interpolations[fen] = interpolated
-        }
-     } while (!parent)
-
-    for (const ifen in interpolations) {
-        const i = interpolations[ifen]
-        i.name = parent[1].name
-        i.rootSrc = parent[1].src
-        newFromTos.push([parent[0], ifen, parent[1].src, i.src])
-    }
-}
-
-export { newFromTos, findRoots, addInterpolations }
+export { findRoots };
