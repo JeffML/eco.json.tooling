@@ -94,11 +94,14 @@ fs.writeFileSync(
     JSON.stringify(newContinuations, null, 2)
 );
 writeln(
-    `${newContinuations.length} continuations have been recorded among the added openings.\n`
+    `${newContinuations.length} continuations have been found among the added openings.\n`
 );
 
-const newFromTos = newContinuations.map(([from, to]) => {
-    return [from, to, added[from].src, allOpenings[to].src]
+const newFromTos = newContinuations.map(c => {
+    const [from, to] = c[0]
+    const fromSrc = c[1].from.src
+    const toSrc = c[1].to.src
+    return [from, to, fromSrc, toSrc]
 })
 
 /******** */

@@ -11,6 +11,13 @@ const chess = new Chess()
  * @returns {Array} An array of continuations, where each continuation is a tuple [fromFEN, toFEN].
  */
 export const addedContinuations = (added) => {
+    const continuation = (from, to) => {
+        const a = added[from]
+        const b = allOpenings[to]??added[to]
+
+        return {from:a, to:b}
+    }
+
     const continuations = [];
 
     Object.keys(added).forEach(fen => {
@@ -20,7 +27,7 @@ export const addedContinuations = (added) => {
             chess.move(m);
             const to = chess.fen();
             if (allOpenings[to] || added[to]) {
-                continuations.push([fen, to]);
+                continuations.push([[fen, to], continuation(fen, to)]);
             }
             chess.undo()
         });
