@@ -62,14 +62,14 @@ export const addInterpolations = (orphanFen, added) => {
     const moreInterpolations = {};
 
     const makeInterpolated = (orphan) => {
-        const moves =  movesFromHistory(chess.history())
-        
+        const moves = movesFromHistory(chess.history());
+
         /* eslint-disable-next-line no-unused-vars */
-        const orphanFields = {fen, src, moves, ...rest}
+        const { fen, src, ...rest } = orphan;
         const interpolated = {
             ...rest,
             src: 'interpolated',
-            moves,
+            moves, // will overwrite orphan moves
         };
         return interpolated;
     };
@@ -94,12 +94,12 @@ export const addInterpolations = (orphanFen, added) => {
         ]);
     } else {
         // while there is no parent, make an interpolation record
-        let o = orphan
+        let o = orphan;
 
         while (!parent) {
-            const interpolated = makeInterpolated(o)
+            const interpolated = makeInterpolated(o);
             moreInterpolations[parentFen] = interpolated;
-            o = interpolated
+            o = interpolated;
 
             const result = checkForParent();
             if (!result.parentFen) break; // Stop if no parent is found
@@ -111,23 +111,28 @@ export const addInterpolations = (orphanFen, added) => {
 
         // the first interpolation is linked to the parent (root) variation
         moreFromTos.push([
-            [parentFen, ifens[0], {from: parent, to: moreInterpolations[ifens[0]]}],
+            [
+                parentFen,
+                ifens[0],
+                { from: parent, to: moreInterpolations[ifens[0]] },
+            ],
         ]);
 
         // walking backwards through the interpolations, skipping the first and last
+        let p = parent
         ifens.slice(1, -1).forEach((ifen, i) => {
             const interpolation = moreInterpolations[ifen];
-            interpolation.name = parent.name;
+            interpolation.name = p.name;
             interpolation.rootSrc = parent.src;
-            [parentFen, orphanFen],
-                { from: parent, to: orphan },
-                moreFromTos.push([
-                    [ifen, ifens[i + 1]],
-                    {
-                        from: parent,
-                        to: interpolation,
-                    },
-                ]);
+
+            moreFromTos.push([
+                [ifen, ifens[i + 2]],
+                {
+                    from: p,
+                    to: interpolation,
+                },
+            ]);
+            p = interpolation
         });
 
         // The last interpolation is linked to the orphan
