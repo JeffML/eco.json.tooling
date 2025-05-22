@@ -108,14 +108,13 @@ const newFromTos = newContinuations.map(c => {
 /* STEP 5 */
 /******** */
 writeln(
-    'Step 5: look for orphan variations in the added openings; these will require interpolations.'
+    'Step 5: look for orphan variations in the added openings; these will require interpolation or attachment to existing roots.'
 );
 await confirmStep('Ready');
 
 // Now look for orphan addeds; they may not be true orphans, but merely continuations not attached
 // to an existing root variation
-const newOrphans = 
-findOrphans(added, [...existingOpenings.FT.json, ...newFromTos]);
+const newOrphans = findOrphans(added, [...existingOpenings.FT.json, ...newFromTos]);
 
 /*
 For each orphan, determine:
@@ -129,27 +128,26 @@ fs.writeFileSync(
     JSON.stringify({ unattached, noRoots }, null, 2)
 );
 
-writeln(`Of the ${newOrphans.length} orphans found, ${unattached.length??0} were unattached to a known root variation,
+writeln(`Of the ${newOrphans.length} orphans found, ${unattached.length??0} will be attached to a known root variation,
 and ${keyLen(noRoots)} had no known root and will need to be interpolated.\n`);
 
 
 /******** */
 /* STEP 6 */
 /******** */
-writeln('Step 6: A new fromTo.json file + new interpolated openings are ready to be generated.');
+writeln('Step 6: Time to find parents for orphans.');
 await confirmStep('Continue');
 
-const oldFtLen = newFromTos.length
 // attach new openings to root variations, adding interpolations if necessary
-let interpolations = {}
+const allInterpolationsForOrphans = {}
 
 for (const orphanFen of noRoots) {
-    addInterpolations(orphanFen, newFromTos, added, interpolations)
+    allInterpolationsForOrphans[orphanFen] = addInterpolations(orphanFen, added)
 };
 
-writeln(`${
-    newFromTos.length - oldFtLen
-} parents have been found for lost children; ${interpolations.length} interpolations have been created for the true orphans.`);
+fs.writeFileSync('./output/parentedOrphans.json', JSON.stringify(allInterpolationsForOrphans, null, 2))
+
+writeln('Orphans have been parented; results can be seen in .output/parentedOrphans.json')
 
 
 /******** */
