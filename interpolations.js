@@ -61,15 +61,17 @@ export const addInterpolations = (orphanFen, added) => {
     const moreFromTos = [];
     const moreInterpolations = {};
 
-    const makeInterpolated = (orphan) => {
+    const makeInterpolated = (o) => {
         const moves = movesFromHistory(chess.history());
 
         /* eslint-disable-next-line no-unused-vars */
-        const { fen, src, ...rest } = orphan;
+        const { fen, src, ...rest } = o;
         const interpolated = {
             ...rest,
             src: 'interpolated',
             moves, // will overwrite orphan moves
+            name: 'TBD',
+            rootSrc: 'TBD'
         };
         return interpolated;
     };
@@ -96,7 +98,7 @@ export const addInterpolations = (orphanFen, added) => {
         // while there is no parent, make an interpolation record
         let o = orphan;
 
-        while (!parent) {
+        do {
             const interpolated = makeInterpolated(o);
             moreInterpolations[parentFen] = interpolated;
             o = interpolated;
@@ -104,29 +106,20 @@ export const addInterpolations = (orphanFen, added) => {
             const result = checkForParent();
             if (!result.parentFen) break; // Stop if no parent is found
             ({ parent, parentFen } = result);
-        }
+        } while (!parent)
 
         // we will walk the interpolations from parent to last
         const ifens = Object.keys(moreInterpolations).reverse();
 
-        // the first interpolation is linked to the parent (root) variation
-        moreFromTos.push([
-            [
-                parentFen,
-                ifens[0],
-                { from: parent, to: moreInterpolations[ifens[0]] },
-            ],
-        ]);
-
-        // walking backwards through the interpolations, skipping the first and last
+        moreFromTos.push([parentFen, ifens[0], {from:parent, to:moreInterpolations[ifens[0]]}])
         let p = parent
-        ifens.slice(1, -1).forEach((ifen, i) => {
+        ifens.slice(0, -1).forEach((ifen, i) => {
             const interpolation = moreInterpolations[ifen];
             interpolation.name = p.name;
             interpolation.rootSrc = parent.src;
 
             moreFromTos.push([
-                [ifen, ifens[i + 2]],
+                [ifen, ifens[i + 1]],
                 {
                     from: p,
                     to: interpolation,
@@ -147,5 +140,5 @@ export const addInterpolations = (orphanFen, added) => {
         ]);
     }
 
-    return { moreFromTos, moreInterpolations };
+    return { moreFromTos, /*moreInterpolations*/ };
 };
