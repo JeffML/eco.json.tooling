@@ -56,10 +56,9 @@ const movesFromHistory = (history) => {
  * Adds interpolations for each true orphan, updating `newFromTos` to reflect the new connections.
  * Note: `newFromTos` is mutated by this method.
  */
-export const addInterpolations = (orphanFen, added) => {
+export const lineOfDescent = (orphanFen, added) => {
     const orphan = added[orphanFen];
-    const moreFromTos = [];
-    const moreInterpolations = {};
+    const lineOfDescent = [orphan];
 
     const makeInterpolated = (o) => {
         const moves = movesFromHistory(chess.history());
@@ -76,69 +75,36 @@ export const addInterpolations = (orphanFen, added) => {
         return interpolated;
     };
 
-    // stateful!
+    // stateful! moves back one ply each time
     const checkForParent = () => {
         chess.undo();
         const parentFen = chess.fen();
         const parent = allOpenings[parentFen];
-        return { parent, parentFen };
+        return parent;
     };
 
     // load the orphan's moves, then see if there is a parent
     chess.loadPgn(orphan.moves);
-    let { parent, parentFen } = checkForParent();
+    let parent = checkForParent();
 
     // special case: orphan is new continuation unattached to parent; no interpolations needed
     if (parent) {
-        moreFromTos.push([
-            [parentFen, orphanFen],
-            { from: parent, to: orphan },
-        ]);
+        lineOfDescent.push(parent)
     } else {
         // while there is no parent, make an interpolation record
         let o = orphan;
 
         do {
             const interpolated = makeInterpolated(o);
-            moreInterpolations[parentFen] = interpolated;
+            lineOfDescent.push(interpolated)
             o = interpolated;
 
-            const result = checkForParent();
-            if (!result.parentFen) break; // Stop if no parent is found
-            ({ parent, parentFen } = result);
+            parent = checkForParent();    // relies on state of chess instance
+            if (parent) {
+                lineOfDescent.push(parent)
+            }
         } while (!parent)
-
-        // we will walk the interpolations from parent to last
-        const ifens = Object.keys(moreInterpolations).reverse();
-
-        moreFromTos.push([parentFen, ifens[0], {from:parent, to:moreInterpolations[ifens[0]]}])
-        let p = parent
-        ifens.slice(0, -1).forEach((ifen, i) => {
-            const interpolation = moreInterpolations[ifen];
-            interpolation.name = p.name;
-            interpolation.rootSrc = parent.src;
-
-            moreFromTos.push([
-                [ifen, ifens[i + 1]],
-                {
-                    from: p,
-                    to: interpolation,
-                },
-            ]);
-            p = interpolation
-        });
-
-        // The last interpolation is linked to the orphan
-        const lastIfen = ifens.at(-1);
-        const lastInterpolation = moreInterpolations[lastIfen];
-        moreFromTos.push([
-            [lastIfen, orphanFen],
-            {
-                from: lastInterpolation,
-                to: orphan,
-            },
-        ]);
     }
 
-    return { moreFromTos, /*moreInterpolations*/ };
+    return lineOfDescent;
 };

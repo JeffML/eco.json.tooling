@@ -1,8 +1,8 @@
 import fs from 'fs';
 import { getLatestEcoJson } from './getLatestEcoJson.js';
 import { keyLen, prompt } from './utils.js';
-import { filterIncoming, getIncomingOpenings, allOpenings } from './incoming.js';
-import { updateInterpolated, addInterpolations } from './interpolations.js';
+import { filterIncoming, getIncomingOpenings } from './incoming.js';
+import { updateInterpolated, lineOfDescent } from './interpolations.js';
 import { findRoots } from './findRoots.js';
 import { findOrphans } from './findOrphans.js';
 import { addedContinuations } from './addedContinuations.js';
@@ -135,23 +135,29 @@ and ${keyLen(noRoots)} had no known root and will need to be interpolated.\n`);
 /******** */
 /* STEP 6 */
 /******** */
-writeln('Step 6: Time to find parents for orphans.');
+writeln('Step 6: Determine line of descent for each orphan.');
 await confirmStep('Continue');
 
 // attach new openings to root variations, adding interpolations if necessary
-const allInterpolationsForOrphans = {}
+const linesOfDescent = []
 
 for (const orphanFen of noRoots) {
-    allInterpolationsForOrphans[orphanFen] = addInterpolations(orphanFen, added)
+    linesOfDescent.push(lineOfDescent(orphanFen, added))
 };
 
-fs.writeFileSync('./output/parentedOrphans.json', JSON.stringify(allInterpolationsForOrphans, null, 2))
+fs.writeFileSync('./output/linesOfDescent.json', JSON.stringify(linesOfDescent, null, 2))
 
-writeln('Orphans have been parented; results can be seen in .output/parentedOrphans.json')
-
+writeln('Orphans have been parented; results can be seen in .output/linesOfDescent.json')
 
 /******** */
 /* STEP 7 */
+/******** */
+writeln('Step 7: link lines of descent with fromTo records.');
+await confirmStep('Continue');
+
+
+/******** */
+/* STEP 8 */
 /******** */
 writeln(
     `Final Step: write out new json files to ./output/toMerge folder. The new opening data is contained in these files.`
