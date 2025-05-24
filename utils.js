@@ -43,4 +43,11 @@ const chunker = (array, chunkSize) => {
     return chunks
 }
 
-export { getDownloadUrls, keyLen, prompt, chunker};
+function hardAssert(condition, message) {
+    console.assert(condition, message);
+    if (!condition) {
+      throw new Error(message || "Assertion failed");
+    }
+  }
+
+export { getDownloadUrls, keyLen, prompt, chunker, hardAssert};

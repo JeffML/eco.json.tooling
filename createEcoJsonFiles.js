@@ -1,24 +1,57 @@
 import { writeFileSync } from 'fs';
+import { hardAssert } from './utils';
+import { moreFromTos } from './addedContinuations';
 
-export const concatData = (existing, added, newFromTos, interpolations) => {
-    Object.entries(added).forEach(([fen, a]) => {
-        if (a.src === 'interpolated') {
-            existing.IN.json[fen] = a;
-        } else {
-            const cat = a.eco[0];
-            existing[cat].json[fen] = a;
-        }
-    });
+const theJson = (cat, existing) => {
+    return existing[cat].json
+}
 
-    newFromTos.forEach(ft => {
-        existing.FT.json.concat(ft);
-    });
+const applyAdded = (added, existing) => {
+    for (const fen in added) {        
+        const theNew = added[fen]
+        const cat = theNew.eco[0]
+        const existingJson = theJson(cat, existing)
+        hardAssert(!existingJson[fen], "added exists already!") // should not be there
+        delete theNew.fen
+        existingJson[fen] = theNew
+    }
+}
 
-    Object.entries(interpolations).forEach(([fen, opening]) => {
-        existing.IN.json[fen] = opening
-    })
+// could be added aliases or modified interpolated
+const applyModified = (modified, existing) => {
+    for (const fen in modified) {
+        const theMod = modified[fen]
+        const cat = theMod.src === 'interpolated'? 'IN' : theMod.eco[0]
+        const existingJson = theJson(cat, existing)
+        hardAssert(existingJson[fen], "can't find record to modify!") //should be there
+        existingJson[fen] = theMod
+    }
+}
+
+const removeFormerInterpolated = (formerInterpolated, interpolated) => {
+    for (const fen in formerInterpolated) {
+        hardAssert(interpolated[fen], "can't find old interpolated!")
+        delete interpolated[fen]
+    }
+}
+
+const applyFromTos = (newFromTos, moreFromTos, existingFromTos) => {
     
-    return existing
+}
+
+/**
+ * 
+ * @param {} existing universal opening data. includes all eco.json file data 
+ * @param {*} added openings to add
+ * @param {*} newFromTos normal continuation fromTos
+ * @param {*} moreFromTos continuation fromTos with possible interpolations
+ */
+export const applyData = (existing, added, newFromTos, moreFromTos, formerInterpolated, modified) => {
+    console.log('applying data')
+    applyAdded(added, existing)
+    applyModified(modified, existing)
+    removeFormerInterpolated(formerInterpolated, existing.IN.json)
+    applyFromTos(newFromTos, moreFromTos, existing.FT.json)
 };
 
 export const writeNew = (newExisting) => {

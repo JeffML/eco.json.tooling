@@ -6,7 +6,7 @@ import { updateInterpolated, lineOfDescent } from './interpolations.js';
 import { findRoots } from './findRoots.js';
 import { findOrphans } from './findOrphans.js';
 import { addedContinuations, moreFromTos } from './addedContinuations.js';
-import { concatData, writeNew } from './createEcoJsonFiles.js';
+import { applyData, writeNew } from './createEcoJsonFiles.js';
 
 const writeln = (str) => process.stdout.write(str + '\n');
 
@@ -169,7 +169,7 @@ writeln(
 await confirmStep('Ready');
 
 // Concatenate the new data to existing structures and output to eco?.json, eco_interpolated.json and fromTo.json files
-const newExisting = concatData(existingOpenings, added, newFromTos, interpolations);
+const newExisting = applyData(existingOpenings, added, newFromTos, mft, formerInterpolated, modified);
 writeNew(newExisting);
 
 writeln(`
