@@ -1,5 +1,6 @@
 import {Chess} from 'chess.js'
 import { allOpenings } from './incoming.js';
+import { lineOfDescent } from './interpolations.js';
 
 const chess = new Chess() 
 
@@ -35,3 +36,27 @@ export const addedContinuations = (added) => {
 
     return continuations;
 };
+
+
+export const moreFromTos = (linesOfDescent) => {
+    const moreFromTos = []
+    
+    linesOfDescent.forEach(lineOfDescent => {
+        const lod = lineOfDescent.reverse()
+
+        lod.forEach((d, i) => {
+            if ((i + 1) < lod.length) {
+                chess.loadPgn(d.moves)
+                const from = chess.fen()
+
+                const c = lod[i+1]
+                chess.loadPgn(c.moves)
+                const to = chess.fen()
+
+                moreFromTos.push([[from, to], {from:d, to: c}])
+            }
+        })
+    })
+
+    return moreFromTos
+}

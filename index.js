@@ -5,7 +5,7 @@ import { filterIncoming, getIncomingOpenings } from './incoming.js';
 import { updateInterpolated, lineOfDescent } from './interpolations.js';
 import { findRoots } from './findRoots.js';
 import { findOrphans } from './findOrphans.js';
-import { addedContinuations } from './addedContinuations.js';
+import { addedContinuations, moreFromTos } from './addedContinuations.js';
 import { concatData, writeNew } from './createEcoJsonFiles.js';
 
 const writeln = (str) => process.stdout.write(str + '\n');
@@ -154,6 +154,10 @@ writeln('Orphans have been parented; results can be seen in .output/linesOfDesce
 /******** */
 writeln('Step 7: link lines of descent with fromTo records.');
 await confirmStep('Continue');
+
+const mft = moreFromTos(linesOfDescent)
+
+fs.writeFileSync('./output/moreFromTos.json', JSON.stringify(mft, null, 2))
 
 
 /******** */
