@@ -5,7 +5,7 @@ import { filterIncoming, getIncomingOpenings } from './incoming.js';
 import { updateInterpolated, lineOfDescent } from './interpolations.js';
 import { findRoots } from './findRoots.js';
 import { findOrphans } from './findOrphans.js';
-import { addedContinuations, moreFromTos } from './addedContinuations.js';
+import { addedContinuations, canonicalFromTos, moreFromTos } from './addedContinuations.js';
 import { applyData, writeNew } from './createEcoJsonFiles.js';
 
 const writeln = (str) => process.stdout.write(str + '\n');
@@ -97,12 +97,6 @@ writeln(
     `${newContinuations.length} continuations have been found among the added openings.\n`
 );
 
-const newFromTos = newContinuations.map(c => {
-    const [from, to] = c[0]
-    const fromSrc = c[1].from.src
-    const toSrc = c[1].to.src
-    return [from, to, fromSrc, toSrc]
-})
 
 /******** */
 /* STEP 5 */
@@ -111,6 +105,9 @@ writeln(
     'Step 5: look for orphan variations in the added openings; these will require interpolation or attachment to existing roots.'
 );
 await confirmStep('Ready');
+
+// canonical format for fromTo recs
+const newFromTos = canonicalFromTos(newContinuations)
 
 // Now look for orphan addeds; they may not be true orphans, but merely continuations not attached
 // to an existing root variation
