@@ -28,11 +28,9 @@ export const updateInterpolated = (toRemove, added, modified, existing) => {
         for (let c of continuations) {
             const IN = interpolated[c];
             if (IN) {
-                IN.rootSrc = src;
-                IN.name = name;
-                modified[fen] = IN;
+                modified[fen] = {...IN, rootSrc: src, name};
                 updated++;
-                updateContinuations(c, src, name);
+                updateContinuations(c, src, name, visited);
             } else break;
         }
     };

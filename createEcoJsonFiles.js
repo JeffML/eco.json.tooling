@@ -8,9 +8,21 @@ const theJson = (cat, existing) => {
 const applyAdded = (added, existing) => {
     for (const fen in added) {
         const theNew = added[fen];
-        const cat = theNew.eco[0];
+        const cat = theNew.src === 'interpolated' ? 'IN' : theNew.eco[0];
         const existingJson = theJson(cat, existing);
-        hardAssert(!existingJson[fen], 'added exists already!'); // should not be there
+
+        if (cat !== 'IN') {
+            // interpolateds are handled in applyFromTos
+            hardAssert(
+                !existingJson[fen],
+                `added exists already!\n${JSON.stringify(
+                    { existing: existingJson[fen], new: theNew },
+                    null,
+                    2
+                )}`
+            ); // should not be there
+        }
+
         delete theNew.fen;
         existingJson[fen] = theNew;
     }
@@ -34,8 +46,8 @@ const removeFormerInterpolated = (formerInterpolated, interpolated) => {
     }
 };
 
-const applyContinuations = (newFromTos, existingFromTos) => {
-    newFromTos.forEach((ft) => {
+const applyContinuations = (fromTos, existingFromTos) => {
+    fromTos.forEach((ft) => {
         const found = existingFromTos.find((eft) => {
             if (eft[0] === ft[0] && eft[1] === ft[1]) {
                 if (eft[2] !== ft[2]) {
@@ -49,7 +61,7 @@ const applyContinuations = (newFromTos, existingFromTos) => {
         hardAssert(!found, 'new fromTo already exists!');
     });
 
-    existingFromTos.push(...newFromTos); // add 'em
+    existingFromTos.push(...fromTos); // add 'em
 };
 
 export const moreFromTos = (moreFromTos, existingFromTos) => {
@@ -114,7 +126,7 @@ const applyFromTos = (newFromTos, mfts, existing) => {
     const interpolated = filterInterpolated(newInterpolated);
 
     applyAdded(interpolated, existing);
-    applyContinuations(fromTos, existingFromTos);
+    applyContinuations(fromTos.map(ft => [...ft[0], ft[1].from.src, ft[1].to.src]), existingFromTos);
 };
 
 /**
@@ -137,7 +149,7 @@ export const applyData = (
     applyModified(modified, existing);
     removeFormerInterpolated(formerInterpolated, existing.IN.json);
     applyFromTos(newFromTos, moreFromTos, existing);
-    return existing
+    return existing;
 };
 
 export const writeNew = (newExisting) => {
