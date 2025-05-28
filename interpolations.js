@@ -4,34 +4,42 @@ import { allOpenings } from './incoming.js';
 
 const chess = new Chess();
 
-/*
-For all the interpolateds to be removed, we need to update the names and root sources of any interpolated continuations.
-Note that an interpolated opening may have multiple continuations, and therefore appear multiple times in the 'from' data in fromTo.json
-*/
+/**
+ * Updates interpolated openings by modifying their names and root sources.
+ * Handles continuations recursively to prevent infinite loops.
+ *
+ * @param {Array} toRemove - FEN strings of interpolated openings to be removed.
+ * @param {Object} added - Newly added openings.
+ * @param {Object} modified - Openings to be modified.
+ * @param {Object} existing - Existing openings data.
+ * @returns {number} Count of updated openings.
+ */
 export const updateInterpolated = (toRemove, added, modified, existing) => {
     const fromTo = existing.FT.json;
     const interpolated = existing.IN.json;
-    const fromToIndexed = fromTo.reduce((a, [from, to]) => {
-        a[from] ??= [];
-        a[from].push(to);
-        return a;
+
+    // Index `fromTo` for quick lookup
+    const fromToIndexed = fromTo.reduce((acc, [from, to]) => {
+        acc[from] ??= [];
+        acc[from].push(to);
+        return acc;
     }, {});
 
-    let updated = 0;
+    let updatedCount = 0;
 
     const updateContinuations = (fen, src, name, visited = new Set()) => {
         if (visited.has(fen)) return; // Prevent infinite recursion
         visited.add(fen);
 
-        let continuations = fromToIndexed[fen];
-
-        for (let c of continuations) {
-            const IN = interpolated[c];
-            if (IN) {
-                modified[fen] = {...IN, rootSrc: src, name};
-                updated++;
-                updateContinuations(c, src, name, visited);
-            } else break;
+        const continuations = fromToIndexed[fen] || [];
+        for (const continuationFen of continuations) {
+            const interpolatedOpening = interpolated[continuationFen];
+            if (interpolatedOpening) {
+                const rootSrc = interpolatedOpening.rootSrc === 'eco_tsv' ? interpolatedOpening.rootSrc : src;
+                modified[continuationFen] = { ...interpolatedOpening, rootSrc, name };
+                updatedCount++;
+                updateContinuations(continuationFen, src, name, visited);
+            }
         }
     };
 
@@ -40,69 +48,60 @@ export const updateInterpolated = (toRemove, added, modified, existing) => {
         updateContinuations(fen, src, name);
     }
 
-    return updated;
-};
-
-const movesFromHistory = (history) => {
-    const fullMoves = chunker(history, 2).map((twoPly, i) => {
-        return `${i + 1}. ${twoPly.join(' ')}`;
-    });
-    return fullMoves.join(' ');
+    return updatedCount;
 };
 
 /**
- * Adds interpolations for each true orphan, updating `newFromTos` to reflect the new connections.
- * Note: `newFromTos` is mutated by this method.
+ * Converts move history into a PGN string.
+ *
+ * @param {Array} history - Array of moves in history.
+ * @returns {string} PGN string of moves.
+ */
+const movesFromHistory = (history) => {
+    return chunker(history, 2)
+        .map((twoPly, i) => `${i + 1}. ${twoPly.join(' ')}`)
+        .join(' ');
+};
+
+/**
+ * Determines the line of descent for an orphan opening, creating interpolations if necessary.
+ *
+ * @param {string} orphanFen - FEN string of the orphan opening.
+ * @param {Object} added - Newly added openings.
+ * @returns {Array} Line of descent for the orphan.
  */
 export const lineOfDescent = (orphanFen, added) => {
-    const orphan = added[orphanFen];
+    let orphan = added[orphanFen];
     const lineOfDescent = [orphan];
 
-    const makeInterpolated = (o) => {
+    const makeInterpolated = (opening) => {
         const moves = movesFromHistory(chess.history());
-
-        /* eslint-disable-next-line no-unused-vars */
-        const { fen, src, ...rest } = o;
-        const interpolated = {
+        const { fen, src, ...rest } = opening;
+        return {
             ...rest,
             src: 'interpolated',
-            moves, // will overwrite orphan moves
+            moves, // Overwrites orphan moves
             name: 'TBD',
-            rootSrc: 'TBD'
+            rootSrc: 'TBD',
         };
-        return interpolated;
     };
 
-    // stateful! moves back one ply each time
     const checkForParent = () => {
         chess.undo();
         const parentFen = chess.fen();
-        const parent = allOpenings[parentFen];
-        return parent;
+        return allOpenings[parentFen];
     };
 
-    // load the orphan's moves, then see if there is a parent
     chess.loadPgn(orphan.moves);
     let parent = checkForParent();
 
-    // special case: orphan is new continuation unattached to parent; no interpolations needed
-    if (parent) {
-        lineOfDescent.push(parent)
-    } else {
-        // while there is no parent, make an interpolation record
-        let o = orphan;
-
-        do {
-            const interpolated = makeInterpolated(o);
-            lineOfDescent.push(interpolated)
-            o = interpolated;
-
-            parent = checkForParent();    // relies on state of chess instance
-            if (parent) {
-                lineOfDescent.push(parent)
-            }
-        } while (!parent)
+    while (!parent) {
+        const interpolated = makeInterpolated(orphan);
+        lineOfDescent.push(interpolated);
+        orphan = interpolated;
+        parent = checkForParent();
     }
 
+    lineOfDescent.push(parent);
     return lineOfDescent;
 };

@@ -1,51 +1,83 @@
 import { writeFileSync } from 'fs';
 import { hardAssert } from './utils.js';
 
-const theJson = (cat, existing) => {
-    return existing[cat].json;
-};
+/**
+ * Retrieves the JSON data for a specific category.
+ *
+ * @param {string} category - Category key (e.g., 'IN', 'A', 'B').
+ * @param {Object} existing - Existing openings data.
+ * @returns {Object} JSON data for the specified category.
+ */
+const getCategoryJson = (category, existing) => existing[category].json;
 
+/**
+ * Applies newly added openings to the existing data.
+ *
+ * @param {Object} added - Newly added openings.
+ * @param {Object} existing - Existing openings data.
+ */
 const applyAdded = (added, existing) => {
     for (const fen in added) {
-        const theNew = added[fen];
-        const cat = theNew.src === 'interpolated' ? 'IN' : theNew.eco[0];
-        const existingJson = theJson(cat, existing);
+        const newOpening = added[fen];
+        const category =
+            newOpening.src === 'interpolated' ? 'IN' : newOpening.eco[0];
+        const existingJson = getCategoryJson(category, existing);
 
-        if (cat !== 'IN') {
-            // interpolateds are handled in applyFromTos
+        if (category !== 'IN') {
             hardAssert(
                 !existingJson[fen],
-                `added exists already!\n${JSON.stringify(
-                    { existing: existingJson[fen], new: theNew },
+                `Opening already exists!\n${JSON.stringify(
+                    { existing: existingJson[fen], new: newOpening },
                     null,
                     2
                 )}`
-            ); // should not be there
+            );
         }
 
-        delete theNew.fen;
-        existingJson[fen] = theNew;
+        delete newOpening.fen; // Remove redundant FEN property
+        existingJson[fen] = newOpening;
     }
 };
 
-// could be added aliases or modified interpolated
+/**
+ * Applies modifications to existing openings.
+ *
+ * @param {Object} modified - Openings to be modified.
+ * @param {Object} existing - Existing openings data.
+ */
 const applyModified = (modified, existing) => {
     for (const fen in modified) {
-        const theMod = modified[fen];
-        const cat = theMod.src === 'interpolated' ? 'IN' : theMod.eco[0];
-        const existingJson = theJson(cat, existing);
-        hardAssert(existingJson[fen], "can't find record to modify!"); //should be there
-        existingJson[fen] = theMod;
+        const modifiedOpening = modified[fen];
+        const category =
+            modifiedOpening.src === 'interpolated'
+                ? 'IN'
+                : modifiedOpening.eco[0];
+        const existingJson = getCategoryJson(category, existing);
+
+        hardAssert(existingJson[fen], 'Cannot find record to modify!');
+        existingJson[fen] = modifiedOpening;
     }
 };
 
+/**
+ * Removes interpolated openings that are no longer needed.
+ *
+ * @param {Array} formerInterpolated - FEN strings of interpolated openings to be removed.
+ * @param {Object} interpolated - Interpolated openings data.
+ */
 const removeFormerInterpolated = (formerInterpolated, interpolated) => {
     for (const fen of formerInterpolated) {
-        hardAssert(interpolated[fen], "can't find old interpolated!");
+        hardAssert(interpolated[fen], 'Cannot find old interpolated opening!');
         delete interpolated[fen];
     }
 };
 
+/**
+ * Applies new continuations to the `fromTo` relationships.
+ *
+ * @param {Array} fromTos - New `fromTo` relationships.
+ * @param {Array} existingFromTos - Existing `fromTo` relationships.
+ */
 const applyContinuations = (fromTos, existingFromTos) => {
     fromTos.forEach((ft) => {
         const found = existingFromTos.find((eft) => {
@@ -64,53 +96,63 @@ const applyContinuations = (fromTos, existingFromTos) => {
     existingFromTos.push(...fromTos); // add 'em
 };
 
-export const moreFromTos = (moreFromTos, existingFromTos) => {
+export const moreFromTos = (moreFromTos) => {
     // moreFromTos needs a little massaging
     const flattened = [];
     let root;
 
     moreFromTos.forEach((lod, i) => {
-        const from = lod[1].from;
+        const from = lod.fromData;
 
         if (i === 0) {
             root = from;
         } else if (from.name === 'TBD') {
             from.name = root.name;
-            from.rootSrc = root.src;
+            from.rootSrc = from.rootSrc !== 'eco_tsv' ? root.src : 'eco_tsv';
         }
-        flattened.push(lod);
+        flattened.push([[lod.from, lod.to], {from: lod.fromData, to:lod.toData}]);
     });
 
     return flattened;
 };
 
-const applyFromTos = (newFromTos, mfts, existing) => {
-    const filterInterpolated = (newInterpolated) => {
-        const filtered = {};
-        for (const fen in newInterpolated) {
-            const theNew = newInterpolated[fen];
-            const cat = theNew.eco[0];
-            const existingJson = theJson(cat, existing);
+const filterInterpolated = (newInterpolated, existing) => {
+    const filtered = {};
 
-            if (existingJson[fen]) {
-                // these are endpoints that came from lineOfDescent(),
-                // They are just there for eyeball checking, so skip them
-                hardAssert(
-                    theNew.src !== 'interpolated',
-                    'interpolated already exists'
-                );
-            } else {
-                hardAssert(
-                    theNew.src === 'interpolated',
-                    'only interpolated should appear'
-                );
-                filtered[fen] = theNew;
-            }
+    for (const fen in newInterpolated) {
+        const newOpening = newInterpolated[fen];
+        const category = newOpening.eco[0];
+        const existingJson = getCategoryJson(category, existing);
+        const old = existingJson[fen]
+
+        if (newOpening.src !== 'interpolated') {
+            continue;
+        }  // head or tail of line of descent; skip
+
+        if (old) {
+            hardAssert(
+                `Opening already exists! ${JSON.stringify(
+                    { newOpening, existing: old },
+                    null,
+                    2
+                )}`
+            );
         }
 
-        return filtered;
-    };
+        filtered[fen] = newOpening;
+    }
 
+    return filtered;
+};
+
+/**
+ * Applies `fromTo` relationships and interpolated openings to the existing data.
+ *
+ * @param {Array} newFromTos - Normal continuation `fromTo` relationships.
+ * @param {Array} mfts - Continuation `fromTo` relationships with possible interpolations.
+ * @param {Object} existing - Existing openings data.
+ */
+const applyFromTos = (newFromTos, mfts, existing) => {
     const existingFromTos = existing.FT.json;
 
     applyContinuations(newFromTos, existingFromTos);
@@ -118,23 +160,30 @@ const applyFromTos = (newFromTos, mfts, existing) => {
     const fromTos = moreFromTos(mfts, existingFromTos);
 
     // moreFromTos also embeds new continuations, so extract those
-    const newInterpolated = fromTos.reduce((acc, ft) => {
-        acc[ft[0][0]] = ft[1].from;
+    const newInterpolated = fromTos.reduce((acc, [[fen], {from}]) => {
+        acc[fen] = from;
         return acc;
     }, {});
 
-    const interpolated = filterInterpolated(newInterpolated);
+    const interpolated = filterInterpolated(newInterpolated, existing);
 
     applyAdded(interpolated, existing);
-    applyContinuations(fromTos.map(ft => [...ft[0], ft[1].from.src, ft[1].to.src]), existingFromTos);
+    applyContinuations(
+        fromTos.map((ft) => [...ft[0], ft[1].from.src, ft[1].to.src]),
+        existingFromTos
+    );
 };
 
 /**
+ * Applies all updates to the existing data.
  *
- * @param {} existing universal opening data. includes all eco.json file data
- * @param {*} added openings to add
- * @param {*} newFromTos normal continuation fromTos
- * @param {*} moreFromTos continuation fromTos with possible interpolations
+ * @param {Object} existing - Existing openings data.
+ * @param {Object} added - Newly added openings.
+ * @param {Array} newFromTos - Normal continuation `fromTo` relationships.
+ * @param {Array} moreFromTos - Continuation `fromTo` relationships with possible interpolations.
+ * @param {Array} formerInterpolated - FEN strings of interpolated openings to be removed.
+ * @param {Object} modified - Openings to be modified.
+ * @returns {Object} Updated openings data.
  */
 export const applyData = (
     existing,
@@ -152,6 +201,11 @@ export const applyData = (
     return existing;
 };
 
+/**
+ * Writes updated openings data to JSON files.
+ *
+ * @param {Object} newExisting - Updated openings data.
+ */
 export const writeNew = (newExisting) => {
     for (const cat in newExisting) {
         if (cat === 'FT') {

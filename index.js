@@ -15,18 +15,21 @@ const alwaysYes = true;
 
 // Helper function to handle prompts and exit if the user declines
 const confirmStep = async (message) => {
-    const answer = await prompt(`${message} (y/N)? `);
-    if (!/[Yy]/.test(answer) && !alwaysYes) {
+    let answer;
+    do {
+        answer = await prompt(`${message} (y/N)? `)
+        answer = answer.trim().toLowerCase();
+    } while (!['y', 'n', ''].includes(answer));
+
+    if (answer !== 'y' && !alwaysYes) {
         writeln('Operation canceled. Exiting.');
         process.exit(-1);
     } else {
-        writeln('\n')
+        writeln('\n');
     }
 };
 
-/***********/
-/*  STEP 1 */
-/********* */
+// Step 1: Parse and validate the opening data
 writeln(
     'Step 1: Parse and validate the opening data provided in the directory ./input/openings.json'
 );
@@ -35,9 +38,7 @@ await confirmStep('Ready');
 const incomingOpenings = getIncomingOpenings(); // performs validation of input
 writeln('Validation passed.\n');
 
-/******** */
-/* STEP 2 */
-/******** */
+// Step 2: Filter out redundant openings
 writeln('Step 2: Filter out any redundantant openings.');
 
 await confirmStep('Ready');
@@ -54,9 +55,7 @@ writeln(`Of the ${incomingOpenings.length - 1} in opening.json, there were:
     ${keyLen(modified)} modifications to existing eco.json openings
     ${formerInterpolated.length} formerly interpolated openings\n`);
 
-/******** */
-/* STEP 3 */
-/******** */
+// Step 3: Create intermediate data files for review
 writeln(
     'Step 3: Create intermediate data files for review. These will be put in the ./output folder of the project.'
 );
@@ -80,9 +79,7 @@ writeln(`Review #1: Look over the following files in the output folder for obvio
 
 await confirmStep('Have you completed your review');
 
-/******** */
-/* STEP 4 */
-/******** */
+// Step 4: Look for continuations in added openings
 writeln(
     'On to Step 4: For all added openings, look for continuations to existing or newly added openings\n'
 );
@@ -98,9 +95,7 @@ writeln(
 );
 
 
-/******** */
-/* STEP 5 */
-/******** */
+// Step 5: Find orphan variations
 writeln(
     'Step 5: look for orphan variations in the added openings; these will require interpolation or attachment to existing roots.'
 );
@@ -129,9 +124,7 @@ writeln(`Of the ${newOrphans.length} orphans found, ${unattached.length??0} will
 and ${keyLen(noRoots)} had no known root and will need to be interpolated.\n`);
 
 
-/******** */
-/* STEP 6 */
-/******** */
+// Step 6: Determine line of descent for each orphan
 writeln('Step 6: Determine line of descent for each orphan.');
 await confirmStep('Continue');
 
@@ -146,9 +139,7 @@ fs.writeFileSync('./output/linesOfDescent.json', JSON.stringify(linesOfDescent, 
 
 writeln('Orphans have been parented; results can be seen in .output/linesOfDescent.json')
 
-/******** */
-/* STEP 7 */
-/******** */
+// Step 7: Link lines of descent with fromTo records
 writeln('Step 7: link lines of descent with fromTo records.');
 await confirmStep('Continue');
 
@@ -157,9 +148,7 @@ const mft = moreFromTos(linesOfDescent)
 fs.writeFileSync('./output/moreFromTos.json', JSON.stringify(mft, null, 2))
 
 
-/******** */
-/* STEP 8 */
-/******** */
+// Step 8: Write out new JSON files to ./output/toMerge folder
 writeln(
     `Final Step: write out new json files to ./output/toMerge folder. The new opening data is contained in these files.`
 );
