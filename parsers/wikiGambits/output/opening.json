@@ -1,0 +1,1305 @@
+[
+  {
+    "src": "eco_wikip.g"
+  },
+  {
+    "name": "Alekhine Gambit",
+    "eco": "B02",
+    "moves": "1.e4 Nf6 2.e5 Nd5 3.c4 Nb6 4.d4 d6 5.Nf3 Bg4 6.Be2 dxe5 7.Nxe5"
+  },
+  {
+    "name": "John Tracy Gambit",
+    "eco": "B02",
+    "moves": "1.e4 Nf6 2.Nf3"
+  },
+  {
+    "name": "Krejcik Gambit",
+    "eco": "B02",
+    "moves": "1.e4 Nf6 2.Bc4 Nxe4 3.Bxf7+"
+  },
+  {
+    "name": "Buntin Gambit",
+    "eco": "B02",
+    "moves": "1.e4 Nf6 2.e5 Nd5 3.e6"
+  },
+  {
+    "name": "Geschev Gambit",
+    "eco": "B02",
+    "moves": "1.e4 Nf6 2.Nc3 d5 3.exd5 c6"
+  },
+  {
+    "name": "Myers Gambit",
+    "eco": "B02",
+    "moves": "1.e4 Nf6 2.Nc3 d5 3.d3 dxe4 4.Bg5"
+  },
+  {
+    "name": "Spielmann Gambit",
+    "eco": "B02",
+    "moves": "1.e4 Nf6 2.Nc3 d5 3.e5 Nfd7 4.e6"
+  },
+  {
+    "name": "Cambridge Gambit",
+    "eco": "B03",
+    "moves": "1.e4 Nf6 2.e5 Nd5 3.d4 d6 4.c4 Nb6 5.f4 g5"
+  },
+  {
+    "name": "Lasker Simul Gambit",
+    "eco": "B02",
+    "moves": "1.e4 Nf6 2.e5 Nd5 3.c4 Nb6 4.c5 Nd5 5.Nc3 e6 6.Bc4"
+  },
+  {
+    "name": "Matsukevich Gambit",
+    "eco": "B02",
+    "moves": "1.e4 Nf6 2.e5 Nd5 3.c4 Nb6 4.c5 Nd5 5.Nc3 Nxc3 6.dxc3 d6 7.Bg5"
+  },
+  {
+    "name": "Nescafe Frappe Attack",
+    "eco": "A57",
+    "moves": "1.d4 Nf6 2.c4 c5 3.d5 b5 4.cxb5 a6 5.Nc3 axb5 6.e4 b4 7.Nb5 d6"
+  },
+  {
+    "name": "Hjoerring Countergambit",
+    "eco": "A57",
+    "moves": "1.d4 Nf6 2.c4 c5 3.d5 b5 4.e4"
+  },
+  {
+    "name": "Mutkin Countergambit",
+    "eco": "A57",
+    "moves": "1.d4 Nf6 2.c4 c5 3.d5 b5 4.g4"
+  },
+  {
+    "name": "Williams Gambit",
+    "eco": "A03",
+    "moves": "1.f4 d5 2.e4"
+  },
+  {
+    "name": "Hobbs Gambit",
+    "eco": "A02",
+    "moves": "1.f4 g5"
+  },
+  {
+    "name": "Dudweiler Gambit",
+    "eco": "A02",
+    "moves": "1.f4 d5 2.g4"
+  },
+  {
+    "name": "Bahr Gambit",
+    "eco": "A02",
+    "moves": "1.f4 e5 2.Nc3"
+  },
+  {
+    "name": "Sturm Gambit",
+    "eco": "A02",
+    "moves": "1.f4 d5 2.c4"
+  },
+  {
+    "name": "Lasker Gambit",
+    "eco": "A02",
+    "moves": "1.f4 e5 2.fxe5 f6"
+  },
+  {
+    "name": "Platz Gambit",
+    "eco": "A02",
+    "moves": "1.f4 e5 2.fxe5 Ne7"
+  },
+  {
+    "name": "Schlechter Gambit",
+    "eco": "A02",
+    "moves": "1.f4 e5 2.fxe5 Nc6"
+  },
+  {
+    "name": "Batavo Gambit",
+    "eco": "A02",
+    "moves": "1.f4 d5 2.Nf3 c5 3.e4 dxe4"
+  },
+  {
+    "name": "Langheld Gambit",
+    "eco": "A02",
+    "moves": "1.f4 e5 2.fxe5 d6 3.exd6 Nf6"
+  },
+  {
+    "name": "Siegener Gambit",
+    "eco": "A02",
+    "moves": "1.f4 e5 2.d4 exd4 3.Nf3 c5 4.c3"
+  },
+  {
+    "name": "Thomas Gambit",
+    "eco": "A02",
+    "moves": "1.f4 d5 2.b3 Nf6 3.Bb2 d4 4.Nf3 c5 5.e3"
+  },
+  {
+    "name": "Prokofiev Gambit",
+    "eco": "A03",
+    "moves": "1.f4 d5 2.e4 dxe4 3.d3"
+  },
+  {
+    "name": "Calabrian Countergambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 f5"
+  },
+  {
+    "name": "Four Pawns Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 Bc5 3.b4 Bxb4 4.f4 exf4 5.Nf3 Be7 6.d4 Bh4+ 7.g3 fxg3 8.O-O gxh2+ 9.Kh1"
+  },
+  {
+    "name": "Lewis Countergambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 Bc5 3.c3 d5"
+  },
+  {
+    "name": "McDonnell Double Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 Bc5 3.b4 Bxb4 4.f4"
+  },
+  {
+    "name": "Petroff Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 Bc5 3.Nf3 d6 4.c3 Qe7 5.d4"
+  },
+  {
+    "name": "Greco Gambit",
+    "eco": "C24",
+    "moves": "1.e4 e5 2.Bc4 Nf6 3.f4"
+  },
+  {
+    "name": "Ponziani Gambit",
+    "eco": "C24",
+    "moves": "1.e4 e5 2.Bc4 Nf6 3.d4"
+  },
+  {
+    "name": "Khan Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 d5"
+  },
+  {
+    "name": "Lewis Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 Bc5 3.d4"
+  },
+  {
+    "name": "Stein Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 Bc5 3.f4"
+  },
+  {
+    "name": "Anderssen Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 b5 3.Bxb5 c6"
+  },
+  {
+    "name": "Thorold Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 b5 3.Bxb5 f5"
+  },
+  {
+    "name": "Lopez Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 Bc5 3.Qe2 Nf6 4.f4"
+  },
+  {
+    "name": "Pachman Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 Nf6 3.Ne2 Nxe4 4.Nec3"
+  },
+  {
+    "name": "Warsaw Gambit",
+    "eco": "C24",
+    "moves": "1.e4 e5 2.Bc4 Nf6 3.d4 exd4 4.c3"
+  },
+  {
+    "name": "Keidansky Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Bc4 Nf6 3.d4 exd4 4.Nf3 Nxe4 5.Qxd4"
+  },
+  {
+    "name": "Blackmar Gambit",
+    "eco": "D00",
+    "moves": "1.d4 d5 2.e4 dxe4 3.f3"
+  },
+  {
+    "name": "Lemberger Countergambit",
+    "eco": "D00",
+    "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 e5"
+  },
+  {
+    "name": "Von Popiel Gambit",
+    "eco": "D00",
+    "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.Bg5"
+  },
+  {
+    "name": "Brombacher Countergambit",
+    "eco": "D00",
+    "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.f3 c5"
+  },
+  {
+    "name": "Elbert Countergambit",
+    "eco": "D00",
+    "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.f3 e5"
+  },
+  {
+    "name": "Ryder Gambit",
+    "eco": "D00",
+    "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.f3 exf3 5.Qxf3"
+  },
+  {
+    "name": "Pfrang Gambit",
+    "eco": "D00",
+    "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.f3 e6 5.fxe4"
+  },
+  {
+    "name": "Duthilleul Gambit",
+    "eco": "D00",
+    "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.f3 exf3 5.Nxf3 e6 6.Bd3"
+  },
+  {
+    "name": "Zilbermints Gambit",
+    "eco": "D00",
+    "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.f3 exf3 5.Nxf3 e6 6.Bg5 Be7 7.Bd3 Nc6 8.O-O Nxd4 9.Kh1"
+  },
+  {
+    "name": "Tejler Gambit",
+    "eco": "D00",
+    "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.f3 exf3 5.Qxf3 Qxd4 6.Be3 Qg4"
+  },
+  {
+    "name": "Mieses Gambit",
+    "eco": "B12",
+    "moves": "1.e4 c6 2.d4 d5 3.Be3"
+  },
+  {
+    "name": "Toikkanen Gambit",
+    "eco": "B10",
+    "moves": "1.e4 c6 2.c4 d5 3.e5"
+  },
+  {
+    "name": "Alien Gambit",
+    "eco": "B15",
+    "moves": "1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nf6 5.Ng5 h6 6.Nxf7"
+  },
+  {
+    "name": "Martian Gambit",
+    "eco": "B15",
+    "moves": "1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Bf5 5.Ng5 Bg6 6.N1f3 h6 7.Ne6"
+  },
+  {
+    "name": "Hector Gambit",
+    "eco": "B12",
+    "moves": "1.e4 c6 2.Nc3 d5 3.Nf3 dxe4 4.Ng5"
+  },
+  {
+    "name": "Schaeffer Gambit",
+    "eco": "B10",
+    "moves": "1.e4 c6 2.Bc4 d5 3.Bb3 dxe4 4.Qh5"
+  },
+  {
+    "name": "Ulysses Gambit",
+    "eco": "B12",
+    "moves": "1.e4 c6 2.d4 d5 3.Nf3 dxe4 4.Ng5"
+  },
+  {
+    "name": "Von Hennig Gambit",
+    "eco": "B15",
+    "moves": "1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Bc4"
+  },
+  {
+    "name": "Alekhine Gambit",
+    "eco": "B15",
+    "moves": "1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nf6 5.Bd3"
+  },
+  {
+    "name": "Landau Gambit",
+    "eco": "B12",
+    "moves": "1.e4 c6 2.d4 d5 3.Bd3 Nf6 4.e5 Nfd7 5.e6"
+  },
+  {
+    "name": "Fianchetto Gambit",
+    "eco": "B13",
+    "moves": "1.e4 c6 2.d4 d5 3.exd5 cxd5 4.c4 Nf6 5.Nc3 g6 6.cxd5 Bg7"
+  },
+  {
+    "name": "Jaenisch Gambit",
+    "eco": "A10",
+    "moves": "1.c4 b5"
+  },
+  {
+    "name": "Hickmann Gambit",
+    "eco": "A10",
+    "moves": "1.c4 f5 2.e4"
+  },
+  {
+    "name": "Wade Gambit",
+    "eco": "A10",
+    "moves": "1.c4 f5 2.g4"
+  },
+  {
+    "name": "Wing Gambit",
+    "eco": "A30",
+    "moves": "1.c4 c5 2.b4"
+  },
+  {
+    "name": "Loehn Gambit",
+    "eco": "A10",
+    "moves": "1.c4 d5 2.cxd5 e6"
+  },
+  {
+    "name": "Schulz Gambit",
+    "eco": "A10",
+    "moves": "1.c4 d5 2.cxd5 Nf6"
+  },
+  {
+    "name": "Zilbermints Gambit",
+    "eco": "A10",
+    "moves": "1.c4 g5 2.d4 e5"
+  },
+  {
+    "name": "Chabanon Gambit",
+    "eco": "A10",
+    "moves": "1.c4 f5 2.Nf3 d6 3.e4"
+  },
+  {
+    "name": "Ferenc Gambit",
+    "eco": "A10",
+    "moves": "1.c4 f5 2.Nc3 Nf6 3.e4"
+  },
+  {
+    "name": "Napolitano Gambit",
+    "eco": "A30",
+    "moves": "1.c4 c5 2.Nf3 Nf6 3.b4"
+  },
+  {
+    "name": "Nei Gambit",
+    "eco": "A19",
+    "moves": "1.c4 Nf6 2.Nc3 e6 3.e4 c5 4.e5 Ng8"
+  },
+  {
+    "name": "Romanishin Gambit",
+    "eco": "A13",
+    "moves": "1.c4 Nf6 2.Nf3 e6 3.g3 a6 4.Bg2 b5"
+  },
+  {
+    "name": "Erbenheimer Gambit",
+    "eco": "A22",
+    "moves": "1.c4 e5 2.Nc3 Nf6 3.Nf3 e4 4.Ng5 Ng4"
+  },
+  {
+    "name": "Alapin Gambit",
+    "eco": "C00",
+    "moves": "1.e4 e6 2.d4 d5 3.Be3"
+  },
+  {
+    "name": "Pinova Gambit",
+    "eco": "C00",
+    "moves": "1.e4 e6 2.b4 Bxb4 3.e5"
+  },
+  {
+    "name": "Morphy Gambit",
+    "eco": "C00",
+    "moves": "1.e4 e6 2.d4 d5 3.Nh3"
+  },
+  {
+    "name": "Perseus Gambit",
+    "eco": "C01",
+    "moves": "1.e4 e6 2.d4 d5 3.Nf3"
+  },
+  {
+    "name": "Reuter Gambit",
+    "eco": "C00",
+    "moves": "1.e4 e6 2.f4 d5 3.Nf3 dxe4"
+  },
+  {
+    "name": "Frenkel Gambit",
+    "eco": "C02",
+    "moves": "1.e4 e6 2.d4 d5 3.e5 c5 4.b4"
+  },
+  {
+    "name": "Carlson Gambit",
+    "eco": "C01",
+    "moves": "1.e4 e6 2.d4 d5 3.Nf3 dxe4 4.Ne5"
+  },
+  {
+    "name": "Orthoschnapp Gambit",
+    "eco": "C00",
+    "moves": "1.e4 e6 2.c4 d5 3.cxd5 exd5 4.Qb3"
+  },
+  {
+    "name": "Wing Gambit",
+    "eco": "C00",
+    "moves": "1.e4 e6 2.Nf3 d5 3.e5 c5 4.b4"
+  },
+  {
+    "name": "Hoffmann Gambit",
+    "eco": "C01",
+    "moves": "1.e4 e6 2.d4 d5 3.Qe2 e5 4.f4 exf4"
+  },
+  {
+    "name": "Ellis Gambit",
+    "eco": "C10",
+    "moves": "1.e4 e6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 e5"
+  },
+  {
+    "name": "Shaposhnikov Gambit",
+    "eco": "C07",
+    "moves": "1.e4 e6 2.d4 d5 3.Nd2 c5 4.exd5 Nf6"
+  },
+  {
+    "name": "Nimzowitsch Gambit",
+    "eco": "C02",
+    "moves": "1.e4 e6 2.d4 d5 3.e5 c5 4.Qg4"
+  },
+  {
+    "name": "Ruisdonk Gambit",
+    "eco": "C02",
+    "moves": "1.e4 e6 2.d4 d5 3.e5 c5 4.Nf3 cxd4 5.Bd3"
+  },
+  {
+    "name": "Wolf Gambit",
+    "eco": "C12",
+    "moves": "1.e4 e6 2.d4 d5 3.Nc3 Nf6 4.Bg5 Bb4 5.Ne2"
+  },
+  {
+    "name": "Kunin Double Gambit",
+    "eco": "C15",
+    "moves": "1.e4 e6 2.d4 d5 3.Nc3 Bb4 4.Bd2 dxe4 5.Qg4 Qxd4"
+  },
+  {
+    "name": "Omega Gambit",
+    "eco": "A45",
+    "moves": "1.d4 Nf6 2.e4"
+  },
+  {
+    "name": "Lazard Gambit",
+    "eco": "A45",
+    "moves": "1.d4 Nf6 2.Nd2 e5"
+  },
+  {
+    "name": "Maddigan Gambit",
+    "eco": "A45",
+    "moves": "1.d4 Nf6 2.Nc3 e5"
+  },
+  {
+    "name": "Medusa Gambit",
+    "eco": "A50",
+    "moves": "1.d4 Nf6 2.c4 g5"
+  },
+  {
+    "name": "Pyrenees Gambit",
+    "eco": "A50",
+    "moves": "1.d4 Nf6 2.c4 b5"
+  },
+  {
+    "name": "Adorjan Gambit",
+    "eco": "A60",
+    "moves": "1.d4 Nf6 2.c4 g6 3.d5 b5"
+  },
+  {
+    "name": "Leko Gambit",
+    "eco": "A70",
+    "moves": "1.d4 Nf6 2.c4 g6 3.f3 e5"
+  },
+  {
+    "name": "Schnepper Gambit",
+    "eco": "A47",
+    "moves": "1.d4 Nf6 2.Nf3 b6 3.c3 e5"
+  },
+  {
+    "name": "Arafat Gambit",
+    "eco": "A45",
+    "moves": "1.d4 Nf6 2.e4 Nxe4 3.Bd3 Nf6 4.Bg5"
+  },
+  {
+    "name": "Stummer Gambit",
+    "eco": "A45",
+    "moves": "1.d4 Nf6 2.g4 Nxg4 3.e4 d6 4.Be2 Nf6 5.Nc3"
+  },
+  {
+    "name": "Lucchini Gambit",
+    "eco": "C50",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.d3 f5"
+  },
+  {
+    "name": "Nakhmanson Gambit",
+    "eco": "C56",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.d4 exd4 5.O-O Nxe4 6.Nc3"
+  },
+  {
+    "name": "Neumann Gambit",
+    "eco": "C55",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.c3 Nf6 4.Bc4"
+  },
+  {
+    "name": "Alexandre Gambit",
+    "eco": "C55",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.c3 f5"
+  },
+  {
+    "name": "Fontaine Countergambit",
+    "eco": "C51",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.b4 b5"
+  },
+  {
+    "name": "Hein Countergambit",
+    "eco": "C51",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.b4 d5"
+  },
+  {
+    "name": "Albin Gambit",
+    "eco": "C53",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.c3 Nf6 5.O-O"
+  },
+  {
+    "name": "Deutz Gambit",
+    "eco": "C55",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.O-O Nf6 5.d4"
+  },
+  {
+    "name": "Kloss Gambit",
+    "eco": "C57",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Nb4"
+  },
+  {
+    "name": "Greco Gambit",
+    "eco": "C53",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.c3 Nf6 5.d4 exd4 6.e5 d5"
+  },
+  {
+    "name": "Leonhardt Countergambit",
+    "eco": "C52",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.b4 Bxb4 5.c3 Ba5 6.d4 b5"
+  },
+  {
+    "name": "Panteldakis Countergambit",
+    "eco": "C30",
+    "moves": "1.e4 e5 2.f4 f5"
+  },
+  {
+    "name": "Zilbermints Double Countergambit",
+    "eco": "C30",
+    "moves": "1.e4 e5 2.f4 g5"
+  },
+  {
+    "name": "Falkbeer Countergambit",
+    "eco": "C31",
+    "moves": "1.e4 e5 2.f4 d5"
+  },
+  {
+    "name": "Basman Gambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.Qe2"
+  },
+  {
+    "name": "Breyer Gambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.Qf3"
+  },
+  {
+    "name": "Carrera Gambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.Qh5"
+  },
+  {
+    "name": "Gama Gambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.g3"
+  },
+  {
+    "name": "Orsini Gambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.b3"
+  },
+  {
+    "name": "Paris Gambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.Ne2"
+  },
+  {
+    "name": "Villemson Gambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.d4"
+  },
+  {
+    "name": "Schurig Gambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.Bb5"
+  },
+  {
+    "name": "Tartakower Gambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.Be2"
+  },
+  {
+    "name": "Hinrichsen Gambit",
+    "eco": "C31",
+    "moves": "1.e4 e5 2.f4 d5 3.d4"
+  },
+  {
+    "name": "Schurig Gambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.Bb5"
+  },
+  {
+    "name": "Gianutio Gambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.Bc4 f5"
+  },
+  {
+    "name": "Gianutio Countergambit",
+    "eco": "C34",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 f5"
+  },
+  {
+    "name": "Senechaud Countergambit",
+    "eco": "C30",
+    "moves": "1.e4 e5 2.f4 Bc5 3.Nf3 g5"
+  },
+  {
+    "name": "Zilbermints Double Gambit I",
+    "eco": "C30",
+    "moves": "1.e4 e5 2.f4 Nc6 3.Nf3 g5"
+  },
+  {
+    "name": "Miles Gambit",
+    "eco": "C31",
+    "moves": "1.e4 e5 2.f4 d5 3.exd5 Bc5"
+  },
+  {
+    "name": "Schulder Gambit",
+    "eco": "C34",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 d6 4.b4"
+  },
+  {
+    "name": "Quaade Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Nc3"
+  },
+  {
+    "name": "Rosentreter Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.d4 g4"
+  },
+  {
+    "name": "Rotlewi Countergambit",
+    "eco": "C30",
+    "moves": "1.e4 e5 2.f4 Bc5 3.Nf3 d6 4.b4"
+  },
+  {
+    "name": "Charousek Gambit",
+    "eco": "C31",
+    "moves": "1.e4 e5 2.f4 d5 3.exd5 e4 4.d3"
+  },
+  {
+    "name": "Bledow Countergambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.Bc4 d5 4.Bxd5 Nf6"
+  },
+  {
+    "name": "Bryan Countergambit",
+    "eco": "C33",
+    "moves": "1.e4 e5 2.f4 exf4 3.Bc4 Qh4+ 4.Kf1 b5"
+  },
+  {
+    "name": "Blachly Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 Nc6"
+  },
+  {
+    "name": "Rubinstein Countergambit",
+    "eco": "C30",
+    "moves": "1.e4 e5 2.f4 Bc5 3.Nf3 d6 4.c3 f5"
+  },
+  {
+    "name": "Pickler Gambit",
+    "eco": "C31",
+    "moves": "1.e4 e5 2.f4 d5 3.exd5 c6 4.dxc6 Bc5"
+  },
+  {
+    "name": "Allgaier Gambit",
+    "eco": "C39",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.h4 g4 5.Ng5"
+  },
+  {
+    "name": "Australian Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.h4"
+  },
+  {
+    "name": "Hanstein Gambit",
+    "eco": "C39",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 Bg7 5.O-O"
+  },
+  {
+    "name": "Lolli Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.Bxf7+"
+  },
+  {
+    "name": "McDonnell Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.Nc3"
+  },
+  {
+    "name": "Muzio Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.O-O"
+  },
+  {
+    "name": "Philidor Gambit",
+    "eco": "C38",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 Bg7 5.h4"
+  },
+  {
+    "name": "Salvio Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.Ne5"
+  },
+  {
+    "name": "Charousek Gambit",
+    "eco": "C32",
+    "moves": "1.e4 e5 2.f4 d5 3.exd5 e4 4.d3"
+  },
+  {
+    "name": "Bertin Gambit",
+    "eco": "C35",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 Be7 4.Bc4 Bh4+ 5.g3"
+  },
+  {
+    "name": "Ghulam Kassim Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.d4"
+  },
+  {
+    "name": "Kieseritzky Gambit",
+    "eco": "C39",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.h4 g4 5.Ne5"
+  },
+  {
+    "name": "Greco Gambit",
+    "eco": "C38",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 Bg7 5.h4 h6 6.d4 d6"
+  },
+  {
+    "name": "Young Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.O-O gxf3 6.Qxf3 Qf6 7.Bxf7+ Kxf7 8.d4 Qxd4+ 9.Be3 Qf6 10.Nc3 fxe3"
+  },
+  {
+    "name": "Baldwin Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.O-O gxf3 6.Qxf3 Qf6 7.Nc3 Qd4+ 8.Kh1 Qxc4 9.Nd5"
+  },
+  {
+    "name": "Rice Gambit",
+    "eco": "C39",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.h4 g4 5.Ne5 Nf6 6.Bc4 d5 7.exd5 Bd6 8.O-O"
+  },
+  {
+    "name": "Silberschmidt Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.Ne5 Qh4+ 6.Kf1 Nh6 7.d4 f3"
+  },
+  {
+    "name": "Middleton Countergambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 d6 5.O-O Bg4 6.h3 h5 7.hxg4 hxg4"
+  },
+  {
+    "name": "Blackburne Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.h4 g4 5.Ng5 h6 6.Nxf7 Kxf7 7.Nc3"
+  },
+  {
+    "name": "Bello Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.O-O gxf3 6.Qxf3 Qf6 7.Nc3"
+  },
+  {
+    "name": "Cochrane Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.Ne5 Qh4+ 6.Kf1 f3"
+  },
+  {
+    "name": "Bird Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.d4 g4 5.Ne5 Qh4+ 6.g3"
+  },
+  {
+    "name": "Mayet Gambit",
+    "eco": "C38",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 Bg7 5.d4 d6 6.c3"
+  },
+  {
+    "name": "Kotov Gambit",
+    "eco": "C37",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.Bc4 g4 5.d4 gxf3 6.Bxf4"
+  },
+  {
+    "name": "Cotter Gambit",
+    "eco": "C39",
+    "moves": "1.e4 e5 2.f4 exf4 3.Nf3 g5 4.h4 g4 5.Ne5 h6 6.Nxf7"
+  },
+  {
+    "name": "Lopez Countergambit",
+    "eco": "C41",
+    "moves": "1.e4 e5 2.Nf3 d6 3.Bc4 f5"
+  },
+  {
+    "name": "Philidor Gambit",
+    "eco": "C41",
+    "moves": "1.e4 e5 2.Nf3 d6 3.d4 Bd7"
+  },
+  {
+    "name": "Philidor Countergambit",
+    "eco": "C41",
+    "moves": "1.e4 e5 2.Nf3 d6 3.d4 f5"
+  },
+  {
+    "name": "Bird Gambit",
+    "eco": "C41",
+    "moves": "1.e4 e5 2.Nf3 d6 3.d4 exd4 4.c3"
+  },
+  {
+    "name": "Morphy Gambit",
+    "eco": "C41",
+    "moves": "1.e4 e5 2.Nf3 d6 3.d4 exd4 4.Bc4"
+  },
+  {
+    "name": "Shirov Gambit",
+    "eco": "C41",
+    "moves": "1.e4 e5 2.Nf3 d6 3.d4 Nd7 4.Nc3 Ngf6 5.g4"
+  },
+  {
+    "name": "Zilbermints Gambit",
+    "eco": "D08",
+    "moves": "1.d4 d5 2.c4 b5"
+  },
+  {
+    "name": "Diemer Gambit",
+    "eco": "D10",
+    "moves": "1.d4 d5 2.c4 c6 3.e4"
+  },
+  {
+    "name": "Slav Gambit",
+    "eco": "D21",
+    "moves": "1.d4 d5 2.c4 dxc4 3.Nf3 b5"
+  },
+  {
+    "name": "Salvio Countergambit",
+    "eco": "D06",
+    "moves": "1.d4 d5 2.c4 c5 3.dxc5 d4"
+  },
+  {
+    "name": "Lazard Gambit",
+    "eco": "D07",
+    "moves": "1.d4 d5 2.c4 Nc6 3.Nf3 e5"
+  },
+  {
+    "name": "Tartakower Gambit",
+    "eco": "D07",
+    "moves": "1.d4 d5 2.c4 Nc6 3.Nc3 e5"
+  },
+  {
+    "name": "Tan Gambit",
+    "eco": "D07",
+    "moves": "1.d4 d5 2.c4 Nf6 3.cxd5 c6"
+  },
+  {
+    "name": "Winawer Countergambit",
+    "eco": "D10",
+    "moves": "1.d4 d5 2.c4 c6 3.Nc3 e5"
+  },
+  {
+    "name": "Somov Gambit",
+    "eco": "D20",
+    "moves": "1.d4 d5 2.c4 dxc4 3.e4 e5 4.Bxc4"
+  },
+  {
+    "name": "Bonet Gambit",
+    "eco": "D11",
+    "moves": "1.d4 d5 2.c4 c6 3.Nf3 Nf6 4.Bg5"
+  },
+  {
+    "name": "Schara Gambit",
+    "eco": "D31",
+    "moves": "1.d4 d5 2.c4 e6 3.Nc3 c5 4.cxd5 cxd4"
+  },
+  {
+    "name": "Portisch Gambit",
+    "eco": "D31",
+    "moves": "1.d4 d5 2.c4 e6 3.Nc3 c6 4.e3 f5 5.g4"
+  },
+  {
+    "name": "Geller Gambit",
+    "eco": "D15",
+    "moves": "1.d4 d5 2.c4 c6 3.Nf3 Nf6 4.Nc3 dxc4 5.e4"
+  },
+  {
+    "name": "Tarrasch Defense Marshall Gambit",
+    "eco": "D32",
+    "moves": "1.d4 d5 2.c4 e6 3.Nc3 c5 4.cxd5 exd5 5.e4"
+  },
+  {
+    "name": "Argentinian Gambit",
+    "eco": "D06",
+    "moves": "1.d4 d5 2.c4 Bf5 3.cxd5 Bxb1 4.Qa4+ c6 5.dxc6 Nxc6"
+  },
+  {
+    "name": "Billinger Gambit",
+    "eco": "D20",
+    "moves": "1.d4 d5 2.c4 dxc4 3.e3 e5 4.Bxc4 exd4 5.Qb3 Qe7 6.a3"
+  },
+  {
+    "name": "Christensen Gambit",
+    "eco": "D20",
+    "moves": "1.d4 d5 2.c4 dxc4 3.e3 e5 4.Bxc4 exd4 5.Qb3 Qe7 6.Nf3"
+  },
+  {
+    "name": "Korchnoi Gambit",
+    "eco": "D20",
+    "moves": "1.d4 d5 2.c4 dxc4 3.e3 e5 4.Bxc4 exd4 5.Qb3 Qe7 6.Kf1"
+  },
+  {
+    "name": "Novikov Gambit",
+    "eco": "D20",
+    "moves": "1.d4 d5 2.c4 dxc4 3.e3 e5 4.Bxc4 exd4 5.Qb3 Qe7 6.Nd2"
+  },
+  {
+    "name": "Alekhine Gambit",
+    "eco": "D37",
+    "moves": "1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Nbd7 5.Nf3 h6 6.Bh4 dxc4"
+  },
+  {
+    "name": "Tarrasch Gambit",
+    "eco": "D32",
+    "moves": "1.d4 d5 2.c4 e6 3.Nc3 c5 4.cxd5 exd5 5.dxc5 d4 6.Na4 b5"
+  },
+  {
+    "name": "Fazekas Gambit",
+    "eco": "D17",
+    "moves": "1.d4 d5 2.c4 c6 3.Nf3 Nf6 4.Nc3 dxc4 5.a4 Bf5 6.Ne5 Na6 7.e4"
+  },
+  {
+    "name": "Von Hennig Gambit",
+    "eco": "D32",
+    "moves": "1.d4 d5 2.c4 e6 3.Nc3 c5 4.cxd5 cxd4 5.Qxd4 Nc6 6.Qd1 exd5 7.Qxd5 Be6"
+  },
+  {
+    "name": "Classical Tarrasch Gambit",
+    "eco": "D34",
+    "moves": "1.d4 d5 2.c4 e6 3.Nc3 c5 4.cxd5 exd5 5.Nf3 Nc6 6.g3 Nf6 7.Bg2 Be7 8.O-O 0-O 9.dxc5 d4"
+  },
+  {
+    "name": "Mar Del Plata Gambit",
+    "eco": "D57",
+    "moves": "1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 O-O 6.Nf3 h6 7.Bh4 Ne4 8.Bxe7 Qxe7 9.cxd5 Nxc3 10.bxc3 exd5 11.Qb3 Rd8 12.c4 Be6"
+  },
+  {
+    "name": "Kaidanov Gambit",
+    "eco": "D47",
+    "moves": "1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 c6 5.e3 Nbd7 6.Bd3 dxc4 7.Bxc4 b5 8.Bd3 Bb7 9.e4 b4 10.Na4 c5 11.e5 Nd5 12.O-O cxd4 13.Nxd4"
+  },
+  {
+    "name": "Herrstrom Gambit",
+    "eco": "A04",
+    "moves": "1.Nf3 g5"
+  },
+  {
+    "name": "Ross Gambit",
+    "eco": "A04",
+    "moves": "1.Nf3 e5"
+  },
+  {
+    "name": "John Tracy Gambit",
+    "eco": "A04",
+    "moves": "1.e4 Nf6 2.Nf3"
+  },
+  {
+    "name": "Lisitsyn Gambit",
+    "eco": "A04",
+    "moves": "1.Nf3 f5 2.e4"
+  },
+  {
+    "name": "Vos Gambit",
+    "eco": "A04",
+    "moves": "1.d4 d6 2.Nf3 e5"
+  },
+  {
+    "name": "Deferred Lisitsyn Gambit",
+    "eco": "A04",
+    "moves": "1.Nf3 f5 2.d3 Nf6 3.e4"
+  },
+  {
+    "name": "Speelsmet Gambit",
+    "eco": "A04",
+    "moves": "1.Nf3 c5 2.d4 cxd4 3.e3"
+  },
+  {
+    "name": "Pachman Gambit",
+    "eco": "A04",
+    "moves": "1.Nf3 d5 2.b3 c5 3.c4 dxc4 4.e3"
+  },
+  {
+    "name": "Shabalov Gambit",
+    "eco": "A04",
+    "moves": "1.c4 e6 2.Nf3 a6 3.Nc3 c5 4.g3 b5"
+  },
+  {
+    "name": "Brentano Gambit",
+    "eco": "C60",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 g5"
+  },
+  {
+    "name": "Spanish Countergambit",
+    "eco": "C60",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 d5"
+  },
+  {
+    "name": "Spanish Wing Gambit",
+    "eco": "C64",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Bc5 4.b4"
+  },
+  {
+    "name": "Cordel Gambit",
+    "eco": "C64",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Bc5 4.c3 f5"
+  },
+  {
+    "name": "Konikowski Gambit",
+    "eco": "C64",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Bc5 4.c3 d5"
+  },
+  {
+    "name": "Zukertort Gambit",
+    "eco": "C64",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Bc5 4.O-O Nf6 5.c3"
+  },
+  {
+    "name": "Fricke Gambit",
+    "eco": "C60",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 d5 4.Nxe5 Qg5 5.O-O"
+  },
+  {
+    "name": "Center Gambit",
+    "eco": "C62",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 d6 4.d4 exd4 5.O-O"
+  },
+  {
+    "name": "Central Countergambit",
+    "eco": "C79",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O d5"
+  },
+  {
+    "name": "Nightingale Gambit",
+    "eco": "C70",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 b5 5.Bb3 Na5 6.Bxf7+"
+  },
+  {
+    "name": "Skipworth Gambit",
+    "eco": "C80",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Nxe4 6.Re1 d5"
+  },
+  {
+    "name": "Harksen Gambit",
+    "eco": "C80",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Nxe4 6.d4 b5 7.Bb3 d5 8.c4"
+  },
+  {
+    "name": "Basque Gambit",
+    "eco": "C84",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Be7 6.d4 exd4 7.e5 Ne4 8.c3"
+  },
+  {
+    "name": "Tartakower Gambit",
+    "eco": "C89",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nge7 4.d4 exd4 5.Nxd4 g6 6.Nc3 Bg7 7.Be3 O-O 8.Qd2 d5"
+  },
+  {
+    "name": "Karpov Gambit",
+    "eco": "C80",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Nxe4 6.d4 b5 7.Bb3 d5 8.dxe5 Be6 9.Nbd2 Nc5 10.c3 d4 11.Ng5"
+  },
+  {
+    "name": "Scotch Gambit",
+    "eco": "C44",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.d4 exd4 4.Bc4"
+  },
+  {
+    "name": "Haxo Gambit",
+    "eco": "C44",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.d4 exd4 4.Bc4 Bc5"
+  },
+  {
+    "name": "Relfsson Gambit",
+    "eco": "C44",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.d4 exd4 4.Bb5"
+  },
+  {
+    "name": "Alekhine Gambit",
+    "eco": "C45",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.d4 exd4 4.Nxd4 Nf6 5.e5"
+  },
+  {
+    "name": "Napoleon Gambit",
+    "eco": "C44",
+    "moves": "1.e4 e5 2.Nf3 Nc6 3.d4 Nxd4 4.Nxd4 exd4 5.Bc4"
+  },
+  {
+    "name": "Wing Gambit",
+    "eco": "B20",
+    "moves": "1.e4 c5 2.b4"
+  },
+  {
+    "name": "Brussels Gambit",
+    "eco": "B27",
+    "moves": "1.e4 c5 2.Nf3 f5"
+  },
+  {
+    "name": "Polish Gambit",
+    "eco": "B27",
+    "moves": "1.e4 c5 2.Nf3 b5"
+  },
+  {
+    "name": "Morphy Gambit",
+    "eco": "B21",
+    "moves": "1.e4 c5 2.d4 cxd4 3.Nf3"
+  },
+  {
+    "name": "Kotov Gambit",
+    "eco": "B50",
+    "moves": "1.e4 c5 2.Nf3 d6 3.g3 b5"
+  },
+  {
+    "name": "Marshall Gambit",
+    "eco": "B23",
+    "moves": "1.e4 c5 2.Nf3 e6 3.d4 d5"
+  },
+  {
+    "name": "Tal Gambit",
+    "eco": "B23",
+    "moves": "1.e4 c5 2.f4 d5 3.exd5 Nf6"
+  },
+  {
+    "name": "Nemeth Gambit",
+    "eco": "B21",
+    "moves": "1.e4 c5 2.Na3 Nc6 3.d4 cxd4 4.Bc4"
+  },
+  {
+    "name": "Andreaschek Gambit",
+    "eco": "B21",
+    "moves": "1.e4 c5 2.d4 cxd4 3.Nf3 e5 4.c3"
+  },
+  {
+    "name": "San Francisco Gambit",
+    "eco": "B31",
+    "moves": "1.e4 c5 2.Nf3 Nc6 3.Bb5 Na5 4.b4"
+  },
+  {
+    "name": "Cortlever Gambit",
+    "eco": "B28",
+    "moves": "1.e4 c5 2.Nf3 a6 3.d4 cxd4 4.Bc4"
+  },
+  {
+    "name": "Coles Sicilian Gambit",
+    "eco": "B21",
+    "moves": "1.e4 c5 2.Nf3 a6 3.d4 cxd4 4.Bc4"
+  },
+  {
+    "name": "Dorfman Gambit",
+    "eco": "B52",
+    "moves": "1.e4 c5 2.Nf3 d6 3.Bb5+ Nc6 4.O-O Bd7 5.Qe2 g6 6.e5"
+  },
+  {
+    "name": "Dekker Gambit",
+    "eco": "B90",
+    "moves": "1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 6.g4"
+  },
+  {
+    "name": "Lutikov Gambit",
+    "eco": "B31",
+    "moves": "1.e4 c5 2.Nf3 Nc6 3.Bb5 g6 4.O-O Bg7 5.c3 Nf6 6.d4"
+  },
+  {
+    "name": "Gufeld Gambit",
+    "eco": "B31",
+    "moves": "1.e4 c5 2.Nf3 Nc6 3.Bb5 g6 4.O-O Bg7 5.c3 e5 6.d4"
+  },
+  {
+    "name": "Haag Gambit",
+    "eco": "B51",
+    "moves": "1.e4 c5 2.Nf3 d6 3.Bb5+ Bd7 4.Bxd7+ Qxd7 5.O-O Nc6 6.c3 Nf6 7.d4"
+  },
+  {
+    "name": "Nanu Gambit",
+    "eco": "B20",
+    "moves": "1.e4 c5 2.b4 cxb4 3.a3 d5 4.exd5 Qxd5 5.Nf3 e5 6.c4 Qe6 7.Bd3"
+  },
+  {
+    "name": "Ponomariov Gambit",
+    "eco": "B48",
+    "moves": "1.e4 c5 2.Nf3 e6 3.d4 cxd4 4.Nxd4 Nc6 5.Nc3 Qc7 6.Ndb5 Qb8 7.Be3 a6 8.Bb6"
+  },
+  {
+    "name": "Moscow Gambit",
+    "eco": "B51",
+    "moves": "1.e4 c5 2.Nf3 d6 3.Bb5+ Nc6 4.O-O Bd7 5.c3 a6 6.Bxc6 Bxc6 7.Re1 Nf6 8.d4 Bxe4 9.Bg5"
+  },
+  {
+    "name": "Vienna Gambit",
+    "eco": "C27",
+    "moves": "1.e4 e5 2.Nc3 Nf6 3.f4"
+  },
+  {
+    "name": "Fyfe Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Nc3 Nc6 3.d4"
+  },
+  {
+    "name": "Omaha Gambit",
+    "eco": "C25",
+    "moves": "1.e4 e5 2.Nc3 d6 3.f4"
+  },
+  {
+    "name": "Zhuravlev Countergambit",
+    "eco": "C25",
+    "moves": "1.e4 e5 2.Nc3 Bb4 3.Qg4 Nf6"
+  },
+  {
+    "name": "Philidor Countergambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Nc3 Nc6 3.d4 f5"
+  },
+  {
+    "name": "Steinitz Gambit",
+    "eco": "C25",
+    "moves": "1.e4 e5 2.Nc3 Nc6 3.f4 exf4 4.d4"
+  },
+  {
+    "name": "Erben Gambit",
+    "eco": "C25",
+    "moves": "1.e4 e5 2.Nc3 Nf6 3.g3 d5 4.exd5 c6"
+  },
+  {
+    "name": "Quelle Gambit",
+    "eco": "C25",
+    "moves": "1.e4 e5 2.Nc3 Nc6 3.f4 Bc5 4.fxe5 d6"
+  },
+  {
+    "name": "Bronstein Gambit",
+    "eco": "C23",
+    "moves": "1.e4 e5 2.Nc3 Nc6 3.Bc4 Nf6 4.f4 Nxe4 5.Nf3"
+  },
+  {
+    "name": "Mariotti Gambit",
+    "eco": "C25",
+    "moves": "1.e4 e5 2.Nc3 Nc6 3.g3 Bc5 4.Bg2 h5 5.Nf3 h4"
+  },
+  {
+    "name": "Pollock Gambit",
+    "eco": "C25",
+    "moves": "1.e4 e5 2.Nc3 Nc6 3.g3 Nf6 4.Bg2 Bc5 5.Nge2 d5 6.exd5 Nd4"
+  },
+  {
+    "name": "Pierce Gambit",
+    "eco": "C25",
+    "moves": "1.e4 e5 2.Nc3 Nc6 3.f4 exf4 4.Nf3 g5 5.d4"
+  }
+]
