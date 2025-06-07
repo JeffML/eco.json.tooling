@@ -2,6 +2,8 @@
 output/*.json
 input/*.json
 output/toMerge/*.json
+debugNotes.txt
+protoTests
 
 # Logs
 logs
