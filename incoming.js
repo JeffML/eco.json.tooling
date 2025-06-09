@@ -40,11 +40,18 @@ const filterIncoming = (incoming, existing) => {
             if (existing.src === src) {
                 if (!redundant) {
                     modified[fen] = { ...existing, name, moves, eco };
-                }
+                } else excluded++
             } else if (existing.src === 'interpolated') {
                 delete existing.rootSrc;
                 added[fen] = { ...existing, src };
                 toRemove.push(fen);
+            } else if (src === 'eco_tsv' && existing.src !== 'eco_tsv'){
+                const aliases = existing.aliases ?? {};
+                aliases[existing.src] = existing.name; 
+                aliases[src] = undefined;
+                existing.src = src
+                existing.name = name
+                modified[fen] = {...existing, aliases} 
             } else if (!redundant && (!existing.aliases || !existing.aliases[src])) {
                 const aliases = existing.aliases ?? {};
                 aliases[src] = name;

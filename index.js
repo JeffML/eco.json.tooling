@@ -11,7 +11,7 @@ import { applyData, writeNew } from './createEcoJsonFiles.js';
 const writeln = (str) => process.stdout.write(str + '\n');
 
 // TEMP TEMP!
-const alwaysYes = true;
+const alwaysYes = false;
 
 // Helper function to handle prompts and exit if the user declines
 const confirmStep = async (message) => {
@@ -31,7 +31,7 @@ const confirmStep = async (message) => {
 
 // Step 1: Parse and validate the opening data
 writeln(
-    'Step 1: Parse and validate the opening data provided in the directory ./input/openings.json'
+    'Step 1: Parse and validate the opening data provided in the directory ./input/opening.json'
 );
 await confirmStep('Ready');
 
