@@ -1,16 +1,17 @@
 import { Chess } from 'chess.js';
 import fs from 'fs';
 import path from 'path';
+import leven from 'leven'
 
 let allOpenings = {};
 
 /**
- * Filters incoming openings, removing those already present and preparing lists 
+ * Filters incoming openings, removing those already present and preparing lists
  * for addition, modification, or removal.
- * 
+ *
  * Note that eco_tsv is the preferred source for openings: it will override any other and move them
  * to aliases
- * 
+ *
  * @param {Array} incoming - Array of incoming opening objects (first element is the src descriptor).
  * @param {Object} existing - Existing categorized openings.
  * @returns {Object} { added, modified, excluded, toRemove }
@@ -45,7 +46,7 @@ const filterIncoming = (incoming, existing) => {
         const existingEntry = allOpenings[fen];
 
         if (existingEntry) {
-            const redundant = existingEntry.name.endsWith(name);
+            const redundant = leven(existingEntry.name, name) < 5; //levenshtein distance
             if (existingEntry.src === src) {
                 if (!redundant) {
                     modified[fen] = { ...existingEntry, name, moves, eco };
