@@ -5,6 +5,12 @@ import leven from 'leven'
 
 let allOpenings = {};
 
+const isRedundant = (existingName, name) => {
+    if (leven(existingName, name) < 5) return true;
+    if (name.length < existingName.length && existingName.startsWith(name)) return true
+    return false
+}
+
 /**
  * Filters incoming openings, removing those already present and preparing lists
  * for addition, modification, or removal.
@@ -46,7 +52,8 @@ const filterIncoming = (incoming, existing) => {
         const existingEntry = allOpenings[fen];
 
         if (existingEntry) {
-            const redundant = leven(existingEntry.name, name) < 5; //levenshtein distance
+            const redundant = isRedundant(existingEntry.name, name); 
+
             if (existingEntry.src === src) {
                 if (!redundant) {
                     modified[fen] = { ...existingEntry, name, moves, eco };
