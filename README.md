@@ -6,7 +6,7 @@ These are command-line tools can be used to prepare pull requests for eco.json. 
 ### incoming data
 Put your new opening data in input/opening.json
 The data must be of this format:
-
+```
 [
     {src: "scid"}
     {
@@ -20,6 +20,7 @@ The data must be of this format:
         "moves": "1. e4 g5",
     },...
 ]
+```
 
 The the first element is a src field which indicates where the data came from; the current recognized sources are listed [here](https://github.com/hayatbiralem/eco.json/tree/master?tab=readme-ov-file#encyclopedia-of-chess-openings-eco-data). If your data is derived from a new source, then mention it in the pull request.
 
