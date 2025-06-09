@@ -1,16 +1,24 @@
 import { Chess } from 'chess.js';
 import fs from 'fs';
-import path from 'path'
+import path from 'path';
 
-let allOpenings
+let allOpenings = {};
 
-// removed extraneous incoming openings that already exist in eco.json
-// this will assign FEN strings to incoming openings
+/**
+ * Filters incoming openings, removing those already present and preparing lists 
+ * for addition, modification, or removal.
+ * 
+ * Note that eco_tsv is the preferred source for openings: it will override any other and move them
+ * to aliases
+ * 
+ * @param {Array} incoming - Array of incoming opening objects (first element is the src descriptor).
+ * @param {Object} existing - Existing categorized openings.
+ * @returns {Object} { added, modified, excluded, toRemove }
+ */
 const filterIncoming = (incoming, existing) => {
     if (!Array.isArray(incoming) || incoming.length === 0) {
         throw new Error('Invalid incoming data: Must be a non-empty array.');
     }
-
     if (!existing || typeof existing !== 'object') {
         throw new Error('Invalid existing data: Must be an object.');
     }
@@ -27,51 +35,60 @@ const filterIncoming = (incoming, existing) => {
     };
 
     let excluded = 0;
-    const added = {};    // openings to add to eco.json, including those moved from eco_interpolated.json
-    const modified = {}; // change to existing eco.json entry
-    const toRemove = []; // interpolated openings to remove
+    const added = {};
+    const modified = {};
+    const toRemove = [];
 
-    for (let inc of incoming.slice(1)) {   // first element is the src; skip it
-        const {fen, name, moves, eco} = inc
-        const existing = allOpenings[fen];
+    for (const inc of incoming.slice(1)) {
+        // skip the src descriptor
+        const { fen, name, moves, eco } = inc;
+        const existingEntry = allOpenings[fen];
 
-        if (existing) {
-            const redundant = existing.name.endsWith(name);
-            if (existing.src === src) {
+        if (existingEntry) {
+            const redundant = existingEntry.name.endsWith(name);
+            if (existingEntry.src === src) {
                 if (!redundant) {
-                    modified[fen] = { ...existing, name, moves, eco };
-                } else excluded++
-            } else if (existing.src === 'interpolated') {
-                delete existing.rootSrc;
-                added[fen] = { ...existing, src };
+                    modified[fen] = { ...existingEntry, name, moves, eco };
+                } else {
+                    excluded++;
+                }
+            } else if (existingEntry.src === 'interpolated') {
+                delete existingEntry.rootSrc;
+                added[fen] = { ...existingEntry, src };
                 toRemove.push(fen);
-            } else if (src === 'eco_tsv' && existing.src !== 'eco_tsv'){
-                const aliases = existing.aliases ?? {};
-                aliases[existing.src] = existing.name; 
+            } else if (src === 'eco_tsv' && existingEntry.src !== 'eco_tsv') {
+                const aliases = existingEntry.aliases ?? {};
+                aliases[existingEntry.src] = existingEntry.name;
                 aliases[src] = undefined;
-                existing.src = src
-                existing.name = name
-                modified[fen] = {...existing, aliases} 
-            } else if (!redundant && (!existing.aliases || !existing.aliases[src])) {
-                const aliases = existing.aliases ?? {};
+                existingEntry.src = src;
+                existingEntry.name = name;
+                modified[fen] = { ...existingEntry, aliases };
+            } else if (
+                !redundant &&
+                (!existingEntry.aliases || !existingEntry.aliases[src])
+            ) {
+                const aliases = existingEntry.aliases ?? {};
                 aliases[src] = name;
-                modified[fen] = { ...existing, aliases };
+                modified[fen] = { ...existingEntry, aliases };
             } else {
                 excluded++;
             }
         } else {
             added[fen] = { ...inc, src };
-            // delete inc.fen
         }
     }
 
     return { added, modified, excluded, toRemove };
 };
 
-// checks that all the required stuff is there
+/**
+ * Validates the structure and content of incoming openings.
+ * @param {Array} incoming - Array of incoming opening objects.
+ * @returns {boolean} True if valid, false otherwise.
+ */
 const validate = (incoming) => {
     const chess = new Chess();
-    const source = incoming[0].src;
+    const source = incoming[0]?.src;
     if (!source) {
         console.error('Missing src component');
         return false;
@@ -80,22 +97,32 @@ const validate = (incoming) => {
     for (const opening of incoming.slice(1)) {
         const { name, eco, moves } = opening;
         if (!(name || eco || moves)) {
-            console.error(`Invalid opening: Missing required fields (name, eco, or moves) - ${JSON.stringify(opening)}`);
+            console.error(
+                `Invalid opening: Missing required fields (name, eco, or moves) - ${JSON.stringify(
+                    opening
+                )}`
+            );
             return false;
         }
-
         try {
             chess.loadPgn(opening.moves);
-            opening.fen = chess.fen()
+            opening.fen = chess.fen();
         } catch (e) {
-            console.error(`Error processing opening: ${JSON.stringify(opening)} - ${e.message}`);
-            return false
+            console.error(
+                `Error processing opening: ${JSON.stringify(opening)} - ${
+                    e.message
+                }`
+            );
+            return false;
         }
     }
-
     return true;
 };
-// parses and validates the opening.json file
+
+/**
+ * Loads and validates the opening.json file from disk.
+ * @returns {Array} Parsed and validated openings array.
+ */
 const getIncomingOpenings = () => {
     const filePath = path.resolve(process.cwd(), 'input/opening.json');
     const text = fs.readFileSync(filePath, 'utf-8');
@@ -105,5 +132,4 @@ const getIncomingOpenings = () => {
     return json;
 };
 
-export {validate, getIncomingOpenings, filterIncoming, allOpenings}
-
+export { validate, getIncomingOpenings, filterIncoming, allOpenings };
