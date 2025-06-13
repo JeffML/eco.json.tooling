@@ -10,15 +10,17 @@ const MAX_DISTANCE = 5;
  * @param fenArray Array of FEN strings.
  * @returns Array of FEN strings with distance <= MAX_DISTANCE.
  */
-function findSimilarPositions([pos, wb, move], posArray) {
-    return posArray.filter(([pos2, wb2, move2]) => {
+function findSimilarPositions(fen, fens) {
+    const [pos, wb, , ,,move] = fen.split(' ')
+
+    return fens.filter((fen2) => {
+        const [pos2, wb2, , , , move2] = fen2.split(' ')
         return (
             move === move2 &&
             wb === wb2 &&
             pos !== pos2 &&
             distance(pos, pos2) <= MAX_DISTANCE
-        );
-    });
+        )})
 }
 
 const startTime = Date.now();
@@ -28,19 +30,14 @@ const fens = Object.keys(book).filter((fen) => {
     return moveNumber >= 5;
 });
 
-// const positions = fens.slice(0, 500).map((fen) => {
-const positions = fens.map((fen) => {
-    const [pos, wb, , , , move] = fen.split(' ');
-    return [pos, wb, move];
-});
 
 const similarPositions = {};
 
-positions.forEach((pos) => {
-    const similar = findSimilarPositions(pos, positions);
+fens.forEach(fen => {
+    const similar = findSimilarPositions(fen, fens);
     if (similar.length) {
-        similarPositions[pos[0]] ??= [];
-        similarPositions[pos[0]].push(...similar.map((s) => s[0]));
+        similarPositions[fen] ??= [];
+        similarPositions[fen].push(...similar);
     }
     process.stdout.write('.');
 });
