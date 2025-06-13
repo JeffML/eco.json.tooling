@@ -55,6 +55,9 @@ consider these to be fragile an in need of occasional maintenance.
 ## Opening evaluations
 The `/scoreOpenings` folder will generate scores for all currently unevaluated openings. It is not an official part of eco.json, and relies on the installation of UCI-capable chess engine, such as stockfish. Evaluations will vary according to the specs of the platform they run on. 
 
+## Similar Openings
+A simple script to generate a list of similar openings for each opening in the eco.json files, based on Levenshtein distance.
+
 
 
 
