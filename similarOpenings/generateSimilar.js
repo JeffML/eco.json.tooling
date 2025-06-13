@@ -1,14 +1,14 @@
 import distance from 'leven';
-import { getLatestEcoJson } from '../getLatestEcoJson.js';
 import fs from 'fs';
+import { book, convertMilliseconds } from '../utils.js';
 
 const MAX_DISTANCE = 5;
 
 /**
- * Finds FEN strings in the array with Levenshtein distance < 5 from the target FEN.
+ * Finds FEN strings in the array with Levenshtein distance <= MAX_DISTANCE from the target FEN.
  * @param targetFEN The FEN string to compare against.
  * @param fenArray Array of FEN strings.
- * @returns Array of FEN strings with distance < 5.
+ * @returns Array of FEN strings with distance <= MAX_DISTANCE.
  */
 function findSimilarPositions([pos, wb, move], posArray) {
     return posArray.filter(([pos2, wb2, move2]) => {
@@ -21,29 +21,7 @@ function findSimilarPositions([pos, wb, move], posArray) {
     });
 }
 
-function convertMilliseconds(milliseconds) {
-    const totalSeconds = Math.floor(milliseconds / 1000);
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    return { hours, minutes, seconds };
-}
-
 const startTime = Date.now();
-
-const byCat = await getLatestEcoJson();
-
-const { A, B, C, D, E, IN } = byCat;
-
-const book = {
-    ...A.json,
-    ...B.json,
-    ...C.json,
-    ...D.json,
-    ...E.json,
-    ...IN.json,
-};
 
 const fens = Object.keys(book).filter((fen) => {
     const moveNumber = parseInt(fen.split(' ').at(-1));

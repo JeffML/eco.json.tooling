@@ -2,6 +2,7 @@ import { Octokit } from 'octokit';
 import readline from 'node:readline';
 import fs from 'fs'
 import path from 'path'
+import { getLatestEcoJson } from './getLatestEcoJson.js';
 
 // not used, but kept in case github d/l urls ever change in the far future
 async function getDownloadUrls() {
@@ -65,4 +66,24 @@ const readJsonFile = (fileName, log=false) => {
     return openings;
 };
 
-export { getDownloadUrls, keyLen, prompt, chunker, hardAssert, readJsonFile };
+export { getDownloadUrls, keyLen, prompt, chunker, hardAssert, readJsonFile };export function convertMilliseconds(milliseconds) {
+        const totalSeconds = Math.floor(milliseconds / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        return { hours, minutes, seconds };
+    }
+
+const byCat = await getLatestEcoJson();
+const { A, B, C, D, E, IN } = byCat;
+
+export const book = {
+    ...A.json,
+    ...B.json,
+    ...C.json,
+    ...D.json,
+    ...E.json,
+    ...IN.json,
+};
+
