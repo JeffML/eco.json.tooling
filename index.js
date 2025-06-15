@@ -10,9 +10,6 @@ import { applyData, writeNew } from './createEcoJsonFiles.js';
 
 const writeln = (str) => process.stdout.write(str + '\n');
 
-// TEMP TEMP!
-const alwaysYes = false;
-
 // Helper function to handle prompts and exit if the user declines
 const confirmStep = async (message) => {
     let answer;
@@ -21,7 +18,7 @@ const confirmStep = async (message) => {
         answer = answer.trim().toLowerCase();
     } while (!['y', 'n', ''].includes(answer));
 
-    if (answer !== 'y' && !alwaysYes) {
+    if (answer !== 'y') {
         writeln('Operation canceled. Exiting.');
         process.exit(-1);
     } else {
@@ -36,7 +33,7 @@ writeln(
 await confirmStep('Ready');
 
 const incomingOpenings = getIncomingOpenings(); // performs validation of input
-writeln('Validation passed.\n');
+writeln('Validation complete.\n');
 
 // Step 2: Filter out redundant openings
 writeln('Step 2: Filter out any redundantant openings.');

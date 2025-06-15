@@ -1,15 +1,16 @@
 import { Chess } from 'chess.js';
 import fs from 'fs';
 import path from 'path';
-import leven from 'leven'
+import leven from 'leven';
 
 let allOpenings = {};
 
 const isRedundant = (existingName, name) => {
     if (leven(existingName, name) < 5) return true;
-    if (name.length < existingName.length && existingName.startsWith(name)) return true
-    return false
-}
+    if (name.length < existingName.length && existingName.startsWith(name))
+        return true;
+    return false;
+};
 
 /**
  * Filters incoming openings, removing those already present and preparing lists
@@ -49,10 +50,13 @@ const filterIncoming = (incoming, existing) => {
     for (const inc of incoming.slice(1)) {
         // skip the src descriptor
         const { fen, name, moves, eco } = inc;
+
+        if (!fen) continue;     // error has already been reported
+
         const existingEntry = allOpenings[fen];
 
         if (existingEntry) {
-            const redundant = isRedundant(existingEntry.name, name); 
+            const redundant = isRedundant(existingEntry.name, name);
 
             if (existingEntry.src === src) {
                 if (!redundant) {
@@ -116,12 +120,12 @@ const validate = (incoming) => {
             chess.loadPgn(opening.moves);
             opening.fen = chess.fen();
         } catch (e) {
+            // FEN failure; this will result in a single "undefined" FEN that needs to be handled in a later step
             console.error(
-                `Error processing opening: ${JSON.stringify(opening)} - ${
-                    e.message
-                }`
+                `Error processing opening (skipped): ${JSON.stringify(
+                    opening
+                )} - ${e.message}`
             );
-            return false;
         }
     }
     return true;
