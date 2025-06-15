@@ -28,3 +28,17 @@ export async function getLatestEcoJson() {
 
     return openingsByCat;
 }
+
+export const catArray = ['A', 'B', 'C', 'D', 'E', 'IN']
+
+export async function ecoJsonMerged() {
+    const ecojson = await getLatestEcoJson()
+
+    let json = {}
+
+    for (const cat in ecojson) {
+        if (catArray.includes(cat)) json = {...json, ...ecojson[cat].json}
+    }
+
+    return json
+}

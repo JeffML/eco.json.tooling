@@ -4,6 +4,7 @@ input/*.json
 output/toMerge/*.json
 debugNotes.txt
 protoTests
+temp
 
 # Logs
 logs
