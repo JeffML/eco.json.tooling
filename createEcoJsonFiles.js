@@ -27,7 +27,7 @@ const applyAdded = (added, existing) => {
             hardAssert(
                 !existingJson[fen],
                 `Opening already exists!\n${JSON.stringify(
-                    { existing: existingJson[fen], new: newOpening },
+                    { fen, existing: existingJson[fen], new: newOpening },
                     null,
                     2
                 )}`
