@@ -1,5 +1,5 @@
 import { writeFileSync } from 'fs';
-import { hardAssert } from './utils.js';
+import { hardAssert } from '../utils.js';
 
 /**
  * Retrieves the JSON data for a specific category.

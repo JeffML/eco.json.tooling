@@ -2,8 +2,9 @@ import { Chess } from 'chess.js';
 import fs from 'fs';
 import path from 'path';
 import leven from 'leven';
+import {book} from '../utils.js'
 
-let allOpenings = {};
+let allOpenings = book;
 
 const isRedundant = (existingName, name) => {
     if (leven(existingName, name) < 5) return true;
@@ -20,27 +21,14 @@ const isRedundant = (existingName, name) => {
  * to aliases
  *
  * @param {Array} incoming - Array of incoming opening objects (first element is the src descriptor).
- * @param {Object} existing - Existing categorized openings.
  * @returns {Object} { added, modified, excluded, toRemove }
  */
-const filterIncoming = (incoming, existing) => {
+const filterIncoming = (incoming) => {
     if (!Array.isArray(incoming) || incoming.length === 0) {
         throw new Error('Invalid incoming data: Must be a non-empty array.');
     }
-    if (!existing || typeof existing !== 'object') {
-        throw new Error('Invalid existing data: Must be an object.');
-    }
 
     const src = incoming[0].src;
-    const { A, B, C, D, E, IN } = existing;
-    allOpenings = {
-        ...A.json,
-        ...B.json,
-        ...C.json,
-        ...D.json,
-        ...E.json,
-        ...IN.json,
-    };
 
     let excluded = 0;
     const added = {};

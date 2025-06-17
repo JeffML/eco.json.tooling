@@ -1,7 +1,7 @@
 import leven from 'leven';
 import { allOpenings } from './incoming.js';
 import { Chess } from 'chess.js';
-import { keyLen } from './utils.js';
+import { keyLen } from '../utils.js';
 
 const chess = new Chess();
 

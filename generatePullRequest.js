@@ -1,12 +1,15 @@
 import fs from 'fs';
-import { getLatestEcoJson } from './getLatestEcoJson.js';
-import { keyLen, prompt } from './utils.js';
-import { filterIncoming, getIncomingOpenings } from './incoming.js';
-import { updateInterpolated, lineOfDescent } from './interpolations.js';
-import { findRoots } from './findRoots.js';
-import { findOrphans } from './findOrphans.js';
-import { addedContinuations, canonicalFromTos, moreFromTos } from './addedContinuations.js';
-import { applyData, writeNew } from './createEcoJsonFiles.js';
+import { getLatestEcoJson, keyLen, prompt } from './utils.js';
+import { filterIncoming, getIncomingOpenings } from './steps/incoming.js';
+import { updateInterpolated, lineOfDescent } from './steps/interpolations.js';
+import { findRoots } from './steps/findRoots.js';
+import { findOrphans } from './steps/findOrphans.js';
+import {
+    addedContinuations,
+    canonicalFromTos,
+    moreFromTos,
+} from './steps/addedContinuations.js';
+import { applyData, writeNew } from './steps/createEcoJsonFiles.js';
 
 const writeln = (str) => process.stdout.write(str + '\n');
 
@@ -14,7 +17,7 @@ const writeln = (str) => process.stdout.write(str + '\n');
 const confirmStep = async (message) => {
     let answer;
     do {
-        answer = await prompt(`${message} (y/N)? `)
+        answer = await prompt(`${message} (y/N)? `);
         answer = answer.trim().toLowerCase();
     } while (!['y', 'n', ''].includes(answer));
 
@@ -25,6 +28,8 @@ const confirmStep = async (message) => {
         writeln('\n');
     }
 };
+
+const existingOpenings = await getLatestEcoJson();  // organized by category
 
 // Step 1: Parse and validate the opening data
 writeln(
@@ -40,11 +45,12 @@ writeln('Step 2: Filter out any redundantant openings.');
 
 await confirmStep('Ready');
 
-const existingOpenings = await getLatestEcoJson(); // requests eco.json data from github
-const { added, modified, excluded, toRemove: formerInterpolated } = filterIncoming(
-    incomingOpenings,
-    existingOpenings
-);
+const {
+    added,
+    modified,
+    excluded,
+    toRemove: formerInterpolated,
+} = filterIncoming(incomingOpenings);
 
 writeln(`Of the ${incomingOpenings.length - 1} in opening.json, there were:
     ${keyLen(added)} new openings
@@ -58,7 +64,12 @@ writeln(
 );
 await confirmStep('Ready');
 
-const updated = updateInterpolated(formerInterpolated, added, modified, existingOpenings);
+updateInterpolated(
+    formerInterpolated,
+    added,
+    modified,
+    existingOpenings
+);
 
 // write intermediate data for review
 fs.writeFileSync('./output/added.json', JSON.stringify(added, null, 2));
@@ -91,7 +102,6 @@ writeln(
     `${newContinuations.length} continuations have been found among the added openings.\n`
 );
 
-
 // Step 5: Find orphan variations
 writeln(
     'Step 5: look for orphan variations in the added openings; these will require interpolation or attachment to existing roots.'
@@ -99,11 +109,14 @@ writeln(
 await confirmStep('Ready');
 
 // canonical format for fromTo recs
-const newFromTos = canonicalFromTos(newContinuations)
+const newFromTos = canonicalFromTos(newContinuations);
 
 // Now look for orphan addeds; they may not be true orphans, but merely continuations not attached
 // to an existing root variation
-const newOrphans = findOrphans(added, [...existingOpenings.FT.json, ...newFromTos]);
+const newOrphans = findOrphans(added, [
+    ...existingOpenings.FT.json,
+    ...newFromTos,
+]);
 
 /*
 For each orphan, determine:
@@ -117,33 +130,38 @@ fs.writeFileSync(
     JSON.stringify({ unattached, noRoots }, null, 2)
 );
 
-writeln(`Of the ${newOrphans.length} orphans found, ${unattached.length??0} will be attached to a known root variation,
+writeln(`Of the ${newOrphans.length} orphans found, ${
+    unattached.length ?? 0
+} will be attached to a known root variation,
 and ${keyLen(noRoots)} had no known root and will need to be interpolated.\n`);
-
 
 // Step 6: Determine line of descent for each orphan
 writeln('Step 6: Determine line of descent for each orphan.');
 await confirmStep('Continue');
 
 // attach new openings to root variations, adding interpolations if necessary
-const linesOfDescent = []
+const linesOfDescent = [];
 
 for (const orphanFen of noRoots) {
-    linesOfDescent.push(lineOfDescent(orphanFen, added))
-};
+    linesOfDescent.push(lineOfDescent(orphanFen, added));
+}
 
-fs.writeFileSync('./output/linesOfDescent.json', JSON.stringify(linesOfDescent, null, 2))
+fs.writeFileSync(
+    './output/linesOfDescent.json',
+    JSON.stringify(linesOfDescent, null, 2)
+);
 
-writeln('Orphans have been parented; results can be seen in .output/linesOfDescent.json')
+writeln(
+    'Orphans have been parented; results can be seen in .output/linesOfDescent.json'
+);
 
 // Step 7: Link lines of descent with fromTo records
 writeln('Step 7: link lines of descent with fromTo records.');
 await confirmStep('Continue');
 
-const mft = moreFromTos(linesOfDescent)
+const mft = moreFromTos(linesOfDescent);
 
-fs.writeFileSync('./output/moreFromTos.json', JSON.stringify(mft, null, 2))
-
+fs.writeFileSync('./output/moreFromTos.json', JSON.stringify(mft, null, 2));
 
 // Step 8: Write out new JSON files to ./output/toMerge folder
 writeln(
@@ -152,7 +170,14 @@ writeln(
 await confirmStep('Ready');
 
 // Concatenate the new data to existing structures and output to eco?.json, eco_interpolated.json and fromTo.json files
-const newExisting = applyData(existingOpenings, added, newFromTos, mft, formerInterpolated, modified);
+const newExisting = applyData(
+    existingOpenings,
+    added,
+    newFromTos,
+    mft,
+    formerInterpolated,
+    modified
+);
 writeNew(newExisting);
 
 writeln(`

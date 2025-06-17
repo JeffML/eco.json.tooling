@@ -1,5 +1,5 @@
 import { Chess } from 'chess.js';
-import { chunker } from './utils.js';
+import { chunker } from '../utils.js';
 import { allOpenings } from './incoming.js';
 
 const chess = new Chess();

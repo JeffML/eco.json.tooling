@@ -1,6 +1,8 @@
 # eco.json.tooling
 
-These are command-line tools can be used to prepare pull requests for eco.json. Steps have to be executed in the order outlined below.
+The generatePullRequest.js file is a command-line tool that can be used to prepare pull requests for eco.json. First, run `yarn install`, then subsequently you can run `node generatePullRequest.js`.
+
+There are several steps to the process, and at each step the tool will explain what the step is and give an option to continue or stop. 
 
 ## Generate merge data for pull request
 ### incoming data
@@ -8,7 +10,7 @@ Put your new opening data in input/opening.json
 The data must be of this format:
 ```
 [
-    {src: "scid"}
+    {src: "scid", url: <optional>}
     {
         "name": "Alekhine Defense, 2. e5 Nd5 3. d4",
         "eco": "B03",
@@ -22,7 +24,7 @@ The data must be of this format:
 ]
 ```
 
-The the first element is a src field which indicates where the data came from; the current recognized sources are listed [here](https://github.com/hayatbiralem/eco.json/tree/master?tab=readme-ov-file#encyclopedia-of-chess-openings-eco-data). If your data is derived from a new source, then mention it in the pull request.
+The the first element is a src field which indicates where the data came from; the current recognized sources are listed [here](https://github.com/hayatbiralem/eco.json/tree/master?tab=readme-ov-file#encyclopedia-of-chess-openings-eco-data). If your data is derived from a new source, then mention it in the pull request. It is recommended to put the first element ({src:...}) into the pull request.
 
 ### parse opening.js
 The `opening.json` file is parsed, compared to the existing [eco.json](https://github.com/hayatbiralem/eco.json) opening data. First, the FEN string will be derived from the moves of each opening, then the following actions will be performed:
