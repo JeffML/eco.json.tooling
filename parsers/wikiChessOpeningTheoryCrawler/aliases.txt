@@ -1,0 +1,4244 @@
+{
+  "openingName": "Queen's Pawn Game",
+  "alias": "1. d4 · Queen's Pawn Opening"
+}
+{
+  "openingName": "English Opening",
+  "alias": "1. c4 · English Opening"
+}
+{
+  "openingName": "Hungarian Opening",
+  "alias": "1. g3 · Hungarian Opening"
+}
+{
+  "openingName": "Nimzo-Larsen Attack",
+  "alias": "1. b3 · Larsen Attack"
+}
+{
+  "openingName": "Bird Opening",
+  "alias": "1. f4 · Bird's Opening"
+}
+{
+  "openingName": "Van Geet Opening",
+  "alias": "1. Nc3 · Van Geet Opening"
+}
+{
+  "openingName": "Grob Opening",
+  "alias": "1. g4? · Grob's Attack"
+}
+{
+  "openingName": "King's Pawn Game",
+  "alias": "1. e4 · King's Pawn Opening"
+}
+{
+  "openingName": "Polish Opening",
+  "alias": "1. b4 · Polish Opening"
+}
+{
+  "openingName": "Zukertort Opening",
+  "alias": "1. Nf3 · Zukertort Opening"
+}
+{
+  "openingName": "Ware Opening",
+  "alias": "1. a4?! · Ware Opening"
+}
+{
+  "openingName": "Anderssen's Opening",
+  "alias": "1. a3 · Anderssen's Opening"
+}
+{
+  "openingName": "Saragossa Opening",
+  "alias": "1. c3 · Saragossa Opening"
+}
+{
+  "openingName": "Sodium Attack",
+  "alias": "1. Na3?! - Durkin Opening"
+}
+{
+  "openingName": "Amar Opening",
+  "alias": "1. Nh3?! · Ammonia Opening"
+}
+{
+  "openingName": "Van't Kruijs Opening",
+  "alias": "1. e3 · Van't Kruijs Opening"
+}
+{
+  "openingName": "Kádas Opening",
+  "alias": "1. h4?! ·Beaver Claw"
+}
+{
+  "openingName": "Clemenz Opening",
+  "alias": "1. h3 · Clemenz Opening"
+}
+{
+  "openingName": "Barnes Opening",
+  "alias": "1. f3? · Barnes Opening"
+}
+{
+  "openingName": "Mieses Opening",
+  "alias": "1. d3 · Mieses Opening"
+}
+{
+  "openingName": "Queen's Pawn Game",
+  "alias": "Closed Game"
+}
+{
+  "openingName": "French Defense",
+  "alias": "1... e6 - French Defence"
+}
+{
+  "openingName": "Indian Defense",
+  "alias": "Indian Defence"
+}
+{
+  "openingName": "Caro-Kann Defense",
+  "alias": "Caro-Kann Defence"
+}
+{
+  "openingName": "Zukertort Opening",
+  "alias": "1.Nf3"
+}
+{
+  "openingName": "Sicilian Defense",
+  "alias": "Sicilian Defence"
+}
+{
+  "openingName": "Zukertort Opening",
+  "alias": "1.Nf3 Opening"
+}
+{
+  "openingName": "Scandinavian Defense",
+  "alias": "1... d5 - Scandinavian Defence"
+}
+{
+  "openingName": "King's Pawn Game",
+  "alias": "1...e5 · Open Game"
+}
+{
+  "openingName": "English Opening: Anglo-Indian Defense",
+  "alias": "English Opening: Anglo-Indian Defence"
+}
+{
+  "openingName": "English Opening: King's English Variation",
+  "alias": "1...e5"
+}
+{
+  "openingName": "Queen's Pawn Game: Modern Defense",
+  "alias": "Queen's Pawn Opening: Modern Defence"
+}
+{
+  "openingName": "Queen's Pawn Game",
+  "alias": "Universal"
+}
+{
+  "openingName": "Zukertort Opening: Sicilian Invitation",
+  "alias": "Sicilian Invitation (Réti Opening)"
+}
+{
+  "openingName": "Dutch Defense",
+  "alias": "1...f5 - Dutch Defence"
+}
+{
+  "openingName": "English Opening: Agincourt Defense",
+  "alias": "English Opening: Agincourt Defence"
+}
+{
+  "openingName": "English Opening: Symmetrical Variation",
+  "alias": "English Opening - Symmetrical Variation"
+}
+{
+  "openingName": "Alekhine Defense",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "Benoni Defense: Old Benoni",
+  "alias": "1...c5 - Old Benoni Defence/ Benoni Defense"
+}
+{
+  "openingName": "Zukertort Opening: Kingside Fianchetto",
+  "alias": "1. Reti Opening"
+}
+{
+  "openingName": "English Opening: Caro-Kann Defensive System",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Sicilian Defense",
+  "alias": "Open Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: Modern Variations",
+  "alias": "Open Sicilian"
+}
+{
+  "openingName": "Sicilian Defense",
+  "alias": "Open Sicilian"
+}
+{
+  "openingName": "Sicilian Defense",
+  "alias": "Open Sicilian"
+}
+{
+  "openingName": "Sicilian: Open, 2...d6",
+  "alias": "Open Sicilian"
+}
+{
+  "openingName": "Sicilian: Open, 2...d6, 5.Nc3",
+  "alias": "Open Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: Modern Variations, Main Line",
+  "alias": "Open Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: Najdorf Variation",
+  "alias": "Sicilian Najdorf"
+}
+{
+  "openingName": "Sicilian: Najdorf, 6.Be3 e5",
+  "alias": "Najdorf Sicilian, English Attack"
+}
+{
+  "openingName": "Sicilian Defense: Najdorf Variation, English Attack",
+  "alias": "Sicilian Defence, Najdorf Variation"
+}
+{
+  "openingName": "Ruy Lopez: Closed",
+  "alias": "Closed Ruy Lopez"
+}
+{
+  "openingName": "Ruy Lopez: Morphy Defense",
+  "alias": "Common Moves"
+}
+{
+  "openingName": "King's Knight Opening",
+  "alias": "2. Nf3 - King's Knight Opening"
+}
+{
+  "openingName": "Ruy Lopez: Morphy Defense",
+  "alias": "Common Moves"
+}
+{
+  "openingName": "Spanish: 4.Ba4",
+  "alias": "Common Moves"
+}
+{
+  "openingName": "Ruy Lopez",
+  "alias": "3. Bb5 - Spanish Game"
+}
+{
+  "openingName": "Spanish: Morphy Defence",
+  "alias": "Common Moves"
+}
+{
+  "openingName": "King's Knight Opening: Normal Variation",
+  "alias": "2...Nc6 - King's Knight Opening"
+}
+{
+  "openingName": "Spanish: Closed, 6.Re1",
+  "alias": "Ruy Lopez Main Line"
+}
+{
+  "openingName": "Spanish: Closed, 6...b5",
+  "alias": "Ruy Lopez Main Line"
+}
+{
+  "openingName": "Indian Defense: Normal Variation",
+  "alias": "Indian Defence"
+}
+{
+  "openingName": "Indian Defense: West Indian Defense",
+  "alias": "King's Indian Defence"
+}
+{
+  "openingName": "King's Indian Defense",
+  "alias": "King's Indian Defence"
+}
+{
+  "openingName": "King's Indian: 3.Nc3 Bg7",
+  "alias": "King's Indian Defense"
+}
+{
+  "openingName": "King's Indian Defense: Normal Variation",
+  "alias": "King's Indian Defence"
+}
+{
+  "openingName": "King's Indian Defense: Normal Variation",
+  "alias": "King's Indian Defence"
+}
+{
+  "openingName": "King's Indian Defense: Normal Variation, Rare Defenses",
+  "alias": "King's Indian Defence"
+}
+{
+  "openingName": "King's Indian: 5.Nf3 O-O",
+  "alias": "King's Indian Defence"
+}
+{
+  "openingName": "King's Indian Defense: Orthodox Variation",
+  "alias": "Chess Opening Theory/1. d4/1...Nf6/2. c4/2...g6/3. Nc3/3...Bg7/4. e4/4...d6/5. Nf3/5...O-O/6. Be2"
+}
+{
+  "openingName": "Queen's Gambit",
+  "alias": "The Queen's Gambit"
+}
+{
+  "openingName": "Queen's Gambit Declined: Queen's Knight Variation",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "Queen's Gambit Declined: Normal Defense",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "Queen's Gambit Declined: Modern Variation",
+  "alias": "4. Bg5"
+}
+{
+  "openingName": "King's Indian Attack",
+  "alias": "2. g3 - King's Indian Attack"
+}
+{
+  "openingName": "Reti: KIA",
+  "alias": "King's Indian Attack"
+}
+{
+  "openingName": "Englund Gambit",
+  "alias": "1... e5? - Englund Gambit"
+}
+{
+  "openingName": "Blackmar-Diemer Gambit",
+  "alias": "Blackmar-Diemer Gambit 2. e4"
+}
+{
+  "openingName": "Queen's Pawn Game: Accelerated London System",
+  "alias": "Chess Opening Theory/1. d4/1...d5/2. Bf4The London System"
+}
+{
+  "openingName": "Sicilian Defense: Lasker-Pelikan Variation",
+  "alias": "Sveshnikov Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: Taimanov Variation",
+  "alias": "Sicilian - Taimanov"
+}
+{
+  "openingName": "Sicilian Defense: Dragon Variation",
+  "alias": "Sicilian Defence, Dragon Variation"
+}
+{
+  "openingName": "Sicilian Defense: Kan Variation",
+  "alias": "Kan Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: Scheveningen Variation",
+  "alias": "Scheveningen Variation"
+}
+{
+  "openingName": "Queen's Gambit Declined: Chigorin Defense",
+  "alias": "Chigorin Defence"
+}
+{
+  "openingName": "Sicilian Defense: Alapin Variation",
+  "alias": "Black’s response"
+}
+{
+  "openingName": "Slav Defense",
+  "alias": "Slav Defence"
+}
+{
+  "openingName": "Semi-Slav Defense",
+  "alias": "Semi-Slav Defence"
+}
+{
+  "openingName": "Dutch Defense",
+  "alias": "Dutch Defence"
+}
+{
+  "openingName": "Queen's Gambit Declined: Marshall Defense",
+  "alias": "Marshall Defence"
+}
+{
+  "openingName": "Dutch Defense: Staunton Gambit",
+  "alias": "Staunton Gambit"
+}
+{
+  "openingName": "Dutch Defense: Hopton Attack",
+  "alias": "Dutch Defence: Hopton Attack"
+}
+{
+  "openingName": "Dutch Defense: Korchnoi Attack",
+  "alias": "2.h3 - Dutch Defence, Korchnoi Attack"
+}
+{
+  "openingName": "English Defense",
+  "alias": "1... b6 - English Defence"
+}
+{
+  "openingName": "Queen's Pawn: Neo-Indian",
+  "alias": "Indian Defence"
+}
+{
+  "openingName": "Queen's Pawn: Neo-Indian",
+  "alias": "Indian Defence"
+}
+{
+  "openingName": "English Opening: Anglo-Dutch Defense",
+  "alias": "English Opening: Anglo-Dutch Defence"
+}
+{
+  "openingName": "Nimzo-Indian Defense",
+  "alias": "Nimzo-Indian Defence"
+}
+{
+  "openingName": "Dutch Defense: Bladel Variation",
+  "alias": "2.c4 g6, 3.Nc3 Nh6 - Dutch Defence, Bladel Variation"
+}
+{
+  "openingName": "Nimzo-Indian Defense: Normal Line",
+  "alias": "Nimzo-Indian Defence, Rubinstein Variation"
+}
+{
+  "openingName": "English: 1...b6",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Bird Opening: Dutch Variation",
+  "alias": "Bird's Opening"
+}
+{
+  "openingName": "Grob Opening: Double Grob, Coca-Cola Gambit",
+  "alias": "Coca-Cola Gambit"
+}
+{
+  "openingName": "Van Geet: 1...d5",
+  "alias": "Dunst Opening"
+}
+{
+  "openingName": "Nimzo-Larsen Attack: Modern Variation",
+  "alias": "Nimzovich-Larsen Attack"
+}
+{
+  "openingName": "St. George Defense",
+  "alias": "Chess Opening Theory/1. e4/1...a6St. George Defence"
+}
+{
+  "openingName": "Polish: 1...e5",
+  "alias": "Polish Opening"
+}
+{
+  "openingName": "Indian Defense: Anti-Nimzo-Indian",
+  "alias": "Indian Defence with e6, Nf3"
+}
+{
+  "openingName": "English Opening: Anglo-Scandinavian Defense",
+  "alias": "English Opening: Anglo-Scandinavian Defence"
+}
+{
+  "openingName": "Bird Opening: From's Gambit",
+  "alias": "Statistics"
+}
+{
+  "openingName": "Hungarian Opening: Indian Defense",
+  "alias": "Benko Opening"
+}
+{
+  "openingName": "Nimzo-Larsen Attack: Indian Variation",
+  "alias": "Nimzovich-Larsen Attack"
+}
+{
+  "openingName": "Van Geet: Sicilian Variation",
+  "alias": "Dunst Opening"
+}
+{
+  "openingName": "English Opening: Jaenisch Gambit",
+  "alias": "English Opening: Halibut Gambit"
+}
+{
+  "openingName": "Grob: 1...d5",
+  "alias": "1...d5"
+}
+{
+  "openingName": "Queen's Indian Defense",
+  "alias": "Queen's Indian Defence"
+}
+{
+  "openingName": "Polish: 1...e5 2.Bb2",
+  "alias": "Polish Opening"
+}
+{
+  "openingName": "Hungarian Opening: Symmetrical Variation",
+  "alias": "Benko Opening"
+}
+{
+  "openingName": "Zukertort Opening: Dutch Variation",
+  "alias": "Dutch Defence"
+}
+{
+  "openingName": "Nimzowitsch Defense",
+  "alias": "Nimzowitsch Defence"
+}
+{
+  "openingName": "Van Geet Opening: Reversed Nimzowitsch",
+  "alias": "Dunst Opening"
+}
+{
+  "openingName": "Benko Opening",
+  "alias": "1...e5 · Hungarian Opening"
+}
+{
+  "openingName": "Owen Defense",
+  "alias": "1. e4 b6 Owen's Defense"
+}
+{
+  "openingName": "Polish: 2...Bxb4",
+  "alias": "Polish Opening, Main Line"
+}
+{
+  "openingName": "English Opening: Myers Defense",
+  "alias": "English Opening: Myers Defence"
+}
+{
+  "openingName": "Grob: 1...e5",
+  "alias": "Win percentages"
+}
+{
+  "openingName": "Bogo-Indian Defense",
+  "alias": "Bogo-Indian Defence"
+}
+{
+  "openingName": "Polish Opening: Outflank Variation",
+  "alias": "1...c6 · Outflank Variation"
+}
+{
+  "openingName": "Bird: Symmetrical",
+  "alias": "The Symmetrical Variation"
+}
+{
+  "openingName": "King's Indian Defense: Orthodox Variation",
+  "alias": "6. e5"
+}
+{
+  "openingName": "Bird Opening: Horsefly Defense",
+  "alias": "Bird's Opening: Horsefly Defence"
+}
+{
+  "openingName": "Duras Gambit",
+  "alias": "Statistics"
+}
+{
+  "openingName": "Barnes Defense",
+  "alias": "Barnes Defence"
+}
+{
+  "openingName": "Grünfeld Defense",
+  "alias": "Grünfeld Defence"
+}
+{
+  "openingName": "Borg Defense",
+  "alias": "Borg Defence"
+}
+{
+  "openingName": "Gruenfeld: Exchange Variation",
+  "alias": "Grünfeld Defence - Exchange Variation"
+}
+{
+  "openingName": "Ware Defense",
+  "alias": "Ware Defence/Corn Stalk Defence"
+}
+{
+  "openingName": "Grünfeld Defense: Exchange Variation",
+  "alias": "Grünfeld Defence - Exchange Variation"
+}
+{
+  "openingName": "Grob Opening: Alessi Gambit",
+  "alias": "1...f5 - Alessi Gambit"
+}
+{
+  "openingName": "Goldsmith Defense",
+  "alias": "Goldsmith Defense/Pickering Defence/Rook Gambit/Reversed Kadas Variation"
+}
+{
+  "openingName": "Zukertort Opening: Lisitsyn Gambit",
+  "alias": "Lisitsin Gambit"
+}
+{
+  "openingName": "Gruenfeld: Exchange, 5.e4",
+  "alias": "5.e4"
+}
+{
+  "openingName": "Grob Opening: Double Grob",
+  "alias": "Double Grob"
+}
+{
+  "openingName": "Gruenfeld: Exchange, 5.e4 Nxc3",
+  "alias": "5...Nxc3"
+}
+{
+  "openingName": "Carr Defense",
+  "alias": "Chess Opening Theory/1. e4/1...h6Carr Defence"
+}
+{
+  "openingName": "Lemming Defense",
+  "alias": "Lemming Defence/Mirrored Amar Opening"
+}
+{
+  "openingName": "Gruenfeld: Exchange, 5.e4 Nxc3 6.bxc3 Bg7",
+  "alias": "6...Bg7"
+}
+{
+  "openingName": "Hippopotamus Defense",
+  "alias": "Adams Defence"
+}
+{
+  "openingName": "Benoni Defense",
+  "alias": "Benoni Defence"
+}
+{
+  "openingName": "Benoni: 3.d5",
+  "alias": "Benoni Defence"
+}
+{
+  "openingName": "Sicilian: Najdorf, 6.Be3 e5 7.Nb3",
+  "alias": "Najdorf Sicilian, English Attack"
+}
+{
+  "openingName": "Ruy Lopez: Closed",
+  "alias": "Ruy Lopez Main Line"
+}
+{
+  "openingName": "Benoni Defense: Modern Variation",
+  "alias": "Modern Benoni"
+}
+{
+  "openingName": "Benoni: 4.Nc3",
+  "alias": "Modern Benoni"
+}
+{
+  "openingName": "Indian Defense: Budapest Defense",
+  "alias": "Budapest Gambit"
+}
+{
+  "openingName": "Budapest: 3.dxe5",
+  "alias": ""
+}
+{
+  "openingName": "Spanish: Closed 7...d6",
+  "alias": "Ruy Lopez Main Line"
+}
+{
+  "openingName": "Spanish: Closed 7...d6 8.c3",
+  "alias": "Ruy Lopez Main Line"
+}
+{
+  "openingName": "French Defense: Normal Variation",
+  "alias": "2. d4 - French Defence"
+}
+{
+  "openingName": "Indian Defense: Budapest Defense",
+  "alias": ""
+}
+{
+  "openingName": "Budapest: Rubinstein, 4...Nc6",
+  "alias": "Budapest Gambit"
+}
+{
+  "openingName": "French Defense: Classical Variation",
+  "alias": "French Defence, Classical variation"
+}
+{
+  "openingName": "Indian Defense: Budapest Defense, Rubinstein Variation",
+  "alias": ""
+}
+{
+  "openingName": "French Defense",
+  "alias": "French Defence"
+}
+{
+  "openingName": "French Defense: Paulsen Variation",
+  "alias": "French Defence: Main line"
+}
+{
+  "openingName": "French Defense: Burn Variation",
+  "alias": "Classical variation"
+}
+{
+  "openingName": "Slav Defense: Modern Line",
+  "alias": "Slav Defence"
+}
+{
+  "openingName": "Slav: 3.Nf3 Nf6",
+  "alias": "Slav Defence"
+}
+{
+  "openingName": "Budapest: Rubinstein, Main Line, 6.Nbd2",
+  "alias": ""
+}
+{
+  "openingName": "French Defense: Classical Variation, Normal Variation",
+  "alias": "Classical variation"
+}
+{
+  "openingName": "Slav Defense: Three Knights Variation",
+  "alias": "Slav Defence after 4.Nc3"
+}
+{
+  "openingName": "Caro-Kann Defense",
+  "alias": "Caro-Kann Defence"
+}
+{
+  "openingName": "Slav Defense: Two Knights Attack",
+  "alias": "Slav accepted  4. ... dxc4"
+}
+{
+  "openingName": "Caro-Kann Defense",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Slav Defense: Alapin Variation",
+  "alias": "Slav Accepted Alapin Variation"
+}
+{
+  "openingName": "Caro-Kann Defense",
+  "alias": "Caro–Kann Defence"
+}
+{
+  "openingName": "Caro-Kann Defense",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Queen's Pawn: 1...e6 2.c4",
+  "alias": "Queen's Pawn Opening"
+}
+{
+  "openingName": "Caro-Kann Defense: Main Line",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Classical Variation",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Caro-Kann: Classical, 5.Ng3",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Queen's Gambit Declined: Queen's Knight Variation",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "Queen's Gambit Declined: Normal Defense",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "Caro-Kann: Classical, 5.Ng3 Bg6",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "QGD: 4.Nf3",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "Caro-Kann Defense: Classical Variation, Main Line",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Semi-Slav Defense",
+  "alias": "Semi-Slav Defence"
+}
+{
+  "openingName": "Caro-Kann: Classical, 6.h4 h6",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Semi-Slav: 5.e3",
+  "alias": "Semi-Slav Defence"
+}
+{
+  "openingName": "Caro-Kann: Classical, 7.Nf3",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Semi-Slav: 5.e3 Nbd7",
+  "alias": "Semi-Slav Defence"
+}
+{
+  "openingName": "Old Indian Defense",
+  "alias": "Universal"
+}
+{
+  "openingName": "Caro-Kann Defense: Classical Variation",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Rat Defense: English Rat",
+  "alias": "Rat Defence"
+}
+{
+  "openingName": "Caro-Kann Defense: Classical Variation, Spassky Variation",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Caro-Kann: Classical, Spassky Variation",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Benoni Defense: Old Benoni",
+  "alias": "Old Benoni Defence"
+}
+{
+  "openingName": "Benoni Defense: Old Benoni",
+  "alias": "Old Benoni Defence"
+}
+{
+  "openingName": "Scandinavian: 2.exd5",
+  "alias": "Scandinavian Defence: 2.exd5"
+}
+{
+  "openingName": "Indian: 2.Bf4",
+  "alias": "Chess Opening Theory/1. d4/1...Nf6/2. Bf4London System Indian Setup with 2. Bf4 -"
+}
+{
+  "openingName": "Scandinavian Defense: Main Line",
+  "alias": "Scandinavian Defence"
+}
+{
+  "openingName": "Scandinavian Defense: Mieses-Kotroc Variation",
+  "alias": "Scandinavian Defense: Mieses-Kotrč Variation"
+}
+{
+  "openingName": "Scandinavian: 2...Qxd5 3.Nc3",
+  "alias": "Scandinavian Defense: Mieses-Kotrč Variation, 3.Nc3"
+}
+{
+  "openingName": "Queen's Pawn: 1...c6 2.c4",
+  "alias": "Irregular Queen's Pawn"
+}
+{
+  "openingName": "Queen's Pawn: 1...c6",
+  "alias": "Queen's Pawn 1...c6"
+}
+{
+  "openingName": "Slav Defense",
+  "alias": "Slav Defence"
+}
+{
+  "openingName": "Pirc Defense",
+  "alias": "Pirc Defence"
+}
+{
+  "openingName": "Pirc Defense",
+  "alias": "Pirc Defence"
+}
+{
+  "openingName": "Polish Defense",
+  "alias": "Polish Defence"
+}
+{
+  "openingName": "Pirc: 3.Nc3",
+  "alias": "Pirc Defence"
+}
+{
+  "openingName": "Mikenas Defense",
+  "alias": "A40 Mikenas Defense"
+}
+{
+  "openingName": "Australian Defense",
+  "alias": "1...Na6? - Australian Defense"
+}
+{
+  "openingName": "Queen's Pawn: Bogoljubow-Miles, 2.d5",
+  "alias": "Mikenas Defense"
+}
+{
+  "openingName": "Pirc Defense",
+  "alias": "Pirc Defence"
+}
+{
+  "openingName": "Pirc Defense: Austrian Attack",
+  "alias": "Austrian Attack"
+}
+{
+  "openingName": "Borg Defense: Borg Gambit",
+  "alias": "1... g5??: Borg Gambit"
+}
+{
+  "openingName": "Pirc: Austrian Attack",
+  "alias": "Austrian Attack"
+}
+{
+  "openingName": "Pirc: Austrian, 5.Nf3",
+  "alias": "Austrian Attack"
+}
+{
+  "openingName": "Modern",
+  "alias": "Modern Defense"
+}
+{
+  "openingName": "Modern Defense",
+  "alias": "Modern Defence"
+}
+{
+  "openingName": "Pirc Defense: Austrian Attack",
+  "alias": "Austrian Attack"
+}
+{
+  "openingName": "Modern Defense: Standard Line",
+  "alias": "Modern Defence, Main Line"
+}
+{
+  "openingName": "Alekhine: 2.e5",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "Alekhine Defense",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "Alekhine Defense",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "Alekhine Defense: Normal Variation",
+  "alias": "Alekhine's Defence - Normal Variation"
+}
+{
+  "openingName": "Alekhine Defense",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "Alekhine Defense: Four Pawns Attack",
+  "alias": "Alekhine's Defence - Four Pawns Attack"
+}
+{
+  "openingName": "Alekhine: 4.c4 Nb6",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "Alekhine: Four Pawns Attack, 5...dxe5",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "Alekhine: Four Pawns Attack, 5...dxe5",
+  "alias": ""
+}
+{
+  "openingName": "Nimzowitsch Defense: Scandinavian Variation",
+  "alias": "Nimzowitsch Defence"
+}
+{
+  "openingName": "Nimzowitsch Defense",
+  "alias": "Nimzowitsch Defence"
+}
+{
+  "openingName": "Owen Defence: 2.d4 Bb7",
+  "alias": "Owen's Defence"
+}
+{
+  "openingName": "Owen Defence",
+  "alias": "Owen's Defence"
+}
+{
+  "openingName": "Owen Defence: 3.Bd3",
+  "alias": "Owen's Defence"
+}
+{
+  "openingName": "Irregular Openings: Koola-Koola Variation",
+  "alias": "Kádas Opening: Koola-Koola VariationStatistics"
+}
+{
+  "openingName": "French Defense: King's Indian Attack",
+  "alias": "King's Indian AttackTheory Table"
+}
+{
+  "openingName": "Queen's Pawn Game: Zukertort Variation",
+  "alias": ""
+}
+{
+  "openingName": "French Defense: Chigorin Variation",
+  "alias": "Chigorin Variation"
+}
+{
+  "openingName": "French: Chigorin, 2...c5",
+  "alias": "Chigorin Variation"
+}
+{
+  "openingName": "Queen's Pawn Game: Levitsky Attack",
+  "alias": "Levitsky Attack or Queen's Bishop Attack"
+}
+{
+  "openingName": "Indian Defense: Knights Variation",
+  "alias": "Indian Defence"
+}
+{
+  "openingName": "Indian: 2.Nc3",
+  "alias": ""
+}
+{
+  "openingName": "English Opening: Anglo-Indian Defense, King's Knight Variation",
+  "alias": "English Opening, Anglo-Indian Defense, King's Knight Variation"
+}
+{
+  "openingName": "Caro-Kann: 2.Nf3",
+  "alias": "Caro-Kann Defence 2 Nf3"
+}
+{
+  "openingName": "Sicilian Defense: Staunton-Cochrane Variation",
+  "alias": "Sicilian - Staunton-Cochrane variation (English variation)"
+}
+{
+  "openingName": "Indian: 2.Nd2",
+  "alias": "Chess Opening Theory/1. d4/1...Nf6/2. Nd2"
+}
+{
+  "openingName": "Réti Opening",
+  "alias": "2. c4 - Réti Opening"
+}
+{
+  "openingName": "French: Chigorin, 2...c5 3.Nf3",
+  "alias": "Chigorin Variation"
+}
+{
+  "openingName": "Caro-Kann Defense",
+  "alias": "Caro-Kann Defence, Two Knights Variation"
+}
+{
+  "openingName": "Blackmar-Diemer Gambit",
+  "alias": "Blackmar-Diemer Gambit 2. e4"
+}
+{
+  "openingName": "Reti: KIA",
+  "alias": "King's Indian Attack"
+}
+{
+  "openingName": "Queen's Pawn Game",
+  "alias": "2. e3"
+}
+{
+  "openingName": "Pirc: 2.Nf3",
+  "alias": "Pirc Defence"
+}
+{
+  "openingName": "Sicilian Defense: Smith-Morra Gambit",
+  "alias": "Smith-Morra Gambit"
+}
+{
+  "openingName": "Bishop's Opening",
+  "alias": "Bishop's Opening 2. Bc4"
+}
+{
+  "openingName": "Amazon Attack",
+  "alias": "2. Qd3"
+}
+{
+  "openingName": "East Indian Defense",
+  "alias": "East Indian Defence"
+}
+{
+  "openingName": "Caro-Kann Defense: Accelerated Panov Attack",
+  "alias": "2. c4"
+}
+{
+  "openingName": "Sicilian: Smith-Morra, 2...cxd4",
+  "alias": "Smith-Morra Gambit"
+}
+{
+  "openingName": "Caro-Kann Defense: Breyer Variation",
+  "alias": "Caro-Kann Defence, Breyer Variation"
+}
+{
+  "openingName": "King's Indian Defense: Normal Variation, King's Knight Variation",
+  "alias": "Indian Defence"
+}
+{
+  "openingName": "Scandinavian: 2.d3",
+  "alias": "2. d3"
+}
+{
+  "openingName": "Sicilian Defense: Smith-Morra Gambit",
+  "alias": "Smith-Morra Gambit"
+}
+{
+  "openingName": "Caro-Kann Defense: Hillbilly Attack",
+  "alias": "Hillbilly Attack"
+}
+{
+  "openingName": "Sicilian Defense: Wing Gambit",
+  "alias": "Sicilian Wing Gambit"
+}
+{
+  "openingName": "Scandinavian: 2.e5",
+  "alias": "2. e5"
+}
+{
+  "openingName": "Zukertort Opening: Tennison Gambit",
+  "alias": "2. Nf3 - Tennison Gambit"
+}
+{
+  "openingName": "Sicilian Defense: Mengarini Variation",
+  "alias": "Mengarini Variation"
+}
+{
+  "openingName": "Indian: 2.Nf3 e6",
+  "alias": "Queen's Pawn Opening"
+}
+{
+  "openingName": "King's Pawn Game: Leonardis Variation",
+  "alias": "Leonardis Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Euwe Attack",
+  "alias": "Caro-Kann Defence, Euwe Attack"
+}
+{
+  "openingName": "Sicilian Defense: Closed",
+  "alias": "Black's responses"
+}
+{
+  "openingName": "King's Pawn Game: Wayward Queen Attack",
+  "alias": "Wayward Queen Attack/Parham Attack"
+}
+{
+  "openingName": "Sicilian Defense: McDonnell Attack",
+  "alias": "Sicilian - Grand Prix Attack"
+}
+{
+  "openingName": "King's Pawn Game: Napoleon Attack",
+  "alias": "2. Qf3?!"
+}
+{
+  "openingName": "Sicilian Defense: Old Sicilian",
+  "alias": "Open Sicilian with 2...Nc6"
+}
+{
+  "openingName": "King's Pawn Game: MacLeod Attack",
+  "alias": "Centre Pawn Opening/MacLeod Attack/Lopez Opening"
+}
+{
+  "openingName": "Indian Defense: Spielmann-Indian",
+  "alias": "2...c5"
+}
+{
+  "openingName": "Sicilian Defense: Open",
+  "alias": "Open Sicilian with 2...Nc6"
+}
+{
+  "openingName": "Queen's Pawn Game: Chigorin Variation",
+  "alias": ""
+}
+{
+  "openingName": "Sicilian Defense: Open",
+  "alias": ""
+}
+{
+  "openingName": "King's Pawn Game: Alapin Opening",
+  "alias": "2. Ne2!?"
+}
+{
+  "openingName": "Trompowsky: 2...Ne4",
+  "alias": "2...Ne4"
+}
+{
+  "openingName": "Sicilian Defense: Closed, Traditional",
+  "alias": "Closed Sicilian"
+}
+{
+  "openingName": "Trompowsky: 2...Ne4 3.Bf4",
+  "alias": "Trompowsky Attack"
+}
+{
+  "openingName": "Sicilian Defense: Closed, Fianchetto Variation",
+  "alias": "Closed Sicilian"
+}
+{
+  "openingName": "Trompowsky: 2...d5",
+  "alias": "Trompowsky Attack"
+}
+{
+  "openingName": "Sicilian Defense: Closed",
+  "alias": "Sicilian, Closed"
+}
+{
+  "openingName": "King's Pawn Opening",
+  "alias": "Description"
+}
+{
+  "openingName": "Paleface Attack",
+  "alias": "2. f3!? - Paleface Attack"
+}
+{
+  "openingName": "Richter-Veresov Attack",
+  "alias": "3...Bg5?!"
+}
+{
+  "openingName": "Sicilian: Alapin, 2...Nf6",
+  "alias": "White’s Responses"
+}
+{
+  "openingName": "Bishop's Opening: Berlin Defense",
+  "alias": "Bishop's Opening: Berlin Defence"
+}
+{
+  "openingName": "Sicilian: Alapin, 2...Nf6 3.e5",
+  "alias": "Sicilian, Alapin"
+}
+{
+  "openingName": "Bishop's Opening: Ponziani Gambit",
+  "alias": "Bishop's Opening: Ponziani-Urusov Gambit"
+}
+{
+  "openingName": "Sicilian: Alapin, 2...Nf6 3.e5 Nd5",
+  "alias": "3...Nd5"
+}
+{
+  "openingName": "Bishop's Opening: Urusov Gambit",
+  "alias": "Bishop's Opening: Ponziani-Urusov Gambit"
+}
+{
+  "openingName": "Sicilian: Alapin, 2...Nf6 3.e5 Nd5 4.d4",
+  "alias": "4.d4"
+}
+{
+  "openingName": "Vienna Game: Falkbeer Variation",
+  "alias": "Vienna Game, Falkbeer Defence"
+}
+{
+  "openingName": "Sicilian: Smith-Morra Accepted",
+  "alias": "Smith-Morra Gambit"
+}
+{
+  "openingName": "Vienna Game: Vienna Gambit",
+  "alias": "Vienna Game"
+}
+{
+  "openingName": "Sicilian: Smith-Morra Accepted",
+  "alias": "Smith-Morra Gambit"
+}
+{
+  "openingName": "Sicilian: Smith-Morra, 4.Nxc3 Nc6",
+  "alias": "Chess Opening Theory/1. e4/1...c5/2. d4/2...cxd4/3. c3/3...dxc3/4. Nxc3/4...Nc6"
+}
+{
+  "openingName": "Vienna Game: Vienna Gambit, Main Line",
+  "alias": "Vienna Game"
+}
+{
+  "openingName": "Vienna Gambit: 4.fxe5",
+  "alias": "Vienna Game"
+}
+{
+  "openingName": "Sicilian Defense: Bowdler Attack",
+  "alias": "Bowdler Attack"
+}
+{
+  "openingName": "Vienna Gambit: 4.fxe5",
+  "alias": "Vienna Game"
+}
+{
+  "openingName": "Sicilian: Grand Prix, Tal Defence",
+  "alias": "Tal Gambit"
+}
+{
+  "openingName": "Sicilian Defense: Snyder Variation",
+  "alias": "Snyder Variation"
+}
+{
+  "openingName": "King's Gambit Accepted: King's Knight's Gambit",
+  "alias": ""
+}
+{
+  "openingName": "Sicilian Defense: King David's Opening",
+  "alias": "2. Ke2? · King David's Opening"
+}
+{
+  "openingName": "King's Gambit Accepted: King's Knight's Gambit",
+  "alias": ""
+}
+{
+  "openingName": "King's Gambit Accepted: King's Knight's Gambit",
+  "alias": ""
+}
+{
+  "openingName": "King's Gambit Accepted: Kieseritzky Gambit, Berlin Defense",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. f4/2...exf4/3. Nf3/3...g5/4. h4/4...g4/5. Ne5/5...Nf6"
+}
+{
+  "openingName": "King's Gambit Accepted: Kieseritzky Gambit",
+  "alias": ""
+}
+{
+  "openingName": "KGA: Kieseritsky, Berlin Defence, 6.Bc4",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. f4/2...exf4/3. Nf3/3...g5/4. h4/4...g4/5. Ne5/5...Nf6/6. Bc4"
+}
+{
+  "openingName": "Center Game Accepted",
+  "alias": "Centre Game"
+}
+{
+  "openingName": "Center Game",
+  "alias": "Center Game Accepted"
+}
+{
+  "openingName": "Center Game: Normal Variation",
+  "alias": "Center Game Accepted"
+}
+{
+  "openingName": "Indian Defense: Normal Variation",
+  "alias": "Indian Defence"
+}
+{
+  "openingName": "English Opening: Anglo-Indian Defense, Queen's Knight Variation",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English Opening: King's English Variation, Reversed Sicilian",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English: King's, 2.g3",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English Opening: Symmetrical Variation",
+  "alias": "English Opening - Symmetrical Variation"
+}
+{
+  "openingName": "Neo-Old Indian: 2.Nf3",
+  "alias": "Universal"
+}
+{
+  "openingName": "Alekhine: Scandinavian Variation",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "Queen's Pawn: 1...e6 2.c4",
+  "alias": "Queen's Pawn Opening"
+}
+{
+  "openingName": "Dutch: 2.c4 g6",
+  "alias": "With g6"
+}
+{
+  "openingName": "English Opening: Symmetrical Variation, Normal Variation",
+  "alias": "English Opening - Symmetrical Variation"
+}
+{
+  "openingName": "English Opening: Agincourt Defense",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Alekhine Defense: Krejcik Variation",
+  "alias": "Alekhine's Defence : Krejcik VariationEpine Dorsal"
+}
+{
+  "openingName": "Dutch: 2.Nf3",
+  "alias": "2. Nf3"
+}
+{
+  "openingName": "Dutch Defense: Fianchetto Attack",
+  "alias": "2. g3"
+}
+{
+  "openingName": "English: 1...e6 2.Nc3",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Alekhine Defense: Maróczy Variation",
+  "alias": "Alekhine's Defence - Maroczy Variation"
+}
+{
+  "openingName": "Sicilian Defense: Staunton-Cochrane Variation",
+  "alias": "Sicilian - Staunton-Cochrane variation (English variation)"
+}
+{
+  "openingName": "Reti: 1...c5",
+  "alias": ""
+}
+{
+  "openingName": "Queen's Pawn: 1...c6 2.c4",
+  "alias": "Irregular Queen's Pawn"
+}
+{
+  "openingName": "English: Caro-Kann Defence",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Sicilian Defense: Modern Variations, Anti-Qxd4 Move Order",
+  "alias": "Sicilian, Najdorf"
+}
+{
+  "openingName": "Caro-Kann Defense: Accelerated Panov Attack",
+  "alias": "2. c4"
+}
+{
+  "openingName": "Sicilian Defense: Moscow Variation",
+  "alias": "Open Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: French Variation",
+  "alias": "Sicilian with 2...e6"
+}
+{
+  "openingName": "Sicilian Defense: Chekhover Variation",
+  "alias": "Chekhover Sicilian"
+}
+{
+  "openingName": "Sicilian: 2.Nf3 d6 3.Nc3",
+  "alias": "Chess Opening Theory/1. e4/1...c5/2. Nf3/2...d6/3. Nc3"
+}
+{
+  "openingName": "Sicilian Defense: Hyperaccelerated Dragon",
+  "alias": "Sicilian - Hyper-Accelerated Dragon"
+}
+{
+  "openingName": "Sicilian Defense: Modern Variations, Tartakower",
+  "alias": "Morra Gambit"
+}
+{
+  "openingName": "Sicilian Defense: Delayed Alapin",
+  "alias": "3. c3"
+}
+{
+  "openingName": "Sicilian Defense: Classical Variation",
+  "alias": "Classical Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: Nimzowitsch Variation",
+  "alias": "Sicilian - Nimzowitsch Variation"
+}
+{
+  "openingName": "Sicilian: Open, 2...d6, 5.Nc3 e5",
+  "alias": "Open Sicilian 5...e5"
+}
+{
+  "openingName": "Sicilian Defense: Najdorf Variation",
+  "alias": "Sicilian Defence, Najdorf Variation"
+}
+{
+  "openingName": "Sicilian: 2...e6 3.d4",
+  "alias": "Open Sicilian 2...e6 3.d4"
+}
+{
+  "openingName": "Sicilian Defense: French Variation, Open",
+  "alias": "Sicilian Defence"
+}
+{
+  "openingName": "Sicilian Defense: O'Kelly Variation",
+  "alias": "Sicilian - O'Kelly variation"
+}
+{
+  "openingName": "Sicilian Defense: Najdorf Variation, Opocensky Variation",
+  "alias": "Sicilian Defence, Najdorf, Opocensky Variation"
+}
+{
+  "openingName": "Sicilian: Open, 2...e6, 4.Nxd4",
+  "alias": "Sicilian 2...e6"
+}
+{
+  "openingName": "Sicilian Defense: Open",
+  "alias": "Open Sicilian with Nc6"
+}
+{
+  "openingName": "Sicilian Defense: Open",
+  "alias": "Open Sicilian with 2...Nc6"
+}
+{
+  "openingName": "Sicilian Defense: Katalimov Variation",
+  "alias": "Sicilian - Katalimov variation"
+}
+{
+  "openingName": "Sicilian: Scheveningen, 6.Be3 a6",
+  "alias": "Sicilian Defence, Scheveningen Variation"
+}
+{
+  "openingName": "Ruy Lopez: Closed, Delayed Exchange",
+  "alias": "Ruy Lopez Main Line"
+}
+{
+  "openingName": "Sicilian Defense: Najdorf Variation, English Attack, Anti-English",
+  "alias": "Chess Opening Theory/1. e4/1...c5/2. Nf3/2...d6/3. d4/3...cxd4/4. Nxd4/4...Nf6/5. Nc3/5...a6/6. Be3/6...Ng4"
+}
+{
+  "openingName": "Ruy Lopez: Exchange Variation",
+  "alias": "Ruy Lopez, Exchange Variation"
+}
+{
+  "openingName": "Russian Game",
+  "alias": "Russian game"
+}
+{
+  "openingName": "Ruy Lopez: Closed, Worrall Attack",
+  "alias": "Closed Ruy Lopez - Worrall Attack"
+}
+{
+  "openingName": "Ruy Lopez: Open",
+  "alias": "Ruy Lopez, Riga Variation"
+}
+{
+  "openingName": "Ruy Lopez: Morphy Defense, Modern Steinitz Defense",
+  "alias": "Steinitz Deferred"
+}
+{
+  "openingName": "Spanish: Exchange, 4...dxc6",
+  "alias": "Ruy Lopez, Exchange Variation"
+}
+{
+  "openingName": "Ruy Lopez: Berlin Defense",
+  "alias": "Ruy Lopez - Berlin Defence"
+}
+{
+  "openingName": "Philidor Defense",
+  "alias": "2... d6 – Philidor Defence"
+}
+{
+  "openingName": "Ruy Lopez: Morphy Defense, Anderssen Variation",
+  "alias": "5. d3"
+}
+{
+  "openingName": "Ruy Lopez: Closed",
+  "alias": "Ruy Lopez Main Line"
+}
+{
+  "openingName": "Ruy Lopez: Morphy Defense, Neo-Arkhangelsk Variation",
+  "alias": "Ruy López Opening: Morphy Defense, Neo-Arkhangelsk Variation:"
+}
+{
+  "openingName": "Ruy Lopez: Exchange Variation, Normal Variation",
+  "alias": "Ruy Lopez, Barendregt Variation"
+}
+{
+  "openingName": "Ruy Lopez: Morphy Defense, Caro Variation",
+  "alias": "Morphy Defence, Caro Variation"
+}
+{
+  "openingName": "Ruy Lopez: Steinitz Defense",
+  "alias": "Ruy Lopez"
+}
+{
+  "openingName": "Ruy Lopez: Closed",
+  "alias": "Ruy Lopez Main Line"
+}
+{
+  "openingName": "Ruy Lopez: Open",
+  "alias": "Ruy Lopez Open Defence"
+}
+{
+  "openingName": "Spanish: 5.O-O b5",
+  "alias": "Ruy Lopez"
+}
+{
+  "openingName": "Spanish: Open, 6.d4 b5",
+  "alias": "Ruy Lopez: Open Defence"
+}
+{
+  "openingName": "Ruy Lopez: Classical Variation",
+  "alias": "Ruy Lopez - Classical Defence"
+}
+{
+  "openingName": "Ruy Lopez: Closed, Flohr System",
+  "alias": "Ruy Lopez, Flohr System"
+}
+{
+  "openingName": "Three Knights Opening",
+  "alias": "Three Knights Game"
+}
+{
+  "openingName": "Ruy Lopez: Morphy Defense, Classical Defense Deferred",
+  "alias": ""
+}
+{
+  "openingName": "King's Pawn Game: Gunderam Gambit",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...c6"
+}
+{
+  "openingName": "Ruy Lopez: Morphy Defense, Norwegian Variation",
+  "alias": "Ruy Lopez Opening: Morphy Defense, Caro, Norwegian Variation"
+}
+{
+  "openingName": "Ruy Lopez: Schliemann Defense",
+  "alias": "Schliemann Defence"
+}
+{
+  "openingName": "Irish Gambit",
+  "alias": "Irish Gambit / Chicago Gambit"
+}
+{
+  "openingName": "Gunderam Defense",
+  "alias": "Gunderam Defence"
+}
+{
+  "openingName": "Ruy Lopez: Bird Variation",
+  "alias": "Ruy Lopez - Bird's Defence"
+}
+{
+  "openingName": "Ruy Lopez: Morphy Defense, Schliemann Defense Deferred",
+  "alias": ""
+}
+{
+  "openingName": "Sicilian Defense: Jalalabad Variation",
+  "alias": "2...c5? - Jalalabad Gambit"
+}
+{
+  "openingName": "Ruy Lopez: Cozio Defense",
+  "alias": "Ruy Lopez, Cozio Defence"
+}
+{
+  "openingName": "King's Pawn Game: Tayler Opening",
+  "alias": "3. Be2 - Tayler Opening"
+}
+{
+  "openingName": "King's Knight Opening: Konstantinopolsky",
+  "alias": "Konstantinopolsky Opening"
+}
+{
+  "openingName": "King's Pawn Game: McConnell Defense",
+  "alias": "2...Qf6"
+}
+{
+  "openingName": "King's Pawn Game: Pachman Wing Gambit",
+  "alias": "3. b4 - Pachman (Wing) Gambit"
+}
+{
+  "openingName": "Ruy Lopez: Alapin Defense",
+  "alias": "3...Bb4!? - Alapin Defence"
+}
+{
+  "openingName": "Indian Defense: Anti-Grünfeld, Alekhine Variation",
+  "alias": "Chess Opening Theory/1. d4/1...Nf6/2. c4/2...g6/3. f3"
+}
+{
+  "openingName": "Old Indian Defense",
+  "alias": "Old Indian Defence"
+}
+{
+  "openingName": "King's Indian: 3.Nf3",
+  "alias": "Indian Defence"
+}
+{
+  "openingName": "King's Pawn Game: Damiano Defense",
+  "alias": "2... f6? - Damiano Defence"
+}
+{
+  "openingName": "King's Indian: 4.Nf3",
+  "alias": "4. Nf3"
+}
+{
+  "openingName": "King's Indian: 4.e4 O-O",
+  "alias": "King's Indian Defense, Fischer Transposition"
+}
+{
+  "openingName": "King's Indian Defense: Sämisch Variation",
+  "alias": "King's Indian Defence - Sämisch Variation"
+}
+{
+  "openingName": "Mexican Defense",
+  "alias": "Black Knights' Tango"
+}
+{
+  "openingName": "King's Indian Defense: Four Pawns Attack",
+  "alias": "King's Indian Defence"
+}
+{
+  "openingName": "Queen's Gambit Declined: Albin Countergambit",
+  "alias": "Albin Countergambit"
+}
+{
+  "openingName": "Queen's Gambit Declined: Austrian Defense",
+  "alias": "Austrian Defense"
+}
+{
+  "openingName": "QGD: 3.Nf3",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "Semi-Slav Defense: Accelerated Move Order",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "QGD: 4.Nf3",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "Queen's Gambit Declined: Modern Variation, Knight Defense",
+  "alias": "4...Nbd7"
+}
+{
+  "openingName": "Dutch: Rubinstein, 3...d5",
+  "alias": ""
+}
+{
+  "openingName": "Blackmar-Diemer Gambit (BDG): 2.e4 dxe4",
+  "alias": "Blackmar-Diemer Gambit (BDG) Accepted"
+}
+{
+  "openingName": "King's Indian Attack: Sicilian Variation",
+  "alias": "King's Indian Attack"
+}
+{
+  "openingName": "Queen's Gambit Accepted: Normal Variation",
+  "alias": "Queen's Gambit Accepted"
+}
+{
+  "openingName": "Vienna Game: Max Lange Defense",
+  "alias": "Vienna Game, Max Lange Defence"
+}
+{
+  "openingName": "Sicilian: Pelikan/Sveshnikov, 6.Nbd5",
+  "alias": "Sveshnikov Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: Taimanov Variation, Normal Variation",
+  "alias": "Sicilian - Taimanov"
+}
+{
+  "openingName": "Reti: KIA",
+  "alias": "King's Indian Attack"
+}
+{
+  "openingName": "Sicilian: Smith-Morra, 2...d5",
+  "alias": "Berg Countergambit"
+}
+{
+  "openingName": "Queen's Pawn Game: Accelerated London System, Steinitz Countergambit",
+  "alias": "Accelerated London, Steinitz Countergambit"
+}
+{
+  "openingName": "Vienna: 2...Bb4",
+  "alias": "Vienna Game"
+}
+{
+  "openingName": "Queen's Gambit Accepted: Saduleto Variation",
+  "alias": "3.e4"
+}
+{
+  "openingName": "Vienna Game: Anderssen Defense",
+  "alias": "2...Bc5"
+}
+{
+  "openingName": "Queen's Gambit Accepted: Old Variation",
+  "alias": "Queen's Gambit Accepted"
+}
+{
+  "openingName": "QGA: 3.Nc3",
+  "alias": "3. Nc3"
+}
+{
+  "openingName": "Sicilian Defense: Dragon Variation",
+  "alias": "Sicilian Defence, Dragon Variation"
+}
+{
+  "openingName": "Sicilian Defense: Kan Variation, Knight Variation",
+  "alias": "Kan Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: Dragon Variation, Classical Variation",
+  "alias": "Chess Opening Theory/1. e4/1...c5/2. Nf3/2...d6/3. d4/3...cxd4/4. Nxd4/4...Nf6/5. Nc3/5...g6/6. Be2"
+}
+{
+  "openingName": "Sicilian: Scheveningen, 6.Be3",
+  "alias": "Scheveningen Variation, English Attack"
+}
+{
+  "openingName": "Sicilian Defense: Scheveningen Variation, Keres Attack",
+  "alias": "Scheveningen Variation, Keres Attack"
+}
+{
+  "openingName": "Sicilian: Alapin, 2...d5",
+  "alias": "2...d5"
+}
+{
+  "openingName": "Slav Defense",
+  "alias": "Slav Defence"
+}
+{
+  "openingName": "Sicilian Defense: Dragon Variation, Levenfish Variation",
+  "alias": "Main Line - 6...Nbd7"
+}
+{
+  "openingName": "Semi-Slav: Botvinnik (Anti-Meran)",
+  "alias": "Semi-Slav Defence"
+}
+{
+  "openingName": "QGD: Marshall Defence, 3.cxd5",
+  "alias": "3. cxd5"
+}
+{
+  "openingName": "Sicilian: Alapin, 2...e6",
+  "alias": "2...e6"
+}
+{
+  "openingName": "Semi-Slav: 5.e3",
+  "alias": "Semi-Slav Defence"
+}
+{
+  "openingName": "Slav Defense: Exchange Variation",
+  "alias": "Slav Defence Exchange Variation"
+}
+{
+  "openingName": "Dutch: 2.Bg5 h6",
+  "alias": "Dutch Defence with 2.Bg5"
+}
+{
+  "openingName": "Rat Defense: Balogh Defense",
+  "alias": "Balogh Defense"
+}
+{
+  "openingName": "French Defense: Franco-Hiva Gambit",
+  "alias": "Kingston Defence"
+}
+{
+  "openingName": "Nimzo-Indian Defense: Classical Variation",
+  "alias": "Nimzo-Indian Defence:Classical Variation"
+}
+{
+  "openingName": "Indian Defense: Seirawan Attack",
+  "alias": "Neo-Indian Attack"
+}
+{
+  "openingName": "Nimzo-Indian: Saemisch",
+  "alias": "Sämisch Variation"
+}
+{
+  "openingName": "Nimzo-Indian Defense: Leningrad Variation",
+  "alias": "Nimzo-Indian Defence, Leningrad Variation"
+}
+{
+  "openingName": "Nimzo-Indian Defense: Spielmann Variation",
+  "alias": "Nimzo-Indian Defence"
+}
+{
+  "openingName": "Queen's Gambit",
+  "alias": "The Queen's Gambit"
+}
+{
+  "openingName": "Bird: From Gambit Accepted",
+  "alias": "From's Gambit Accepted"
+}
+{
+  "openingName": "Queen's Indian Defense: Fianchetto Variation",
+  "alias": "Queen's Indian Defense"
+}
+{
+  "openingName": "Queen's Indian Defense: Miles Variation",
+  "alias": "Queen's Indian Defence - London System (Miles Variation)"
+}
+{
+  "openingName": "Reti: 1...f5 2.g3",
+  "alias": "2. g3"
+}
+{
+  "openingName": "Nimzowitsch Defense: Declined Variation",
+  "alias": "Nimzowitsch Defence"
+}
+{
+  "openingName": "Nimzowitsch Defence: 2.Nc3",
+  "alias": "Nimzowitsch Defense: Symmetrical Variation"
+}
+{
+  "openingName": "Grünfeld Defense: Exchange Variation, Nadanian Attack",
+  "alias": "5. Na4!?"
+}
+{
+  "openingName": "Grünfeld Defense: Exchange Variation, Modern Exchange Variation",
+  "alias": "7.Nf3"
+}
+{
+  "openingName": "Gruenfeld: Modern Exchange, 7...c5",
+  "alias": "7...c5"
+}
+{
+  "openingName": "Grünfeld Defense: Exchange Variation, Classical Variation",
+  "alias": "7.Bc4"
+}
+{
+  "openingName": "English Opening: Symmetrical Variation, Anti-Benoni Variation",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "Ruy Lopez: Closed",
+  "alias": "Closed Ruy Lopez, 7...O-O"
+}
+{
+  "openingName": "Indian Defense: Budapest Defense, Fajarowicz Variation",
+  "alias": "Fajarowicz variation"
+}
+{
+  "openingName": "Ruy Lopez: Closed, Rosen Attack",
+  "alias": "8. d4?!"
+}
+{
+  "openingName": "Indian Defense: Budapest Defense, Adler Variation",
+  "alias": "Adler variation"
+}
+{
+  "openingName": "French Defense: Franco-Sicilian Defense",
+  "alias": "Franco-Benoni Defence"
+}
+{
+  "openingName": "French Defense: Franco-Hiva Gambit",
+  "alias": "Kingston Defence"
+}
+{
+  "openingName": "French Defense: Mediterranean Defense",
+  "alias": "Chess Opening Theory/1. e4/1...e6/2. d4/2...Nf6"
+}
+{
+  "openingName": "Indian Defense: Budapest Defense, Alekhine Variation",
+  "alias": "Variations"
+}
+{
+  "openingName": "French Defense: Classical Variation, Steinitz Variation",
+  "alias": "Classical Defence/Steinitz Variation"
+}
+{
+  "openingName": "Budapest: 3...Ng4 4.e3",
+  "alias": ""
+}
+{
+  "openingName": "French Defense: Tarrasch Variation",
+  "alias": "French Defence: Tarrasch Variation"
+}
+{
+  "openingName": "French Defense: Winawer Variation",
+  "alias": "French Defence, Winawer Variation"
+}
+{
+  "openingName": "French Defense: MacCutcheon Variation",
+  "alias": "Chess Opening Theory/1. e4/1...e6/2. d4/2...d5/3. Nc3/3...Nf6/4. Bg5/4...Bb4"
+}
+{
+  "openingName": "French Defense: Tarrasch Variation, Closed Variation",
+  "alias": "French Defence: Tarrasch Variation"
+}
+{
+  "openingName": "French Defense: Winawer Variation, Advance Variation",
+  "alias": "French Defence, Winawer Variation"
+}
+{
+  "openingName": "Slav Defense: Quiet Variation",
+  "alias": "Slav Defence Declined"
+}
+{
+  "openingName": "QGD: 3.Nf3 c6",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "French Defense: Winawer Variation, Advance Variation",
+  "alias": "French Defence, Winawer Variation"
+}
+{
+  "openingName": "French: Tarrasch, Closed, 4.e5",
+  "alias": "French Defence: Tarrasch Variation / 3....Nf6"
+}
+{
+  "openingName": "French Defense: Rubinstein Variation",
+  "alias": "Rubinstein French"
+}
+{
+  "openingName": "French Defense: Advance Variation",
+  "alias": "French Defence - Advance Variation"
+}
+{
+  "openingName": "French: Tarrasch, Closed, 4...Nfd7",
+  "alias": "French Defence: Tarrasch Variation / 3....Nf6"
+}
+{
+  "openingName": "Slav: Exchange",
+  "alias": "Slav Defence Exchange Variation"
+}
+{
+  "openingName": "Slav Defense: Chameleon Variation",
+  "alias": "a6 Slav"
+}
+{
+  "openingName": "French Defense: Advance Variation",
+  "alias": "French Defence: Advance Variation"
+}
+{
+  "openingName": "French Defense: Advance Variation",
+  "alias": "French Defence: Advance Variation"
+}
+{
+  "openingName": "Modern",
+  "alias": "Caro-Kann"
+}
+{
+  "openingName": "French Defense: Advance Variation",
+  "alias": "French Defence: Advance Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Advance Variation",
+  "alias": "Caro-Kann Defence - Advance Variation"
+}
+{
+  "openingName": "Kangaroo Defense",
+  "alias": "Keres Defence"
+}
+{
+  "openingName": "Caro-Kann Defense: von Hennig Gambit",
+  "alias": "Von Hennig Gambit"
+}
+{
+  "openingName": "French Defense: Exchange Variation",
+  "alias": "Exchange Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Exchange Variation",
+  "alias": "Caro-Kann Defence: Exchange Variation"
+}
+{
+  "openingName": "French: Exchange",
+  "alias": "Exchange Variation"
+}
+{
+  "openingName": "French: Exchange, 4.Bd3",
+  "alias": "Exchange Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Modern Variation",
+  "alias": "Caro-Kann Defence: Modern Variation"
+}
+{
+  "openingName": "English Defense",
+  "alias": "English Defence"
+}
+{
+  "openingName": "Caro-Kann Defense: Maróczy Variation",
+  "alias": "3. f3"
+}
+{
+  "openingName": "Caro-Kann Defense: Karpov Variation",
+  "alias": "4...Nd7"
+}
+{
+  "openingName": "Caro-Kann Defense: Tartakower Variation",
+  "alias": "Caro-Kann Defence:Korchnoi Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Bronstein-Larsen Variation",
+  "alias": "Caro-Kann Defence:Bronstein-Larsen Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Panov Attack",
+  "alias": "Caro-Kann Panov-Botvinnik Attack"
+}
+{
+  "openingName": "Caro-Kann: 4.Nxe4 Nf6",
+  "alias": "Caro-Kann Defence"
+}
+{
+  "openingName": "Caro-Kann Defense: Finnish Variation",
+  "alias": "Caro-Kann Defence: Finnish Variation"
+}
+{
+  "openingName": "Caro-Kann: Classical, 6.Nf3",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Caro-Kann: Classical, 6.h4 h6 7.h5",
+  "alias": "Nimzowitsch Variation: 7...Bh7 8. Rh4!?"
+}
+{
+  "openingName": "Neo-Old Indian: 2.c4 e5 3.dxe5",
+  "alias": "Rat Defence"
+}
+{
+  "openingName": "Caro-Kann: Classical, 7.Nf3 e6",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Caro-Kann: Classical, Spassky, 10.Qxd3",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Scandinavian Defense: Modern Variation",
+  "alias": "Scandinavian Defence: Modern Variation"
+}
+{
+  "openingName": "Scandinavian Defense: Blackburne-Kloosterboer Gambit",
+  "alias": "Scandinavian Defense: Blackburne Gambit"
+}
+{
+  "openingName": "Scandinavian Defense: Gubinsky-Melts Defense",
+  "alias": "Scandinavian Defense: Mieses-Kotrč, Gubinsky-Melts Defense"
+}
+{
+  "openingName": "Caro-Kann Defense",
+  "alias": "Caro-Kann Defence"
+}
+{
+  "openingName": "Modern",
+  "alias": "Modern Defence"
+}
+{
+  "openingName": "Rat Defense: Balogh Defense",
+  "alias": "Balogh Defense"
+}
+{
+  "openingName": "Nimzowitsch Defense",
+  "alias": "Nimzowitsch Defence"
+}
+{
+  "openingName": "Pirc Defense: Austrian Attack, Dragon Formation",
+  "alias": "Austrian Attack: Dragon"
+}
+{
+  "openingName": "Pirc Defense: Austrian Attack",
+  "alias": "Austrian Attack"
+}
+{
+  "openingName": "Crab Opening",
+  "alias": "Crab Variation"
+}
+{
+  "openingName": "Ware Opening: Meadow Hay Trap",
+  "alias": "2. Ra3??"
+}
+{
+  "openingName": "Alekhine Defense: Two Pawns Attack",
+  "alias": "Alekhine's Defence: Lasker Attack"
+}
+{
+  "openingName": "Alekhine Defense: Modern Variation",
+  "alias": "Alekhine's Defence : Modern Variation"
+}
+{
+  "openingName": "Alekhine Defense: Exchange Variation",
+  "alias": "Alekhine Defence:Exchange variation"
+}
+{
+  "openingName": "Nimzowitsch Defense: Scandinavian Variation, Bogoljubov Variation",
+  "alias": "Nimzowitsch Defence"
+}
+{
+  "openingName": "Alekhine: Four Pawns Attack, 6...Nc6",
+  "alias": "Alekhine Defence"
+}
+{
+  "openingName": "Nimzowitsch Defense: Kennedy Variation",
+  "alias": "Nimzowitsch Defence"
+}
+{
+  "openingName": "Owen Defence: 3.Bd3 Nf6",
+  "alias": "Chess Opening Theory/1. e4/1...b6/2. d4/2...Bb7/3. Bd3/3...Nf6"
+}
+{
+  "openingName": "Owen Defence: Matinovsky Gambit",
+  "alias": "Matovinsky Gambit"
+}
+{
+  "openingName": "Queen's Pawn Game",
+  "alias": "2. e3"
+}
+{
+  "openingName": "Barnes Opening: Fool's Mate",
+  "alias": "Barnes Opening/Fool's Mate"
+}
+{
+  "openingName": "French: KIA 2.d3 d5",
+  "alias": "King's Indian Attack"
+}
+{
+  "openingName": "Barnes Opening: Hammerschlag",
+  "alias": "Fried Fox/Pork Chop Opening Mainline"
+}
+{
+  "openingName": "Sicilian: 2.d3 e6",
+  "alias": "French Defense"
+}
+{
+  "openingName": "Queen's Pawn: 2.Nf3 e6",
+  "alias": ""
+}
+{
+  "openingName": "Queen's Pawn: 2.Nf3 c6",
+  "alias": ""
+}
+{
+  "openingName": "Queen's Pawn Game: Krause Variation",
+  "alias": "2...c5"
+}
+{
+  "openingName": "Indian Defense: Polish Variation",
+  "alias": "Polish Defence Deferred"
+}
+{
+  "openingName": "Hodgson Attack, 2...h6",
+  "alias": "2...h6"
+}
+{
+  "openingName": "Trompowsky Attack: Classical Defense",
+  "alias": "2...e6"
+}
+{
+  "openingName": "English Opening: Anglo-Indian Defense, King's Indian Formation",
+  "alias": "2...g6"
+}
+{
+  "openingName": "Queen's Pawn: Veresov Attack",
+  "alias": ""
+}
+{
+  "openingName": "English Opening: Anglo-Indian Defense, Queen's Indian Formation",
+  "alias": "2...b6"
+}
+{
+  "openingName": "English Opening: Agincourt Defense",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Caro-Kann Defense: Two Knights Attack",
+  "alias": "Caro–Kann Defence: Two Knights Attack"
+}
+{
+  "openingName": "Queen's Pawn Game",
+  "alias": "2...Nf6"
+}
+{
+  "openingName": "Sicilian Defense: Smith-Morra Gambit Declined, Push Variation",
+  "alias": "3...d3"
+}
+{
+  "openingName": "King's Indian Attack: Symmetrical Defense",
+  "alias": "King's Indian Attack"
+}
+{
+  "openingName": "Bishop's Opening: Boi Variation",
+  "alias": "2...Bc5"
+}
+{
+  "openingName": "Bishop's Opening: Calabrese Countergambit",
+  "alias": "Bishop's Opening - Calabrese Countergambit"
+}
+{
+  "openingName": "Bishop's Opening: Anderssen Gambit",
+  "alias": "Bishop's Opening - Sideline 2... b5?!: The Anderssen Counter-Gambit"
+}
+{
+  "openingName": "Bishop's Opening: Khan Gambit",
+  "alias": "Bishop's Opening - Sideline 2... d5?"
+}
+{
+  "openingName": "Indian Defense: Przepiorka Variation",
+  "alias": "King's Indian, Fianchetto without c4"
+}
+{
+  "openingName": "Caro-Kann Defense: Accelerated Panov Attack",
+  "alias": "Accelerated Panov Attack"
+}
+{
+  "openingName": "Caro-Kann: English Variation",
+  "alias": "Accelerated Panov Attack"
+}
+{
+  "openingName": "Caro-Kann: Breyer Variation",
+  "alias": "Caro-Kann Defence, Breyer Variation"
+}
+{
+  "openingName": "Sicilian Defense: Morphy Gambit",
+  "alias": "Chess Opening Theory/1. e4/1...c5/2. d4/2...cxd4/3. Nf3"
+}
+{
+  "openingName": "Caro-Kann: English Variation",
+  "alias": "Accelerated Panov Attack"
+}
+{
+  "openingName": "Caro-Kann: English, Exchange",
+  "alias": "Accelerated Panov Attack"
+}
+{
+  "openingName": "King's Gambit Declined: Classical Variation",
+  "alias": "King's Gambit Declined"
+}
+{
+  "openingName": "Caro-Kann Defense: Accelerated Panov Attack, Open Variation",
+  "alias": "Caro-Kann"
+}
+{
+  "openingName": "King's Gambit Declined: Falkbeer Countergambit",
+  "alias": "Falkbeer Countergambit"
+}
+{
+  "openingName": "King's Gambit: 2...d6",
+  "alias": "2...d6"
+}
+{
+  "openingName": "King's Gambit Declined: Panteldakis Countergambit",
+  "alias": "Panteldakis Countergambit"
+}
+{
+  "openingName": "Danish Gambit Declined: Sorensen Defense",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. d4/2...exd4/3. c3/3...d5"
+}
+{
+  "openingName": "Sicilian Defense: Wing Gambit, Marshall Variation",
+  "alias": "3. a3"
+}
+{
+  "openingName": "King's Pawn Game: Maróczy Defense",
+  "alias": "2...d6"
+}
+{
+  "openingName": "Philidor Defense: Exchange Variation",
+  "alias": "Philidor Defence: Exchange Variation"
+}
+{
+  "openingName": "Reti: Tennison Gambit Accepted",
+  "alias": "2...exd5"
+}
+{
+  "openingName": "Russian Game: Modern Attack, 3...Nxe4",
+  "alias": "Petrov Defence, Steinitz variation"
+}
+{
+  "openingName": "Torre Attack: Classical Defense",
+  "alias": "Torre Attack"
+}
+{
+  "openingName": "Sicilian: Closed",
+  "alias": "2...d6"
+}
+{
+  "openingName": "King's Pawn Game: Wayward Queen Attack, Kiddie Countergambit",
+  "alias": "Kiddie Countergambit"
+}
+{
+  "openingName": "Queen's Pawn Game: Colle System",
+  "alias": "Chess Opening Theory/1. d4/1...Nf6/2. Nf3/2...e6/3. e3/3...d5Queen's Pawn Game: Colle System"
+}
+{
+  "openingName": "Sicilian Defense: Closed",
+  "alias": "2...e6"
+}
+{
+  "openingName": "Indian Defense: London System",
+  "alias": "London System Indian Setup with a Early 2. Nf3"
+}
+{
+  "openingName": "Sicilian Defense: Nyezhmetdinov-Rossolimo Attack",
+  "alias": "Sicilian-Rossolimo Variation"
+}
+{
+  "openingName": "Queen's Pawn Game: Colle System",
+  "alias": "Queen's Pawn Opening"
+}
+{
+  "openingName": "Sicilian: 2...Nc6 3.Nc3",
+  "alias": "Sicilian"
+}
+{
+  "openingName": "Richter-Veresov Attack",
+  "alias": "3...Bg5?!"
+}
+{
+  "openingName": "Sicilian Defense: Franco-Sicilian Variation",
+  "alias": "Open Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: Portsmouth Gambit",
+  "alias": "Portsmouth Gambit"
+}
+{
+  "openingName": "Sicilian Defense: Grand Prix Attack",
+  "alias": "Closed Sicilian: Grand Prix Attack"
+}
+{
+  "openingName": "Trompowsky Attack: Borg Variation",
+  "alias": "Trompowsky Attack"
+}
+{
+  "openingName": "Vienna Game: Stanley Variation",
+  "alias": "Vienna Game, Falkbeer Defence"
+}
+{
+  "openingName": "Russian Game: Italian Variation",
+  "alias": "Petrov's Defence: Italian Variation"
+}
+{
+  "openingName": "Bishop's Opening: 3.d3",
+  "alias": "Bishop's Opening: \"Modern\" Berlin Defence"
+}
+{
+  "openingName": "Sicilian: Alapin, 2...Nf6 3.e5 Nd5 4.d4",
+  "alias": "4.d4"
+}
+{
+  "openingName": "Vienna Game: Stanley Variation",
+  "alias": "Vienna Game, Falkbeer Defence"
+}
+{
+  "openingName": "Vienna Gambit: 3...exf4",
+  "alias": "Vienna Game"
+}
+{
+  "openingName": "Vienna Game: Vienna Gambit, Modern Variation",
+  "alias": "Vienna Game"
+}
+{
+  "openingName": "King's Gambit Accepted: Bishop's Gambit",
+  "alias": "King's Bishop Gambit Accepted"
+}
+{
+  "openingName": "King's Gambit Accepted: Polerio Gambit",
+  "alias": "Villemson Gambit"
+}
+{
+  "openingName": "King's Gambit Accepted: Breyer Gambit",
+  "alias": "The Breyer Gambit - 3. Qf3?!"
+}
+{
+  "openingName": "King's Gambit Accepted: Tumbleweed",
+  "alias": "3. Kf2? King's Own Gambit"
+}
+{
+  "openingName": "King's Gambit Accepted: King's Knight's Gambit",
+  "alias": "King's Gambit Accepted, 4.Bc4"
+}
+{
+  "openingName": "King's Gambit Accepted: Modern Defense",
+  "alias": ""
+}
+{
+  "openingName": "King's Gambit Accepted: Kieseritzky Gambit, Kolisch Defense",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. f4/2...exf4/3. Nf3/3...g5/4. h4/4...g4/5. Ne5/5...d6"
+}
+{
+  "openingName": "King's Gambit Accepted: Becker Defense",
+  "alias": "Becker's Defence"
+}
+{
+  "openingName": "King's Gambit Accepted: Cunningham Defense",
+  "alias": "Cunningham-Euwe Variation"
+}
+{
+  "openingName": "King's Gambit Accepted: Allgaier Gambit",
+  "alias": "Allgaier Gambit"
+}
+{
+  "openingName": "King's Gambit Accepted: Fischer Defense",
+  "alias": "Fischer Defense"
+}
+{
+  "openingName": "Danish Gambit: Accepted",
+  "alias": "Danish Gambit Accepted"
+}
+{
+  "openingName": "Danish Gambit: Accepted, 4.Bc4",
+  "alias": "4. Bc4"
+}
+{
+  "openingName": "English: Anglo-Indian, 2.Nc3 g6",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English Opening: Anglo-Indian Defense, Hedgehog System",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English Opening: King's English Variation, Two Knights Variation",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English Opening: King's English Variation, Reversed Closed Sicilian",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English: King's, 2.g3 Nf6",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English: King's, 2.g3 Nc6",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English: Symmetrical, 2.Nf3 Nf6",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "English: Symmetrical, 2.Nf3 Nc6",
+  "alias": ""
+}
+{
+  "openingName": "English Opening: Symmetrical Variation, Two Knights Variation",
+  "alias": "English Opening - Symmetrical Variation"
+}
+{
+  "openingName": "Dutch: 2.g3 Nf6",
+  "alias": "Dutch"
+}
+{
+  "openingName": "Alekhine Defense: Scandinavian Variation",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "English: 1...e6 2.Nc3 d5",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English Opening: Agincourt Defense",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Dutch: 2.Nf3 Nf6",
+  "alias": "Dutch"
+}
+{
+  "openingName": "English: 1...e6 2.Nf3 Nf6",
+  "alias": "2...e6"
+}
+{
+  "openingName": "Reti: 1...c5",
+  "alias": ""
+}
+{
+  "openingName": "English: Caro-Kann Defence",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Sicilian: Moscow 3...Nc6",
+  "alias": "Sicilian Canal-Sokolsky (Rossolimo) Attack"
+}
+{
+  "openingName": "Sicilian: 2...e6 3.Nc3",
+  "alias": "3.Nc3"
+}
+{
+  "openingName": "Sicilian: Moscow 3...Nd7",
+  "alias": "Open Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: Venice Attack",
+  "alias": "Open Sicilian 6.Bb5+"
+}
+{
+  "openingName": "Sicilian Defense: Moscow Variation, Main Line",
+  "alias": "Sicilian, Canal-Sokolsky (Rossolimo) Attack"
+}
+{
+  "openingName": "Sicilian Defense: Najdorf Variation",
+  "alias": "Sicilian Defence, Najdorf Variation"
+}
+{
+  "openingName": "Sicilian Defense: French Variation, Normal",
+  "alias": "Sicilian 2...e6"
+}
+{
+  "openingName": "Sicilian Defense: O'Kelly Variation, Venice System",
+  "alias": "Sicilian - O'Kelly variation - Venice System (\"Enhanced\" Alapin)"
+}
+{
+  "openingName": "Sicilian: Najdorf, 6.Bg5 Nbd7",
+  "alias": "Sicilian Defence, Najdorf Variation"
+}
+{
+  "openingName": "Sicilian Defense: Löwenthal Variation",
+  "alias": "Löwenthal Variation"
+}
+{
+  "openingName": "Sicilian Defense: Scheveningen Variation, Delayed Keres Attack",
+  "alias": "Sicilian Defence, Scheveningen Variation, Perenyi Attack"
+}
+{
+  "openingName": "Sicilian Defense: Accelerated Dragon",
+  "alias": "Sicilian - Accelerated Dragon"
+}
+{
+  "openingName": "Russian Game",
+  "alias": "3. Nxe5"
+}
+{
+  "openingName": "Russian Game: Three Knights Game",
+  "alias": "Petrov's Defence"
+}
+{
+  "openingName": "Sicilian Defense: Nimzo-American Variation",
+  "alias": "Chess Opening Theory/1. e4/1...c5/2. Nf3/2...Nc6/3. d4/3...cxd4/4. Nxd4/4...d5"
+}
+{
+  "openingName": "Russian Game: Italian Variation",
+  "alias": "Petrov's Defence: Italian Variation"
+}
+{
+  "openingName": "Russian Game: Modern Attack",
+  "alias": "Petrov's DefenceTheory table"
+}
+{
+  "openingName": "Spanish: Open, 6.Re1",
+  "alias": "Ruy Lopez, Riga Variation"
+}
+{
+  "openingName": "Spanish: Modern Steinitz, 5.d4",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...d6/5. d4"
+}
+{
+  "openingName": "Spanish: Exchange, Lasker Variation",
+  "alias": "Ruy Lopez: Exchange Variation"
+}
+{
+  "openingName": "Ruy Lopez: Berlin Defense",
+  "alias": "Ruy Lopez:Open Game"
+}
+{
+  "openingName": "Spanish: Exchange, 5.O-O Bg4",
+  "alias": "5...Bg4"
+}
+{
+  "openingName": "Latvian Gambit: 3.Nxe5",
+  "alias": "3. Nxe5"
+}
+{
+  "openingName": "Philidor Defense",
+  "alias": "Philidor Defence"
+}
+{
+  "openingName": "Philidor Defense",
+  "alias": "Philidor Defence"
+}
+{
+  "openingName": "Spanish: Old Steinitz, 4.d4",
+  "alias": "Ruy Lopez: Steinitz Defence"
+}
+{
+  "openingName": "Italian Game: Giuoco Piano",
+  "alias": "3...Bc5 – Giuoco Piano"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense",
+  "alias": "3... Nf6 – Two Knights Defence"
+}
+{
+  "openingName": "Ruy Lopez: Closed, Chigorin Defense",
+  "alias": "Chigorin Defense"
+}
+{
+  "openingName": "Italian Game: Hungarian Defense",
+  "alias": "Hungarian Defence"
+}
+{
+  "openingName": "Ruy Lopez: Open, Riga Variation",
+  "alias": "Ruy Lopez Open Defence"
+}
+{
+  "openingName": "Italian Game: Paris Defense",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bc4/3...d6Paris Defence"
+}
+{
+  "openingName": "Elephant Gambit: 3.exd5",
+  "alias": "Elephant Gambit"
+}
+{
+  "openingName": "Spanish: 5.O-O b5 6.Bb3",
+  "alias": "Ruy Lopez Arkhangelsk/Møller Variations"
+}
+{
+  "openingName": "Italian Game: Blackburne-Kostić Gambit",
+  "alias": "Blackburne Shilling Gambit"
+}
+{
+  "openingName": "Ruy Lopez: Open",
+  "alias": "Ruy Lopez Open Defence"
+}
+{
+  "openingName": "Ruy Lopez: Classical Variation, Central Variation",
+  "alias": "Ruy Lopez:Open Game"
+}
+{
+  "openingName": "Scotch: 3...d6",
+  "alias": "3...Nc6"
+}
+{
+  "openingName": "Ruy Lopez: Open, Richter Variation",
+  "alias": "Ruy Lopez Open Defence"
+}
+{
+  "openingName": "Italian Game: Rousseau Gambit",
+  "alias": "Rousseau Gambit"
+}
+{
+  "openingName": "Three Knights Opening: Steinitz Defense",
+  "alias": ""
+}
+{
+  "openingName": "Three Knights Opening: Winawer Defense",
+  "alias": "Winawer Defense"
+}
+{
+  "openingName": "Ponziani Opening: Jaenisch Counterattack",
+  "alias": "Ponziani Opening, Jaenisch Counterattack"
+}
+{
+  "openingName": "Ruy Lopez: Schliemann Defense, Dyckhoff Variation",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. Nc3"
+}
+{
+  "openingName": "Spanish: Bird's, 4.Bc4",
+  "alias": "4. Bc4"
+}
+{
+  "openingName": "Ponziani: 3...d5",
+  "alias": "3.d5"
+}
+{
+  "openingName": "Spanish: Schliemann, 4.d3",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. d3"
+}
+{
+  "openingName": "Ruy Lopez: Schliemann Defense, Schönemann Attack",
+  "alias": "4. ...fxe4"
+}
+{
+  "openingName": "Ponziani Opening: Ponziani Countergambit",
+  "alias": "3...F5"
+}
+{
+  "openingName": "Ruy Lopez: Schliemann Defense, Jaenisch Gambit Accepted",
+  "alias": "Schliemann Defence Accepted"
+}
+{
+  "openingName": "King's Indian: 3.Nf3 Bg7",
+  "alias": "Indian Defence"
+}
+{
+  "openingName": "Old Indian: 3.Nc3",
+  "alias": "Old Indian"
+}
+{
+  "openingName": "King's Indian Defense: Sämisch Variation, Normal Defense",
+  "alias": "King's Indian Defence"
+}
+{
+  "openingName": "Indian: Mexican Defence, 3.Nf3",
+  "alias": "Black Knights Tango"
+}
+{
+  "openingName": "Old Indian: 3.Nf3",
+  "alias": "King's Indian, Orthodox"
+}
+{
+  "openingName": "QGD: 4.Nf3 Be7",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "King's Indian: 3.Nf3 d6",
+  "alias": "King's Indian, Orthodox"
+}
+{
+  "openingName": "Indian: Mexican Defence, 3.Nc3",
+  "alias": "Black Knights Tango"
+}
+{
+  "openingName": "Semi-Slav Defense: Marshall Gambit",
+  "alias": "4. e4"
+}
+{
+  "openingName": "QGD: 3.Nf3 Nf6",
+  "alias": "3...Nf6"
+}
+{
+  "openingName": "Blackmar-Diemer: 2.e4 dxe4 3.Nc3",
+  "alias": "Blackmar-Diemer Gambit (BDG)"
+}
+{
+  "openingName": "QGD: Ragozin",
+  "alias": "4...Bb4"
+}
+{
+  "openingName": "King's Indian Attack: Sicilian Variation",
+  "alias": "King's Indian Attack"
+}
+{
+  "openingName": "Blackmar-Diemer Gambit: Fritz Attack",
+  "alias": "Blackmar-Diemer Gambit (BDG)"
+}
+{
+  "openingName": "Queen's Gambit Declined: Semi-Tarrasch Defense",
+  "alias": "General concepts"
+}
+{
+  "openingName": "Vienna Gambit, with Max Lange Defense",
+  "alias": "Vienna Gambit"
+}
+{
+  "openingName": "Vienna: 2...Nc6 3.Bc4",
+  "alias": "Vienna Game"
+}
+{
+  "openingName": "Sicilian Defense: Four Knights Variation",
+  "alias": "Sicilian - Four Knights Variation"
+}
+{
+  "openingName": "Vienna Game: Hamppe-Meitner Variation",
+  "alias": "3. Na4?!"
+}
+{
+  "openingName": "Sicilian: Pelikan/Sveshnikov, Pelikan Variation",
+  "alias": "Sveshnikov Sicilian"
+}
+{
+  "openingName": "Sicilian: Dragon, 6.Be3 Bg7",
+  "alias": "Sicilian Defence, Dragon Variation"
+}
+{
+  "openingName": "Sicilian: Alapin, 2...d5 3.exd5",
+  "alias": "3. exd5"
+}
+{
+  "openingName": "Sicilian: Scheveningen, Keres, 6...h6",
+  "alias": "Scheveningen Variation, Keres Attack"
+}
+{
+  "openingName": "Sicilian: Dragon, Levenfish, 6...Bg7",
+  "alias": "Chess Opening Theory/1. e4/1...c5/2. Nf3/2...d6/3. d4/3...cxd4/4. Nxd4/4...Nf6/5. Nc3/5...g6/6. f4/6...Bg7"
+}
+{
+  "openingName": "Slav Defense",
+  "alias": "3...dxc4"
+}
+{
+  "openingName": "Semi-Slav Defense Accepted",
+  "alias": "Botvinnik Variation"
+}
+{
+  "openingName": "Slav Defense: Winawer Countergambit",
+  "alias": "Winawer Countergambit"
+}
+{
+  "openingName": "Slav: 3.Nc3 Nf6",
+  "alias": "Slav Defence"
+}
+{
+  "openingName": "Semi-Slav: 5.e3 Nbd7",
+  "alias": "Semi-Slav Defence"
+}
+{
+  "openingName": "Nimzo-Indian: Leningrad, 4...h6",
+  "alias": "Nimzo-Indian Defence, Leningrad Variation"
+}
+{
+  "openingName": "Nimzo-Indian: Leningrad, 4...h6 5.Bh4",
+  "alias": "Nimzo-Indian Defence, Leningrad Variation"
+}
+{
+  "openingName": "Nimzo-Indian: Leningrad, 4...h6 5.Bh4 c5",
+  "alias": "Nimzo-Indian Defence, Leningrad Variation"
+}
+{
+  "openingName": "Nimzo-Indian: Leningrad, 6.d5",
+  "alias": "Nimzo-Indian Defence, Leningrad Variation"
+}
+{
+  "openingName": "English Opening: Anglo-Scandinavian Defense, Löhn Gambit",
+  "alias": "English Opening: Loehn Gambit"
+}
+{
+  "openingName": "English Opening: Anglo-Scandinavian Defense, Schulz Gambit",
+  "alias": "English Opening: Schulz Gambit"
+}
+{
+  "openingName": "Bird: From Gambit, 2...d6",
+  "alias": "2...d6"
+}
+{
+  "openingName": "Bird Opening: Schlechter Gambit",
+  "alias": "2...Nc6"
+}
+{
+  "openingName": "Nimzowitsch Defense: Colorado Countergambit",
+  "alias": "Colorado Countergambit"
+}
+{
+  "openingName": "Nimzowitsch Defense: Williams Variation",
+  "alias": "Nimzowitsch Defence, Williams Variation"
+}
+{
+  "openingName": "Gruenfeld: Classical Exchange, 7...c5",
+  "alias": "7...c5"
+}
+{
+  "openingName": "English: Symmetrical, Two Knights",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "Benko Gambit: 4.cxb5",
+  "alias": "Benko Gambit"
+}
+{
+  "openingName": "Spanish: Closed, 8.c3",
+  "alias": "Closed Main Line, (to) Marshall Gambit"
+}
+{
+  "openingName": "Spanish: Closed, 8.h3",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...Nf6/5. O-O/5...Be7/6. Re1/6...b5/7. Bb3/7...O-O/8. h3"
+}
+{
+  "openingName": "Ruy Lopez: Closed, Anti-Marshall",
+  "alias": "Closed Ruy Lopez, Kasparov (anti-Marshall) Attack"
+}
+{
+  "openingName": "Budapest: Fajarowicz, 4.Nf3",
+  "alias": "4...Nc6"
+}
+{
+  "openingName": "Budapest: Fajarowicz, 4.a3",
+  "alias": ""
+}
+{
+  "openingName": "Indian Defense: Budapest Defense, Fajarowicz-Steiner Variation",
+  "alias": "4...d5"
+}
+{
+  "openingName": "French Defense: Tarrasch Variation, Open System",
+  "alias": "Chess Opening Theory/1. e4/1...e6/2. d4/2...d5/3. Nd2/3...c5French Defence: Tarrasch Variation"
+}
+{
+  "openingName": "French Defense: Winawer Variation, Advance Variation",
+  "alias": "French Defence, Winawer Variation"
+}
+{
+  "openingName": "French Defense: Tarrasch Variation, Morozevich Variation",
+  "alias": "Chess Opening Theory/1. e4/1...e6/2. d4/2...d5/3. Nd2/3...Be7"
+}
+{
+  "openingName": "French: Tarrasch, 5.Bd3",
+  "alias": "French Defence: Tarrasch Variation / 3....Nf6"
+}
+{
+  "openingName": "French: Winawer, 5...Bxc3+",
+  "alias": "French Defence, Winawer Variation"
+}
+{
+  "openingName": "French Defense: Winawer Variation, Delayed Exchange Variation",
+  "alias": "Chess Opening Theory/1. e4/1...e6/2. d4/2...d5/3. Nc3/3...Bb4/4. exd5"
+}
+{
+  "openingName": "French Defense: Winawer Variation, Alekhine-Maróczy Gambit",
+  "alias": "French Defence, Winawer Variation, Alekhine Gambit"
+}
+{
+  "openingName": "French Defense: Winawer Variation, Advance Variation",
+  "alias": "French Defence, Winawer Variation"
+}
+{
+  "openingName": "French: Winawer, Alekhine Gambit Accepted",
+  "alias": "French Defence, Winawer Variation, Alekhine Gambit"
+}
+{
+  "openingName": "Slav Defense: Chameleon Variation, Advance System",
+  "alias": "a6 Slav"
+}
+{
+  "openingName": "French: Advance, 5.Nf3 Qb6",
+  "alias": "French Defence: Advance Variation"
+}
+{
+  "openingName": "French Defense: Advance Variation, Paulsen Attack",
+  "alias": "French Defence: Advance VariationTheory Table"
+}
+{
+  "openingName": "Caro-Kann: Advance, 3...Bf5",
+  "alias": "Caro-Kann Defence - Advance Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Advance Variation, Botvinnik-Carls Defense",
+  "alias": "Caro-Kann Defence - Botvinnik-Carls Defense"
+}
+{
+  "openingName": "Caro-Kann: Advance, 4.Bd3",
+  "alias": "Caro-Kann Defence - Advance Variation"
+}
+{
+  "openingName": "Caro-Kann: Exchange, 3...cxd5",
+  "alias": "Caro-Kann Defence: Exchange Variation"
+}
+{
+  "openingName": "French: Exchange, 4.Nf3",
+  "alias": "French Defence: Exchange Variation: 4. Nf3"
+}
+{
+  "openingName": "Caro-Kann: 3.Nd2 dxe4",
+  "alias": "Caro-Kann Defense: Modern Variation"
+}
+{
+  "openingName": "French Defense: Exchange Variation, Monte Carlo Variation",
+  "alias": "Monte Carlo Variation"
+}
+{
+  "openingName": "French: Exchange, 4.c4 Nf6",
+  "alias": "Monte Carlo Variation"
+}
+{
+  "openingName": "French: Exchange, 4.c4 Nf6 5.Nc3",
+  "alias": "Variation c4"
+}
+{
+  "openingName": "French: Exchange, 4.c4 Nf6 5.Nc3 Be7",
+  "alias": "Variation c4"
+}
+{
+  "openingName": "Caro-Kann Defense: Karpov Variation, Modern Variation",
+  "alias": "5.Ng5 !?"
+}
+{
+  "openingName": "Caro-Kann: 4.Nxe4 Nf6 5.Nxf6+",
+  "alias": "Caro-Kann Defence"
+}
+{
+  "openingName": "Caro-Kann: Classical, 6.Nf3 Nd7",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Rat Defense: English Rat, Lisbon Gambit",
+  "alias": "Rat Defence"
+}
+{
+  "openingName": "Caro-Kann: Classical, Spassky, 10.Qxd3 e6",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Caro-Kann: Classical, Spassky, 10.Qxd3 Qc7",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Scandinavian: 2...Nf6 3.c4",
+  "alias": "3. c4"
+}
+{
+  "openingName": "Pirc: Austrian, 5...c5 6.dxc5",
+  "alias": "Austrian Attack:Dragon"
+}
+{
+  "openingName": "Alekhine: Chase Variation",
+  "alias": "Alekhine's Defence: Lasker Attack"
+}
+{
+  "openingName": "Alekhine Defense: Modern Variation, Main Line",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "Alekhine Defense: The Squirrel",
+  "alias": "Alekhine's Defence: The Squirrel"
+}
+{
+  "openingName": "Nimzowitsch Defense: Scandinavian Variation, Bogoljubov Variation",
+  "alias": "Nimzowitsch Defence"
+}
+{
+  "openingName": "Alekhine Defense: Four Pawns Attack, Main Line",
+  "alias": "Alekhine Defence"
+}
+{
+  "openingName": "Alekhine: Exchange, 5...cxd6",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "Alekhine Defense: Modern Variation, Alburt Variation",
+  "alias": "Alekhine's Defence:Modern Variation"
+}
+{
+  "openingName": "Nimzowitsch Defense: Scandinavian Variation, Bogoljubov Variation, Brandics Gambit",
+  "alias": "Nimzowitsch Defence"
+}
+{
+  "openingName": "Alekhine: Exchange, 5...exd6",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "French: KIA 2.d3 d5 3.Nd2",
+  "alias": "French Defense: King's Indian Attack"
+}
+{
+  "openingName": "English: Anglo-Indian, 2.Nc3 e6 3.Nf3",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English: 1...e6 2.Nf3 Nf6 3.g3",
+  "alias": "3.g3"
+}
+{
+  "openingName": "Caro-Kann: English Variation",
+  "alias": "Accelerated Panov Attack"
+}
+{
+  "openingName": "Caro-Kann Defense: Accelerated Panov Attack, Modern Variation",
+  "alias": "Accelerated Panov Attack"
+}
+{
+  "openingName": "King's Gambit Declined: Falkbeer Countergambit Accepted",
+  "alias": "Falkbeer Countergambit"
+}
+{
+  "openingName": "King's Gambit Declined: Falkbeer Countergambit, Blackburne Attack",
+  "alias": "Falkbeer Countergambit"
+}
+{
+  "openingName": "Sicilian Defense: Closed",
+  "alias": "3.g3"
+}
+{
+  "openingName": "Sicilian Defense: Nyezhmetdinov-Rossolimo Attack, Fianchetto Variation",
+  "alias": "Sicilian, Rossolimo Variation"
+}
+{
+  "openingName": "Colle: 3...c5",
+  "alias": "3...c5"
+}
+{
+  "openingName": "Torre Attack: 3...e6",
+  "alias": "Torre Attack"
+}
+{
+  "openingName": "Vienna Game: Stanley Variation, Three Knights Variation",
+  "alias": "Vienna Game"
+}
+{
+  "openingName": "Vienna Game: Frankenstein-Dracula Variation",
+  "alias": "Frankenstein-Dracula Variation"
+}
+{
+  "openingName": "King's Gambit Accepted: Bishop's Gambit, Cozio Defense",
+  "alias": ""
+}
+{
+  "openingName": "King's Gambit Accepted: Bishop's Gambit, Bledow Variation",
+  "alias": ""
+}
+{
+  "openingName": "KGA: 3.Nf3 g5 4.Bc4 g4",
+  "alias": "King's Gambit Accepted, 4...g4"
+}
+{
+  "openingName": "KGA: Fischer, 4.d4",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. f4/2...exf4/3. Nf3/3...d6/4. d4"
+}
+{
+  "openingName": "English Opening: Carls-Bremen System",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English Opening: Mikenas-Carls Variation",
+  "alias": "Mikenas Variation"
+}
+{
+  "openingName": "English: Closed",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English Opening: King's English Variation, Three Knights System",
+  "alias": "English, Three Knights System"
+}
+{
+  "openingName": "English: Symmetrical, Two Knights",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "English Opening: Symmetrical Variation, Two Knights, Fianchetto Variation",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "Alekhine Defense: Krejcik Variation, Krejcik Gambit",
+  "alias": "Alekhine Defence:Krejcik Variation"
+}
+{
+  "openingName": "English: Agincourt Variation",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Reti: 1...c5",
+  "alias": ""
+}
+{
+  "openingName": "Alekhine: Scandinavian, 3.e5",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "Réti Opening: Anglo-Slav Variation, Bogoljubov Variation",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Sicilian Defense: Najdorf Variation",
+  "alias": "Sicilian Defence, Najdorf Variation"
+}
+{
+  "openingName": "Sicilian: Open, 2...e6, 4.Nxd4 Nf6 5.Nc3",
+  "alias": "Sicilian 2...e6"
+}
+{
+  "openingName": "Sicilian: Loewenthal, 5.Nb5",
+  "alias": "Kalashnikov Variation"
+}
+{
+  "openingName": "Sicilian Defense: Sozin, not Scheveningen",
+  "alias": "Classical Sicilian - Sozin Attack"
+}
+{
+  "openingName": "Sicilian Defense: Accelerated Dragon, Maróczy Bind",
+  "alias": "Sicilian Defence, Maróczy Bind"
+}
+{
+  "openingName": "Russian Game: Damiano Variation",
+  "alias": ""
+}
+{
+  "openingName": "Russian-Three Knights Game",
+  "alias": "Petroff Three Knights Variation"
+}
+{
+  "openingName": "Sicilian Defense: Accelerated Dragon, Modern Variation",
+  "alias": "Accelerated Dragon - Modern Variation"
+}
+{
+  "openingName": "Russian Game: Modern Attack, 3...Nxe4",
+  "alias": "Petrov Defence, Steinitz variation"
+}
+{
+  "openingName": "Russian Game",
+  "alias": "Petrov DefenceTheory table"
+}
+{
+  "openingName": "Russian Game: Stafford Gambit",
+  "alias": "3... Nc6"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense",
+  "alias": "3... Nf6 – Two Knights Defence"
+}
+{
+  "openingName": "Russian Game",
+  "alias": "Petrov's DefenceTheory Table"
+}
+{
+  "openingName": "Russian Game",
+  "alias": "Petrov's DefenceTheory Table"
+}
+{
+  "openingName": "Russian Game: Damiano Variation, Kholmov Gambit",
+  "alias": "Petrov's Defence, Damiano Variation"
+}
+{
+  "openingName": "Russian Game: Stafford Gambit",
+  "alias": "4...dxc6"
+}
+{
+  "openingName": "Spanish: Exchange, 5.O-O Bg4 6.h3",
+  "alias": "6. h3"
+}
+{
+  "openingName": "Philidor Defense: Philidor Countergambit",
+  "alias": "Philidor Counter-Gambit"
+}
+{
+  "openingName": "Philidor Defense: Exchange Variation",
+  "alias": "Philidor Defence: Exchange Variation"
+}
+{
+  "openingName": "Philidor Defense: Hanham Variation",
+  "alias": "Hanham Variation 3..Nd7!?"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Knight Attack",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Italian Game: Rosentreter Gambit",
+  "alias": "Italian Gambit"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Traxler Counterattack",
+  "alias": "Traxler Counterattack"
+}
+{
+  "openingName": "Italian Game: Evans Gambit",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bc4/3...Bc5/4. b4Evans Gambit"
+}
+{
+  "openingName": "Italian Game: Classical Variation",
+  "alias": "4. c3"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Traxler Counterattack, Bishop Sacrifice Line",
+  "alias": "Traxler Counterattack"
+}
+{
+  "openingName": "Philidor Defense: Nimzowitsch Variation",
+  "alias": "Improved Hanham Variation (Nimzowitsch Variation)Theory table"
+}
+{
+  "openingName": "Italian Game: Giuoco Pianissimo",
+  "alias": "Giuoco Pianissimo"
+}
+{
+  "openingName": "Two Knights: Traxler, Chigorin/Pithart Variation",
+  "alias": "Traxler Counterattack"
+}
+{
+  "openingName": "Giuoco Piano: 4.O-O",
+  "alias": "4. O-O"
+}
+{
+  "openingName": "Italian Game: Jerome Gambit",
+  "alias": "4. Bxf7+?"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Knight Attack, Normal Variation",
+  "alias": "Statistics"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Lolli Attack",
+  "alias": "Two Knights Defence:Lolli Variation"
+}
+{
+  "openingName": "Two Knights: 4.Ng5 d5 5.exd5 Nxd5",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Pincus Variation",
+  "alias": "Two Knights Defence:Lolli Variation"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Fried Liver Attack",
+  "alias": "Fried Liver Attack"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Polerio Defense, Kieseritzky Variation",
+  "alias": "Two Knights Defence:Morphy Variation"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Polerio Defense",
+  "alias": "Two Knights Defence: Polerio Defense"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Polerio Defense, Yankovich Variation",
+  "alias": "Two Knights Defence:Morphy Variation"
+}
+{
+  "openingName": "Two Knights: Morphy, Kieseritsky Variation, 6...h6 7.Nf3 e4 8.Qe2",
+  "alias": "Two Knights Defence:Morphy Variation"
+}
+{
+  "openingName": "Two Knights: Morphy, Polerio, 6...c6",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Polerio Defense, Bishop Check Line",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Two Knights: Morphy, Main Line 9.Nf3",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Polerio Defense, Suhle Defense",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Two Knights: Morphy, Main Line 9.Nf3 e4",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Two Knights: Morphy, Main Line 9.Nf3 e4 10.Ne5",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Steinitz Variation",
+  "alias": "Two Knights Defence:Steinitz Variation"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Polerio Defense, Bogoljubov Variation",
+  "alias": "Two Knights with 8.Qf3"
+}
+{
+  "openingName": "Two Knights: Morphy, Steiner Variation",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Colman Variation",
+  "alias": "Two Knights:Colman Defence"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Ulvestad Variation",
+  "alias": "Ulvestad Variation"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Fritz Variation",
+  "alias": "Two Knights Defence:Fritz variation"
+}
+{
+  "openingName": "Two Knights: Fritz Variation, Main Line",
+  "alias": "Two Knights Defence:Fritz variation"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Fritz, Gruber Variation",
+  "alias": "Two Knights Defence:Fritz variation"
+}
+{
+  "openingName": "Two Knights: Fritz, Berliner Variation",
+  "alias": "Two Knights Defence:Fritz variation"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Open Variation",
+  "alias": "Two Knights Defence - Classical Variation"
+}
+{
+  "openingName": "Scotch Game: Scotch Gambit, Dubois Réti Defense",
+  "alias": "Two Knights Defence - Classical Variation"
+}
+{
+  "openingName": "Ruy Lopez: Morphy Defense, Arkhangelsk Variation",
+  "alias": "Arkhangelsk Variation"
+}
+{
+  "openingName": "Scotch Game",
+  "alias": "Scotch Game, main line"
+}
+{
+  "openingName": "Ruy Lopez: Classical Variation, Cordel Gambit",
+  "alias": "Ruy Lopez:Open Game"
+}
+{
+  "openingName": "Spanish: Open, 7.Bb3 d5",
+  "alias": "Ruy Lopez Open Defence"
+}
+{
+  "openingName": "Italian Game: Scotch Gambit",
+  "alias": "Two Knights Defence: Classical Variation"
+}
+{
+  "openingName": "Scotch Game: Scotch Gambit",
+  "alias": "Scotch Gambit"
+}
+{
+  "openingName": "Spanish: 5.O-O b5 6.Bb3 Bc5",
+  "alias": "Modern-Arkhangelsk Variation"
+}
+{
+  "openingName": "Scotch Game: Scotch Gambit, Advance Variation",
+  "alias": "Two Knights Defence - Modern Variation"
+}
+{
+  "openingName": "Scotch Game: Göring Gambit",
+  "alias": "Scotch Game/Göring Gambit"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Modern Bishop's Opening",
+  "alias": "Two Knights Defence 4. d3"
+}
+{
+  "openingName": "Four Knights Game: Scotch Variation",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Nc3/3...Nf6/4. d4"
+}
+{
+  "openingName": "Four Knights Game: Spanish Variation",
+  "alias": "Spanish Four Knights Game"
+}
+{
+  "openingName": "Spanish: Schliemann, 4.Nc3 fxe4",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. Nc3/4...fxe4"
+}
+{
+  "openingName": "Spanish: Schliemann, 4.d3 fxe4",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. d3/4...fxe4"
+}
+{
+  "openingName": "King's Indian: Saemisch, 5...O-O 6.Be3",
+  "alias": "King's Indian Defence"
+}
+{
+  "openingName": "QGD: Classical Variation",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "Four Knights Game: Halloween Gambit",
+  "alias": "Halloween Gambit"
+}
+{
+  "openingName": "Indian: Mexican Defence, 3.Nf3 e6",
+  "alias": "Black Knights Tango"
+}
+{
+  "openingName": "Semi-Slav: Marshall Gambit, 4...dxe4",
+  "alias": "4...dxe4"
+}
+{
+  "openingName": "King's Indian Attack: French Variation",
+  "alias": "Chess Opening Theory/1. Nf3/1...d5/2. g3/2...c5/3. Bg2/3...Nc6"
+}
+{
+  "openingName": "Blackmar-Diemer Gambit",
+  "alias": "Blackmar-Diemer Gambit (BDG)"
+}
+{
+  "openingName": "Blackmar-Diemer Gambit: Lemberger Countergambit",
+  "alias": "Blackmar-Diemer Gambit (BDG): Lemberger Countergambit"
+}
+{
+  "openingName": "Vienna: 2...Nc6 3.f4",
+  "alias": "Vienna Gambit"
+}
+{
+  "openingName": "Queen's Gambit Accepted: Normal Variation",
+  "alias": "4. e3"
+}
+{
+  "openingName": "Blackmar-Diemer Gambit: Zeller Defense",
+  "alias": "3. Bf5"
+}
+{
+  "openingName": "Sicilian: Pelikan, 7.Bg5",
+  "alias": "Sveshnikov Sicilian"
+}
+{
+  "openingName": "Sicilian Defense: Dragon Variation, Yugoslav Attack, Early Deviations",
+  "alias": "Sicilian Defense, Dragon Variation, Yugoslav Attack"
+}
+{
+  "openingName": "Sicilian: Dragon, Levenfish, 6...Bg7 7.e5",
+  "alias": "Chess Opening Theory/1. e4/1...c5/2. Nf3/2...d6/3. d4/3...cxd4/4. Nxd4/4...Nf6/5. Nc3/5...g6/6. f4/6...Bg7/7. e5"
+}
+{
+  "openingName": "Slav: 3.Nc3 dxc4 4.e3",
+  "alias": "4.e3"
+}
+{
+  "openingName": "Semi-Slav: 6.Qc2",
+  "alias": "Semi-Slav Defence, Anti-Meran Variation"
+}
+{
+  "openingName": "Catalan: 4.Nf3",
+  "alias": "Catalan Opening"
+}
+{
+  "openingName": "English: Symmetrical, Two Knights",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "Benko Gambit Accepted",
+  "alias": "Benko Gambit"
+}
+{
+  "openingName": "Ruy Lopez: Marshall Attack",
+  "alias": "Ruy Lopez, Marshall Gambit"
+}
+{
+  "openingName": "Spanish: Closed, 8...d6",
+  "alias": "Ruy Lopez Main Line"
+}
+{
+  "openingName": "French Defense: Advance Variation, Milner-Barry Gambit",
+  "alias": "French Defence: Advance Variation"
+}
+{
+  "openingName": "French Defense: Advance Variation, Euwe Variation",
+  "alias": "French Defence: Advance Variation, Euwe VariationTheory Table"
+}
+{
+  "openingName": "French Defense: Advance Variation, Main Line",
+  "alias": "French Defence: Advance Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Advance Variation, Van der Wiel Attack",
+  "alias": "Caro-Kann Defence - Advance Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Advance Variation, Short Variation",
+  "alias": "Caro-Kann Defence - Advance Variation"
+}
+{
+  "openingName": "Caro-Kann: Exchange, 4.Bd3",
+  "alias": "Caro-Kann Exchange Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Advance Variation, Tal Variation",
+  "alias": "Caro-Kann Defence - Advance Variation, Tal Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Main Line",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Caro-Kann Defense: Advance Variation, Bayonet Attack",
+  "alias": "Caro-Kann Defence - Bayonet Attack"
+}
+{
+  "openingName": "Caro-Kann: Classical, Spassky, 10.Qxd3 e6 11.Bf4",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Alekhine: Exchange, 5...exd6 6.Nc3",
+  "alias": "Chess Opening Theory/1. e4/1...Nf6/2. e5/2...Nd5/3. d4/3...d6/4. c4/4...Nb6/5. exd6/5...exd6/6. Nc3"
+}
+{
+  "openingName": "Alekhine Defense: Two Pawns Attack, Lasker Variation",
+  "alias": "Alekhine's Defence: Lasker Attack"
+}
+{
+  "openingName": "Alekhine: Exchange, 5...cxd6 6.Nc3",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "English: Anglo-Indian, 2.Nc3 e6 3.Nf3 d5",
+  "alias": "Queen's Gambit Declined"
+}
+{
+  "openingName": "King's Gambit Declined: Falkbeer Countergambit, Staunton Line",
+  "alias": "Falkbeer Countergambit"
+}
+{
+  "openingName": "Torre Attack: 3...e6 4.e3",
+  "alias": "Torre Attack"
+}
+{
+  "openingName": "Sicilian Defense: Closed, Korchnoi Defense",
+  "alias": "3...d5"
+}
+{
+  "openingName": "King's Gambit Declined: Falkbeer Countergambit, Nimzowitsch-Marshall Countergambit",
+  "alias": "Falkbeer Countergambit"
+}
+{
+  "openingName": "Vienna: 3.Bc4 Nxe4 4.Nxe4",
+  "alias": "4. Nxe4"
+}
+{
+  "openingName": "King's Gambit Accepted: Muzio Gambit, Wild Muzio Gambit",
+  "alias": "King's Gambit Accepted, Muzio Gambit"
+}
+{
+  "openingName": "Vienna: 3.Bc4 Nxe4 4.Qh5",
+  "alias": "Vienna Game, Falkbeer Defence"
+}
+{
+  "openingName": "King's Gambit Accepted: Salvio Gambit",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. f4/2...exf4/3. Nf3/3...g5/4. Bc4/4...g4/5. Ne5"
+}
+{
+  "openingName": "English Opening: King's English Variation, Two Knights Variation, Fianchetto Line",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English Opening: Mikenas-Carls, Sicilian",
+  "alias": "Flohr-Mikenas System"
+}
+{
+  "openingName": "English Opening: King's English Variation, Two Knights Variation, Keres Variation",
+  "alias": "English Opening"
+}
+{
+  "openingName": "English Opening: King's English Variation, Four Knights Variation",
+  "alias": "English, Four Knights"
+}
+{
+  "openingName": "English: Symmetrical, 3.g3 g6",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "English: Neo-Catalan",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Alekhine: Scandinavian, 3.e5 Nfd7",
+  "alias": "Alekhine's Defence"
+}
+{
+  "openingName": "English: Symmetrical, 3.g3 Nf6",
+  "alias": "English Opening - Symmetrical Variation"
+}
+{
+  "openingName": "Sicilian Defense: Kalashnikov Variation",
+  "alias": "Pelikán and Sveshnikov Variations"
+}
+{
+  "openingName": "Sicilian Defense: Najdorf Variation",
+  "alias": "Sicilian Defence, Najdorf Variation"
+}
+{
+  "openingName": "Sicilian Defense: Najdorf Variation, Poisoned Pawn Variation",
+  "alias": "Sicilian Defence, Poisoned Pawn Variation"
+}
+{
+  "openingName": "Sicilian Defense: Najdorf Variation, Polugaevsky Variation",
+  "alias": "Polugaevsky Variation"
+}
+{
+  "openingName": "Sicilian Defense: Richter-Rauzer Variation",
+  "alias": "Classical Sicilian Richter Rauser variation"
+}
+{
+  "openingName": "Sicilian Defense: Accelerated Dragon, Maróczy Bind",
+  "alias": "Sicilian Defence, Maroczy Bind"
+}
+{
+  "openingName": "Vienna: 3.Bc4 Bb4 4.Nf3",
+  "alias": "4. Bc4"
+}
+{
+  "openingName": "Sicilian: Accelerated Fianchetto, Modern, 5...Bg7",
+  "alias": "Accelerated Dragon - Modern Variation"
+}
+{
+  "openingName": "Russian Game: Classical Attack",
+  "alias": "Petrov's DefenseTheory Table"
+}
+{
+  "openingName": "Russian Game: Cochrane Gambit",
+  "alias": "Petrov Defence: Beaver GambitTheory table"
+}
+{
+  "openingName": "Ruy Lopez: Exchange Variation, Alapin Gambit",
+  "alias": "Ruy Lopez, Exchange Variation, Alapin Gambit"
+}
+{
+  "openingName": "Russian Game: Nimzowitsch Attack",
+  "alias": "5. Nc3"
+}
+{
+  "openingName": "Philidor: Philidor Countergambit, 4.dxe5",
+  "alias": "Philidor Counter-Gambit"
+}
+{
+  "openingName": "Philidor: Hanham, 4.Bc4",
+  "alias": "4.Bc4"
+}
+{
+  "openingName": "Philidor Defense: Exchange Variation",
+  "alias": "Philidor Defence: Exchange Variation 4. Nxd4"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Ponziani-Steinitz Gambit",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Traxler Counterattack, Knight Sacrifice Line",
+  "alias": "5. Nxf7"
+}
+{
+  "openingName": "Italian Game: Evans Gambit Accepted",
+  "alias": "4...Bxb4"
+}
+{
+  "openingName": "Italian Game: Classical Variation",
+  "alias": "4... Nf6"
+}
+{
+  "openingName": "Italian Game: Giuoco Pianissimo, Normal",
+  "alias": "4. d3 Giuoco Pianissimo"
+}
+{
+  "openingName": "Italian Game: Evans Gambit Declined",
+  "alias": "Evans Gambit Declined"
+}
+{
+  "openingName": "Two Knights: Traxler, 5.Nxf7 & 6.Kxf2",
+  "alias": "6. Kxf2"
+}
+{
+  "openingName": "Italian Game: Evans Gambit, Hein Countergambit",
+  "alias": "Evans Gambit: Hein Countergambit"
+}
+{
+  "openingName": "Two Knights: Traxler, 5.d4",
+  "alias": "5. d4!?"
+}
+{
+  "openingName": "Giuoco Piano: 4.O-O Nf6",
+  "alias": "4... Nf6"
+}
+{
+  "openingName": "Two Knights: Morphy, Polerio, 6...Bd7",
+  "alias": "Statistics"
+}
+{
+  "openingName": "Two Knights: Main Line 10...Bd6",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Two Knights: Morphy, Geller Variation",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Italian Game: Scotch Gambit, Double Gambit Accepted",
+  "alias": "Scotch Gambit"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Polerio Defense, Göring Variation",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Two Knights: Fritz, 8.cxd5",
+  "alias": "Two Knights Defence:Fritz variation"
+}
+{
+  "openingName": "Scotch Game: Classical Variation",
+  "alias": "Scotch Game, main line"
+}
+{
+  "openingName": "Ruy Lopez: Open",
+  "alias": "Ruy Lopez Open Defence"
+}
+{
+  "openingName": "Scotch Game: Haxo Gambit",
+  "alias": "Scotch Gambit"
+}
+{
+  "openingName": "Scotch Game: Steinitz Variation",
+  "alias": "Scotch Game, Steinitz Variation"
+}
+{
+  "openingName": "Two Knights: Max Lange Attack",
+  "alias": "Scotch Gambit: Max Lange Attack"
+}
+{
+  "openingName": "Italian Game: Giuoco Pianissimo, Normal",
+  "alias": "4. d3 Giuoco Pianissimo"
+}
+{
+  "openingName": "Sicilian: Pelikan, 7.Bg5 a6",
+  "alias": "Chess Opening Theory/1. e4/1...c5/2. Nf3/2...Nc6/3. d4/3...cxd4/4. Nxd4/4...Nf6/5. Nc3/5...e5/6. Ndb5/6...d6/7. Bg5/7...a6"
+}
+{
+  "openingName": "Reti: KIA, 2...c5, 3.Bg2 Nc6 4.d4",
+  "alias": "Chess Opening Theory/1. Nf3/1...d5/2. g3/2...c5/3. Bg2/3...Nc6/4. d4"
+}
+{
+  "openingName": "Sicilian Defense: Dragon Variation, Yugoslav Attack",
+  "alias": "Sicilian Defense, Dragon Variation, Yugoslav Attack"
+}
+{
+  "openingName": "Spanish: Marshall, 9.exd5",
+  "alias": "Ruy Lopez, Marshall Gambit"
+}
+{
+  "openingName": "Benko Gambit Accepted: Fully Accepted Variation",
+  "alias": "Benko Gambit"
+}
+{
+  "openingName": "Semi-Slav: 6.Qc2 Bd6",
+  "alias": "Anti-Meran Variation"
+}
+{
+  "openingName": "Spanish: Marshall, 9.exd5 Nxd5",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...Nf6/5. O-O/5...Be7/6. Re1/6...b5/7. Bb3/7...O-O/8. c3/8...d5/9. exd5/9...Nxd5"
+}
+{
+  "openingName": "Spanish: Marshall, 9.exd5 Nxd5 10.Nxe5",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...Nf6/5. O-O/5...Be7/6. Re1/6...b5/7. Bb3/7...O-O/8. c3/8...d5/9. exd5/9...Nxd5/10. Nxe5"
+}
+{
+  "openingName": "French: Advance, 5.Nf3 Qb6 6.a3 c4",
+  "alias": "French Defence: Advance Variation"
+}
+{
+  "openingName": "Spanish: Marshall, 9.exd5 Nxd5 10.Nxe5 Nxe5",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...Nf6/5. O-O/5...Be7/6. Re1/6...b5/7. Bb3/7...O-O/8. c3/8...d5/9. exd5/9...Nxd5/10. Nxe5/10...Nxe5"
+}
+{
+  "openingName": "Caro-Kann: Advance, 4.Nc3 e6",
+  "alias": "Chess Opening Theory/1. e4/1...c6/2. d4/2...d5/3. e5/3...Bf5/4. Nc3/4...e6"
+}
+{
+  "openingName": "Caro-Kann: Advance, 4.Nf3 e6",
+  "alias": "Caro-Kann Defence - Advance Variation"
+}
+{
+  "openingName": "Spanish: Marshall, 11.Rxe5",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...Nf6/5. O-O/5...Be7/6. Re1/6...b5/7. Bb3/7...O-O/8. c3/8...d5/9. exd5/9...Nxd5/10. Nxe5/10...Nxe5/11. Rxe5"
+}
+{
+  "openingName": "Caro-Kann: Exchange, 4.Bd3 Nc6",
+  "alias": "Caro-Kann Exchange Variation"
+}
+{
+  "openingName": "Danish Gambit Accepted: Schlechter Defense",
+  "alias": "Danish Gambit Accepted: Schlechter Defence"
+}
+{
+  "openingName": "Danish Gambit Accepted: Classical Defense",
+  "alias": "Danish Gambit Accepted, Classical Defence"
+}
+{
+  "openingName": "Sicilian: Najdorf, Polugaevsky, 8.e5",
+  "alias": "Polugaevsky Variation"
+}
+{
+  "openingName": "English: Symmetrical, 3.g3 g6",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "Alekhine Defense: Spielmann Gambit",
+  "alias": "Alekhine's Defence: Spielmann Gambit"
+}
+{
+  "openingName": "Sicilian: Najdorf, Poisoned Pawn, 8.Qd2",
+  "alias": "Sicilian Defence, Poisoned Pawn Variation"
+}
+{
+  "openingName": "Sicilian Defense: Richter-Rauzer Variation, Traditional Variation",
+  "alias": "Classical Sicilian Richter Rauzer variation"
+}
+{
+  "openingName": "English: Neo-Catalan",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Sicilian Defense: Accelerated Dragon, Maróczy Bind",
+  "alias": "Sicilian Defence, Maroczy Bind"
+}
+{
+  "openingName": "Sicilian: Accelerated Fianchetto, Modern, 6.Be3",
+  "alias": "Accelerated Dragon - Modern Variation"
+}
+{
+  "openingName": "Italian Game: Classical Variation, Center Attack",
+  "alias": "5. d4"
+}
+{
+  "openingName": "Two Knights: Traxler, 5.Nxf7 & 6.Kf1",
+  "alias": "6. Kf1"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Traxler Counterattack, King March Line",
+  "alias": "7. Ke3"
+}
+{
+  "openingName": "Italian Game: Classical Variation, Giuoco Pianissimo",
+  "alias": "Giuoco Piano: Giuoco Pianissimo Variation"
+}
+{
+  "openingName": "Evans Gambit Accepted, 5.c3",
+  "alias": "Evans Gambit Accepted"
+}
+{
+  "openingName": "Italian Game: Classical Variation, Albin Gambit",
+  "alias": "5. c3"
+}
+{
+  "openingName": "Italian Game: Deutz Gambit",
+  "alias": "Deutz Gambit"
+}
+{
+  "openingName": "Two Knights: Main Line, 11.d4",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Two Knights: Classical, 6.Re1",
+  "alias": "Scotch Gambit Accepted"
+}
+{
+  "openingName": "Scotch: 4.Nxd4 Bc5 5.Nxc6",
+  "alias": "Scotch Game, Classical Variation"
+}
+{
+  "openingName": "Italian Game: Scotch Gambit, Nakhmanson Gambit",
+  "alias": "Nakhmanson Gambit"
+}
+{
+  "openingName": "Two Knights: Main Line, 11.f4",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Italian Game: Two Knights Defense, Max Lange Attack",
+  "alias": "Max Lange Attack"
+}
+{
+  "openingName": "Spanish: Schliemann, 4.Nc3 fxe4 5.Nxe4 d5",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. Nc3/4...fxe4/5. Nxe4/5...d5"
+}
+{
+  "openingName": "Ruy Lopez: Open, Main Line",
+  "alias": "Ruy Lopez Open Defence"
+}
+{
+  "openingName": "Ruy Lopez: Schliemann Defense, Tartakower Variation",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. Nc3/4...fxe4/5. Nxe4/5...Nf6"
+}
+{
+  "openingName": "Sicilian: Dragon, Yugoslav, 7.f3 O-O 8.Qd2",
+  "alias": "Sicilian Defense, Dragon Variation, Yugoslav Attack"
+}
+{
+  "openingName": "Benko Gambit: 5.bxa6 Bxa6",
+  "alias": "Benko Gambit"
+}
+{
+  "openingName": "Caro-Kann: Advance, 4.Nf3 e6 5.Be2",
+  "alias": "Caro-Kann Defence - Advance Variation"
+}
+{
+  "openingName": "Ruy Lopez: Marshall Attack, Modern Variation",
+  "alias": "Ruy Lopez, Marshall Gambit Main Line"
+}
+{
+  "openingName": "Caro-Kann: Exchange, 4.Bd3 Nc6 5.c3",
+  "alias": "Caro-Kann Exchange Variation"
+}
+{
+  "openingName": "Owen Defense: Matovinsky Gambit",
+  "alias": "Matovinsky Gambit Accepted"
+}
+{
+  "openingName": "Vienna: 3.Bc4 Nxe4 4.Qh5 Nd6 5.Bb3",
+  "alias": "Vienna Game, Falkbeer Defence"
+}
+{
+  "openingName": "Vienna: 3.Bc4 Nxe4 4.Qh5 Nd6 5.Qxe5+",
+  "alias": "5. Qxe5+"
+}
+{
+  "openingName": "English: Symmetrical, 3.g3 g6",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "English: Neo-Catalan Declined",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Sicilian: Maroczy Bind, 6.Be3 Nf6",
+  "alias": "Sicilian Defence, Maroczy Bind"
+}
+{
+  "openingName": "Sicilian Defense: Richter-Rauzer Variation, Neo-Modern Variation, Early Deviations",
+  "alias": "Classical Sicilian Richter Rauzer variation"
+}
+{
+  "openingName": "Sicilian: Najdorf, Poisoned Pawn Accepted",
+  "alias": "Sicilian Defence, Poisoned Pawn Variation"
+}
+{
+  "openingName": "Russian Game: Cochrane Gambit, Center Variation",
+  "alias": "Petrov's Defence: Cochrane Gambit"
+}
+{
+  "openingName": "Russian Game: Cochrane Gambit, Bishop Check Line",
+  "alias": "Petrov's Defence: Cochrane GambitTheory Table"
+}
+{
+  "openingName": "Italian Game: Evans Gambit, Main Line",
+  "alias": "Main information"
+}
+{
+  "openingName": "Two Knights: Classical, 6.Re1 d5",
+  "alias": "Scotch Gambit Accepted"
+}
+{
+  "openingName": "Two Knights: Main Line, 11.d4 exd3",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Spanish: Schliemann, 4.Nc3 fxe4 5.Nxe4 Nf6 6.Nxf6+",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. Nc3/4...fxe4/5. Nxe4/5...Nf6/6. Nxf6"
+}
+{
+  "openingName": "Spanish: Schliemann, 4.d3 fxe4 5.dxe4 Nf6 6.O-O",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. d3/4...fxe4/5. dxe4/5...Nf6/6. O-O"
+}
+{
+  "openingName": "Spanish: Schliemann, 4.Nc3 fxe4 5.Nxe4 d5 6.Nxe5",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. Nc3/4...fxe4/5. Nxe4/5...d5/6. Nxe5"
+}
+{
+  "openingName": "Ruy Lopez: Open",
+  "alias": "Ruy Lopez Open Defence"
+}
+{
+  "openingName": "Ruy Lopez: Open, Bernstein Variation",
+  "alias": "Ruy Lopez Open Defence"
+}
+{
+  "openingName": "Sicilian Defense: Dragon Variation, Yugoslav Attack",
+  "alias": "Sicilian Defense, Dragon Variation, Yugoslav Attack"
+}
+{
+  "openingName": "Spanish: Schliemann, 4.Nc3 fxe4 5.Nxe4 Nf6 6.Qe2",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. Nc3/4...fxe4/5. Nxe4/5...Nf6/6. Qe2"
+}
+{
+  "openingName": "Caro-Kann: Advance, 4.Nf3 e6 5.Be2 Nd7",
+  "alias": "Caro-Kann Advance Variation"
+}
+{
+  "openingName": "Ruy Lopez: Marshall Attack, Main Line",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...Nf6/5. O-O/5...Be7/6. Re1/6...b5/7. Bb3/7...O-O/8. c3/8...d5/9. exd5/9...Nxd5/10. Nxe5/10...Nxe5/11. Rxe5/11...c6/12. d4"
+}
+{
+  "openingName": "Spanish: Marshall, Main Line, 13.Re1",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...Nf6/5. O-O/5...Be7/6. Re1/6...b5/7. Bb3/7...O-O/8. c3/8...d5/9. exd5/9...Nxd5/10. Nxe5/10...Nxe5/11. Rxe5/11...c6/12. d4/12...Bd6/13. Re1"
+}
+{
+  "openingName": "Spanish: Marshall, Main Line (12.d4 Bd6)",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...Nf6/5. O-O/5...Be7/6. Re1/6...b5/7. Bb3/7...O-O/8. c3/8...d5/9. exd5/9...Nxd5/10. Nxe5/10...Nxe5/11. Rxe5/11...c6/12. d4/12...Bd6"
+}
+{
+  "openingName": "Caro-Kann: Exchange, 4.Bd3 Nc6 5.c3 Nf6",
+  "alias": "Caro-Kann Exchange Variation"
+}
+{
+  "openingName": "Vienna: 3.Bc4 Nxe4 4.Qh5 Nd6 5.Bb3 Nc6",
+  "alias": "Vienna Game, Falkbeer Defence"
+}
+{
+  "openingName": "Caro-Kann Defense: Classical Variation, Lobron System",
+  "alias": "Caro-Kann Defence:Classical Variation"
+}
+{
+  "openingName": "Spanish: Marshall, Main Line, 13.Re1 Qh4 14.g3",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...Nf6/5. O-O/5...Be7/6. Re1/6...b5/7. Bb3/7...O-O/8. c3/8...d5/9. exd5/9...Nxd5/10. Nxe5/10...Nxe5/11. Rxe5/11...c6/12. d4/12...Bd6/13. Re1/13...Qh4/14. g3"
+}
+{
+  "openingName": "Vienna Game: Stanley Variation, Monster Declined",
+  "alias": "Vienna Game, Falkbeer Defence"
+}
+{
+  "openingName": "Ruy Lopez: Marshall Attack, Modern Main Line",
+  "alias": "Ruy Lopez, Marshall Gambit"
+}
+{
+  "openingName": "Spanish: Marshall, Main Line, 13.Re1 Qh4",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...Nf6/5. O-O/5...Be7/6. Re1/6...b5/7. Bb3/7...O-O/8. c3/8...d5/9. exd5/9...Nxd5/10. Nxe5/10...Nxe5/11. Rxe5/11...c6/12. d4/12...Bd6/13. Re1/13...Qh4"
+}
+{
+  "openingName": "English Opening: Symmetrical Variation, Three Knights, Fianchetto Variation",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "English Opening: Symmetrical Variation, Three Knights, Fianchetto Variation",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "Sicilian: Richter-Rauzer, 7...a6 8.O-O-O",
+  "alias": "Classical Sicilian Richter Rauzer variation"
+}
+{
+  "openingName": "Sicilian: Najdorf, Poisoned Pawn, 9.Rb1",
+  "alias": "Sicilian Defence, Poisoned Pawn Variation"
+}
+{
+  "openingName": "Sicilian: Maroczy Bind, 6.Be3 Nf6 7.Nc3",
+  "alias": "Sicilian Defence, Maroczy Bind"
+}
+{
+  "openingName": "English: Neo-Catalan Declined",
+  "alias": "English Opening"
+}
+{
+  "openingName": "Italian Game: Classical Variation, Greco Gambit, Traditional Line",
+  "alias": "6. cxd4"
+}
+{
+  "openingName": "Two Knights: Classical, 7.Bxd5",
+  "alias": "Scotch Gambit Accepted"
+}
+{
+  "openingName": "Sicilian Defense: Dragon Variation, Yugoslav Attack, Main Line",
+  "alias": "Sicilian Defense, Dragon, Main Line"
+}
+{
+  "openingName": "Caro-Kann Defense: Exchange Variation, Rubinstein Variation",
+  "alias": "Caro-Kann Exchange Variation"
+}
+{
+  "openingName": "Vienna: 3.Bc4 Nxe4 4.Qh5 Nd6 5.Bb3 Nc6",
+  "alias": "Vienna Game, Falkbeer Defence"
+}
+{
+  "openingName": "Vienna Game: Stanley Variation, Frankenstein-Dracula Variation",
+  "alias": "Vienna Game, Frankenstein-Dracula Variation"
+}
+{
+  "openingName": "Spanish: Marshall, Main Line, 15.Re4",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...a6/4. Ba4/4...Nf6/5. O-O/5...Be7/6. Re1/6...b5/7. Bb3/7...O-O/8. c3/8...d5/9. exd5/9...Nxd5/10. Nxe5/10...Nxe5/11. Rxe5/11...c6/12. d4/12...Bd6/13. Re1/13...Qh4/14. g3/14...Qh3/15. Re4"
+}
+{
+  "openingName": "Sicilian: Najdorf, Polugaevsky, 9.fxe5 Qc7",
+  "alias": "Polugaevsky Variation"
+}
+{
+  "openingName": "English: Symmetrical, Main Line",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "Sicilian Defense: Najdorf Variation, Poisoned Pawn Accepted",
+  "alias": "Sicilian Defence, Poisoned Pawn Variation"
+}
+{
+  "openingName": "English Opening: Symmetrical Variation, Botvinnik System Reversed, with Nf3",
+  "alias": "Symmetrical English - Wedberg Variation"
+}
+{
+  "openingName": "Sicilian Defense: Accelerated Dragon, Maróczy Bind, Breyer Variation",
+  "alias": "Maroczy Bind, Breyer Variation"
+}
+{
+  "openingName": "Giuoco Piano: 6.cxd4 Bb4+",
+  "alias": "6...Bb4+"
+}
+{
+  "openingName": "Two Knights: Classical, 7.Bxd5 Qxd5",
+  "alias": "Scotch Gambit Accepted"
+}
+{
+  "openingName": "Two Knights: Main Line, 11.d4 exd3 12.Nxd3 Qc7",
+  "alias": "Two Knights Defence"
+}
+{
+  "openingName": "Sicilian Defense: Dragon Variation, Yugoslav Attack",
+  "alias": "Sicilian Defense, Dragon, Main Line"
+}
+{
+  "openingName": "Caro-Kann: Exchange, Rubinstein, 6...Bg4",
+  "alias": "Caro-Kann Exchange Variation"
+}
+{
+  "openingName": "Sicilian: Najdorf, Polugaevsky, 10.exf6",
+  "alias": "Polugaevsky Variation"
+}
+{
+  "openingName": "English: Symmetrical, Main Line, 6.O-O",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "Italian Game: Scotch Gambit, Anderssen Attack",
+  "alias": "Scotch Gambit Accepted"
+}
+{
+  "openingName": "Ruy Lopez: Schliemann Defense, Möhring Variation",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. Nc3/4...fxe4/5. Nxe4/5...d5/6. Nxe5/6...dxe4/7. Nxc6/7...Qd5"
+}
+{
+  "openingName": "Ruy Lopez: Schliemann Defense, Classical Variation",
+  "alias": "Chess Opening Theory/1. e4/1...e5/2. Nf3/2...Nc6/3. Bb5/3...f5/4. Nc3/4...fxe4/5. Nxe4/5...d5/6. Nxe5/6...dxe4/7. Nxc6/7...Qg5"
+}
+{
+  "openingName": "Sicilian Defense: Dragon Variation, Yugoslav Attack",
+  "alias": "Sicilian Defense, Dragon, Main Line"
+}
+{
+  "openingName": "English: Symmetrical, Main Line, 6.O-O O-O",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "Two Knights: Classical, Moller Variation",
+  "alias": "Scotch Gambit Accepted"
+}
+{
+  "openingName": "Blackburne Shilling Gambit",
+  "alias": "7...Nf3#"
+}
+{
+  "openingName": "Sicilian Defense: Dragon Variation, Yugoslav Attack, Old Line",
+  "alias": "Sicilian Defense, Dragon, Old Line"
+}
+{
+  "openingName": "English Opening: Symmetrical Variation, Mecking Variation",
+  "alias": "Symmetrical English"
+}
+{
+  "openingName": "Caro-Kann: Exchange, Rubinstein, 7.Qb3 Qd7",
+  "alias": "Caro-Kann Exchange Variation"
+}
+{
+  "openingName": "Sicilian: Dragon, Yugoslav, 10.O-O-O Rc8 11.Bb3",
+  "alias": "Sicilian Defense, Dragon, Old Line"
+}
