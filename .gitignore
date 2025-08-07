@@ -5,6 +5,10 @@ output/toMerge/*.json
 debugNotes.txt
 protoTests
 temp
+pgnOpeningAnalyzer/cache
+pgnOpeningAnalyzer/openings.json
+pgnOpeningAnalyzer/pgn-links.json
+
 
 # Logs
 logs

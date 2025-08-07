@@ -1,0 +1,20 @@
+{
+  "name": "pgn-opening-analyzer",
+  "version": "1.0.0",
+  "description": "Downloads and analyzes PGN files to build chess opening database",
+  "main": "pgn-analyzer.js",
+  "type": "module",
+  "scripts": {
+    "start": "node pgn-analyzer.js",
+    "schedule": "node pgn-analyzer.js --schedule"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.10"
+  },
+  "bin": {
+    "pgn-analyzer": "./pgn-analyzer.js"
+  },
+  "keywords": ["chess", "pgn", "openings", "analysis"],
+  "author": "Your Name",
+  "license": "MIT"
+}
