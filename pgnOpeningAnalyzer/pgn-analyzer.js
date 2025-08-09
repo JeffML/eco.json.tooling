@@ -6,41 +6,18 @@ import crypto from 'crypto';
 import https from 'https';
 import http from 'http';
 import { URL } from 'url';
-import AdmZip from 'adm-zip';
+import { config } from './config.js';
+import { inspectZipFile, processZipFile } from './zipMethods.js';
+import { 
+    scrapePgnLinks, 
+    loadPgnLinks, 
+    savePgnLinks, 
+    updatePgnLinksForSource 
+} from './pgnLinkMethods.js';
 
 class PGNAnalyzer {
     constructor() {
-        this.config = {
-            htmlSources: [
-                {
-                    name: 'pgnmentor',
-                    url: 'https://www.pgnmentor.com/files.html',
-                    enabled: false,
-                },
-                {
-                    name: 'twic',
-                    url: 'https://theweekinchess.com/twic',
-                    enabled: true,
-                },
-                {
-                    name: 'lichess_db',
-                    url: 'https://database.lichess.org/',
-                    enabled: false,
-                },
-            ],
-            linksFile: 'pgn-links.json',
-            outputFile: 'openings.json',
-            cacheDir: './cache',
-            maxMoves: 25,
-            maxFilesPerSitePerSession: 12,
-            linkPatterns: [
-                /\.pgn$/i,
-                /\.pgn\.zip$/i,
-                /\.pgn\.gz$/i,
-                /\.pgn\.bz2$/i,
-                /\.zip$/i, // Added general zip pattern
-            ],
-        };
+        this.config = config;
 
         this.database = {
             openings: {},
@@ -126,64 +103,6 @@ class PGNAnalyzer {
         return true; // Changed
     }
 
-    // Check if ZIP file contains PGN files
-    async inspectZipFile(zipBuffer) {
-        try {
-            const zip = new AdmZip(zipBuffer);
-            const entries = zip.getEntries();
-
-            const pgnEntries = entries.filter(
-                (entry) => {
-                    const fileName = entry.entryName.toLowerCase();
-                    return fileName.endsWith('.pgn') && !entry.isDirectory;
-                }
-            );
-
-            console.log(`ZIP contains ${pgnEntries.length} PGN files`);
-            return pgnEntries.length > 0 ? pgnEntries : null;
-        } catch (error) {
-            console.error(`Error inspecting ZIP file: ${error.message}`);
-            return null;
-        }
-    }
-
-    // Extract and process PGN files from ZIP
-    async processZipFile(zipBuffer, zipUrl) {
-        try {
-            const zip = new AdmZip(zipBuffer);
-            const pgnEntries = await this.inspectZipFile(zipBuffer);
-
-            if (!pgnEntries) {
-                console.log(`No PGN files found in ZIP: ${path.basename(zipUrl)}`);
-                return 0;
-            }
-
-            let totalProcessed = 0;
-
-            for (const entry of pgnEntries) {
-                try {
-                    console.log(`Processing PGN from ZIP: ${entry.entryName}`);
-                    const pgnContent = entry.getData();
-
-                    if (pgnContent && pgnContent.length > 0) {
-                        this.parsePGN(pgnContent);
-                        totalProcessed++;
-                    }
-                } catch (error) {
-                    console.error(
-                        `Error processing ${entry.entryName}: ${error.message}`
-                    );
-                }
-            }
-
-            console.log(`Processed ${totalProcessed} PGN files from ZIP`);
-            return totalProcessed;
-        } catch (error) {
-            console.error(`Error processing ZIP file: ${error.message}`);
-            return 0;
-        }
-    }
-
     // Enhanced download function with ZIP detection
     async downloadAndProcessPgn(url) {
         try {
@@ -202,11 +121,13 @@ class PGNAnalyzer {
                 console.log(`Detected ZIP file: ${fileName}`);
 
                 // First inspect to see if it contains PGN files
-                const pgnEntries = await this.inspectZipFile(content);
+                const pgnEntries = await inspectZipFile(content);
 
                 if (pgnEntries) {
-                    // Process the ZIP file
-                    return await this.processZipFile(content, url);
+                    // Process the ZIP file with callback to this.parsePGN
+                    return await processZipFile(content, url, (pgnContent) => {
+                        this.parsePGN(pgnContent);
+                    });
                 } else {
                     console.log(`ZIP file contains no PGN files: ${fileName}`);
                     return 0;
@@ -218,146 +139,11 @@ class PGNAnalyzer {
                 return 1;
             }
         } catch (error) {
-            console.error(`Failed to download/process ${url}: ${error.message}`);
+            console.error(
+                `Failed to download/process ${url}: ${error.message}`
+            );
             return 0;
         }
-    }
-
-    // Extract PGN links from HTML content
-    extractPgnLinks(html, baseUrl) {
-        const links = new Set();
-
-        // Simple regex to find href attributes
-        const hrefRegex = /href\s*=\s*["']([^"']+)["']/gi;
-        let match;
-
-        while ((match = hrefRegex.exec(html)) !== null) {
-            const href = match[1];
-
-            // Check if it matches any PGN pattern or is a ZIP file that might contain PGNs
-            const isPgnLink = this.config.linkPatterns.some((pattern) =>
-                pattern.test(href)
-            );
-
-            if (!isPgnLink) continue;
-
-            try {
-                // Resolve relative URLs
-                const fullUrl = new URL(href, baseUrl).toString();
-                links.add(fullUrl);
-            } catch (error) {
-                console.warn(`Invalid URL found: ${href}`);
-            }
-        }
-
-        return Array.from(links);
-    }
-
-    // Scrape HTML page for PGN links
-    async scrapePgnLinks(source) {
-        try {
-            console.log(`Scraping PGN links from ${source.name}...`);
-
-            const response = await this.makeRequest(source.url);
-            if (response.statusCode !== 200) {
-                throw new Error(`HTTP ${response.statusCode}`);
-            }
-
-            const html = response.body.toString('utf8');
-            const links = this.extractPgnLinks(html, source.url);
-
-            console.log(`Found ${links.length} PGN links on ${source.name}`);
-            return links;
-        } catch (error) {
-            console.error(`Failed to scrape ${source.name}: ${error.message}`);
-            return [];
-        }
-    }
-
-    // Load existing PGN links
-    async loadPgnLinks() {
-        try {
-            const data = await fs.readFile(this.config.linksFile, 'utf8');
-            this.pgnLinks = JSON.parse(data);
-
-            // Convert processedFiles arrays back to Sets
-            for (const sourceName in this.pgnLinks.sources) {
-                const source = this.pgnLinks.sources[sourceName];
-                if (Array.isArray(source.processedFiles)) {
-                    source.processedFiles = new Set(source.processedFiles);
-                } else if (!source.processedFiles) {
-                    source.processedFiles = new Set();
-                }
-            }
-
-            console.log(
-                `Loaded ${this.pgnLinks.totalLinks} existing PGN links`
-            );
-        } catch (error) {
-            console.log('No existing PGN links file found');
-        }
-    }
-
-    // Save PGN links
-    async savePgnLinks() {
-        this.pgnLinks.lastUpdated = new Date().toISOString();
-        this.pgnLinks.totalLinks = Object.values(this.pgnLinks.sources).reduce(
-            (total, source) => total + source.links.length,
-            0
-        );
-
-        // Convert Sets to Arrays for JSON serialization
-        const serializable = JSON.parse(JSON.stringify(this.pgnLinks));
-        for (const sourceName in serializable.sources) {
-            if (this.pgnLinks.sources[sourceName].processedFiles) {
-                serializable.sources[sourceName].processedFiles = Array.from(
-                    this.pgnLinks.sources[sourceName].processedFiles
-                );
-            }
-        }
-
-        await fs.writeFile(
-            this.config.linksFile,
-            JSON.stringify(serializable, null, 2)
-        );
-        console.log(`Saved ${this.pgnLinks.totalLinks} PGN links`);
-    }
-
-    // Update PGN links for a source
-    updatePgnLinksForSource(sourceName, newLinks) {
-        if (!this.pgnLinks.sources[sourceName]) {
-            this.pgnLinks.sources[sourceName] = {
-                links: [],
-                lastScraped: null,
-                newLinksFound: 0,
-                processedFiles: new Set(),
-            };
-        }
-
-        const source = this.pgnLinks.sources[sourceName];
-        const oldLinks = new Set(source.links);
-
-        // Find truly new links
-        const addedLinks = newLinks.filter((link) => !oldLinks.has(link));
-
-        source.links = newLinks;
-        source.lastScraped = new Date().toISOString();
-        source.newLinksFound = addedLinks.length;
-
-        // Ensure processedFiles is a Set (for backward compatibility)
-        if (Array.isArray(source.processedFiles)) {
-            source.processedFiles = new Set(source.processedFiles);
-        } else if (!source.processedFiles) {
-            source.processedFiles = new Set();
-        }
-
-        if (addedLinks.length > 0) {
-            console.log(
-                `Found ${addedLinks.length} new PGN links for ${sourceName}`
-            );
-        }
-
-        return addedLinks.length > 0;
     }
 
     // Check if PGN file has changed
@@ -429,6 +215,7 @@ class PGNAnalyzer {
 
         const headerText = parts[0];
         const movesText = parts.slice(1).join('\n\n');
+        console.log({movesText})
 
         const headers = this.parseHeaders(headerText);
         const opening = headers.Opening;
@@ -440,11 +227,11 @@ class PGNAnalyzer {
 
         // Build full opening name with variation and subvariation
         let fullOpeningName = opening;
-        
+
         if (variation) {
             fullOpeningName += `: ${variation}`;
         }
-        
+
         if (subvariation) {
             fullOpeningName += ` - ${subvariation}`;
         }
@@ -452,69 +239,41 @@ class PGNAnalyzer {
         const moves = this.parseMoves(movesText);
         if (moves.length === 0) return null;
 
-        return { 
-            opening: fullOpeningName,  // Changed: now uses full name
-            baseOpening: opening,      // Added: store base opening
-            variation,                 // Added: store variation
-            subvariation,              // Added: store subvariation
-            eco, 
-            moves 
+        return {
+            opening: fullOpeningName,
+            baseOpening: opening,
+            variation,
+            subvariation,
+            eco,
+            moves,
         };
     }
 
-    // Find minimal common move sequence
-    findMinimalMoves(openingName, newMoves) {
-        const existing = this.database.openings[openingName];
-        if (!existing) return newMoves;
-
-        const existingMoves = existing.minimalMoves;
-        const commonMoves = [];
-
-        const minLength = Math.min(existingMoves.length, newMoves.length);
-        for (let i = 0; i < minLength; i++) {
-            if (existingMoves[i] === newMoves[i]) {
-                commonMoves.push(existingMoves[i]);
-            } else {
-                break;
-            }
-        }
-
-        return commonMoves.length > 0 ? commonMoves : newMoves;
-    }
-
-    // Add opening to database
     addOpening(gameData) {
-        const { opening, baseOpening, variation, subvariation, eco, moves } = gameData;  // Changed: destructure new fields
+        const { opening, baseOpening, variation, subvariation, eco, moves } =
+            gameData;
 
         if (!this.database.openings[opening]) {
             this.database.openings[opening] = {
-                baseOpening,           // Added: store base opening
-                variation,             // Added: store variation  
-                subvariation,          // Added: store subvariation
+                baseOpening,
+                variation,
+                subvariation,
                 eco,
-                minimalMoves: moves,
                 count: 0,
-                variations: {},
             };
         }
 
         const entry = this.database.openings[opening];
         entry.count++;
 
-        entry.minimalMoves = this.findMinimalMoves(opening, moves);
-
-        const moveKey = moves.join(' ');
-        entry.variations[moveKey] = (entry.variations[moveKey] || 0) + 1;
-
         if (!entry.eco && eco) {
             entry.eco = eco;
         }
-        
-        // Added: Update variation info if missing
+
         if (!entry.variation && variation) {
             entry.variation = variation;
         }
-        
+
         if (!entry.subvariation && subvariation) {
             entry.subvariation = subvariation;
         }
@@ -573,11 +332,12 @@ class PGNAnalyzer {
             } openings`
         );
     }
+
     // Update PGN links from HTML sources
     async updatePgnLinks() {
         console.log('Checking for new PGN links...');
 
-        await this.loadPgnLinks();
+        this.pgnLinks = await loadPgnLinks(this.config.linksFile);
         let linksUpdated = false;
 
         for (const source of this.config.htmlSources) {
@@ -590,14 +350,14 @@ class PGNAnalyzer {
             }
 
             // Scrape for new links
-            const links = await this.scrapePgnLinks(source);
-            if (this.updatePgnLinksForSource(source.name, links)) {
+            const links = await scrapePgnLinks(source, this.makeRequest.bind(this), this.config.linkPatterns);
+            if (updatePgnLinksForSource(this.pgnLinks, source.name, links)) {
                 linksUpdated = true;
             }
         }
 
         if (linksUpdated) {
-            await this.savePgnLinks();
+            await savePgnLinks(this.pgnLinks, this.config.linksFile);
         }
 
         return linksUpdated;
@@ -635,6 +395,7 @@ class PGNAnalyzer {
         // Return up to maxCount files
         return unprocessed.slice(0, maxCount);
     }
+
     // Process all PGN files (with limits)
     async processPgnFiles() {
         console.log('Processing PGN files...');
@@ -668,24 +429,32 @@ class PGNAnalyzer {
                 try {
                     // Check if file has changed (skip if unchanged)
                     if (!(await this.hasPgnChanged(url))) {
-                        console.log(`No changes in file: ${path.basename(url)}`);
+                        console.log(
+                            `No changes in file: ${path.basename(url)}`
+                        );
                         // Still mark as processed since we checked it
                         this.markPgnAsProcessed(url, sourceName);
                         continue;
                     }
 
                     // Use enhanced download function that handles ZIP files
-                    const filesProcessed = await this.downloadAndProcessPgn(url);
+                    const filesProcessed = await this.downloadAndProcessPgn(
+                        url
+                    );
 
                     if (filesProcessed > 0) {
                         this.markPgnAsProcessed(url, sourceName);
                         processedForSource += filesProcessed;
                         totalProcessed += filesProcessed;
                         console.log(
-                            `Successfully processed ${filesProcessed} file(s) from ${path.basename(url)}`
+                            `Successfully processed ${filesProcessed} file(s) from ${path.basename(
+                                url
+                            )}`
                         );
                     } else {
-                        console.log(`No processable content in ${path.basename(url)}`);
+                        console.log(
+                            `No processable content in ${path.basename(url)}`
+                        );
                         // Still mark as processed to avoid retrying
                         this.markPgnAsProcessed(url, sourceName);
                     }
@@ -702,13 +471,13 @@ class PGNAnalyzer {
 
         // Save updated processed files list
         if (totalProcessed > 0) {
-            await this.savePgnLinks();
+            await savePgnLinks(this.pgnLinks, this.config.linksFile);
         }
 
         return totalProcessed;
     }
 
-    // Print statistics (enhanced)
+    // Enhanced statistics
     printStats() {
         const openings = Object.entries(this.database.openings).sort(
             (a, b) => b[1].count - a[1].count
@@ -740,7 +509,36 @@ class PGNAnalyzer {
             const [name, data] = openings[i];
             console.log(`${i + 1}. ${name}: ${data.count} games`);
         }
+
+        // Show opening hierarchy statistics
+        const baseOpenings = {};
+        for (const [name, data] of Object.entries(this.database.openings)) {
+            const base = data.baseOpening || name;
+            if (!baseOpenings[base]) {
+                baseOpenings[base] = {
+                    count: 0,
+                    variations: 0,
+                };
+            }
+            baseOpenings[base].count += data.count;
+            baseOpenings[base].variations++;
+        }
+
+        const topBaseOpenings = Object.entries(baseOpenings)
+            .sort((a, b) => b[1].count - a[1].count)
+            .slice(0, 5);
+
+        console.log('\nTop 5 base openings with variations:');
+        for (let i = 0; i < topBaseOpenings.length; i++) {
+            const [name, data] = topBaseOpenings[i];
+            console.log(
+                `${i + 1}. ${name}: ${data.count} games (${
+                    data.variations
+                } variations)`
+            );
+        }
     }
+
     // Schedule periodic runs
     schedule() {
         console.log('Running initial analysis...');
