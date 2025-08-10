@@ -10,12 +10,18 @@
     "schedule": "node pgn-analyzer.js --schedule"
   },
   "dependencies": {
-    "adm-zip": "^0.5.10"
+    "adm-zip": "^0.5.10",
+    "chess.js": "^1.4.0"
   },
   "bin": {
     "pgn-analyzer": "./pgn-analyzer.js"
   },
-  "keywords": ["chess", "pgn", "openings", "analysis"],
+  "keywords": [
+    "chess",
+    "pgn",
+    "openings",
+    "analysis"
+  ],
   "author": "Your Name",
   "license": "MIT"
 }

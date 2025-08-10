@@ -6,6 +6,7 @@ import crypto from 'crypto';
 import https from 'https';
 import http from 'http';
 import { URL } from 'url';
+import { Chess } from 'chess.js';
 import { config } from './config.js';
 import { inspectZipFile, processZipFile } from './zipMethods.js';
 import { 
@@ -14,6 +15,30 @@ import {
     savePgnLinks, 
     updatePgnLinksForSource 
 } from './pgnLinkMethods.js';
+
+// Chess position tracker using chess.js library
+class ChessPosition {
+    constructor() {
+        this.chess = new Chess();
+    }
+
+    // Generate partial FEN (position only)
+    toPartialFEN() {
+        const fen = this.chess.fen();
+        // Extract just the board position (first part before the first space)
+        return fen.split(' ')[0];
+    }
+
+    // Parse algebraic notation and make move
+    makeMove(moveStr) {
+        try {
+            const move = this.chess.move(moveStr);
+            return move !== null;
+        } catch (error) {
+            return false;
+        }
+    }
+}
 
 class PGNAnalyzer {
     constructor() {
@@ -203,7 +228,7 @@ class PGNAnalyzer {
             .filter(
                 (move) => move && !['1-0', '0-1', '1/2-1/2', '*'].includes(move)
             )
-            .slice(0, this.config.maxMoves);
+            .slice(0, this.config.maxPlies); // Limit to maxPlies (half-moves)
 
         return moves;
     }
@@ -215,9 +240,14 @@ class PGNAnalyzer {
 
         const headerText = parts[0];
         const movesText = parts.slice(1).join('\n\n');
-        console.log({movesText})
 
         const headers = this.parseHeaders(headerText);
+        
+        // Skip games with Variant tag (chess variants, not standard chess)
+        if (headers.Variant) {
+            return null;
+        }
+        
         const opening = headers.Opening;
         const variation = headers.Variation || '';
         const subvariation = headers.Subvariation || '';
@@ -239,6 +269,9 @@ class PGNAnalyzer {
         const moves = this.parseMoves(movesText);
         if (moves.length === 0) return null;
 
+        // Generate FEN positions for each move
+        const positions = this.generatePositions(moves);
+
         return {
             opening: fullOpeningName,
             baseOpening: opening,
@@ -246,11 +279,42 @@ class PGNAnalyzer {
             subvariation,
             eco,
             moves,
+            positions, // Array of partial FEN strings
         };
     }
 
+    // Generate FEN positions for each move
+    generatePositions(moves) {
+        const position = new ChessPosition();
+        const positions = [];
+        
+        // Add starting position
+        positions.push(position.toPartialFEN());
+
+        // Apply each move and capture position
+        for (let i = 0; i < Math.min(moves.length, this.config.maxPlies); i++) {
+            const move = moves[i];
+            if (position.makeMove(move)) {
+                positions.push(position.toPartialFEN());
+            } else {
+                // If move parsing fails, show the move sequence leading up to the failure
+                const moveSequence = this.formatMovesString(moves.slice(0, i + 1));
+                const failedMoveNumber = Math.floor(i / 2) + 1;
+                const isWhiteMove = i % 2 === 0;
+                const moveColor = isWhiteMove ? 'White' : 'Black';
+                
+                console.warn(`Failed to parse move "${move}" (${moveColor} move ${failedMoveNumber}) at position ${i + 1}`);
+                console.warn(`Move sequence: ${moveSequence}`);
+                console.warn(`Current position: ${position.toPartialFEN()}`);
+                break;
+            }
+        }
+
+        return positions;
+    }
+
     addOpening(gameData) {
-        const { opening, baseOpening, variation, subvariation, eco, moves } =
+        const { opening, baseOpening, variation, subvariation, eco, moves, positions } =
             gameData;
 
         if (!this.database.openings[opening]) {
@@ -260,7 +324,31 @@ class PGNAnalyzer {
                 subvariation,
                 eco,
                 count: 0,
+                moves: this.formatMovesString(moves),
+                positions: positions.map(pos => [pos, 1]), // Store as [position, count] tuples
             };
+        } else {
+            const entry = this.database.openings[opening];
+            
+            // Update position counts and find divergence point
+            const divergenceInfo = this.updatePositionCounts(entry, positions, moves, opening);
+            
+            // If there's a divergence, log it
+            if (divergenceInfo) {
+                this.logDivergence(divergenceInfo);
+            }
+            
+            // Extend positions if this game is longer
+            if (positions.length > entry.positions.length) {
+                // Extend the existing array with new positions
+                const currentLength = entry.positions.length;
+                const newPositions = positions.slice(currentLength).map(pos => [pos, 1]);
+                entry.positions = entry.positions.concat(newPositions);
+                entry.moves = this.formatMovesString(moves);
+            }
+            
+            // Sort positions by count (descending order)
+            entry.positions.sort((a, b) => b[1] - a[1]);
         }
 
         const entry = this.database.openings[opening];
@@ -277,6 +365,102 @@ class PGNAnalyzer {
         if (!entry.subvariation && subvariation) {
             entry.subvariation = subvariation;
         }
+    }
+
+    // Update position counts and detect divergence
+    updatePositionCounts(entry, newPositions, newMoves, openingName) {
+        const existingPositions = entry.positions; // Array of [position, count] tuples
+        let divergenceIndex = -1;
+        
+        // Check each position for matches and find first divergence
+        const minLength = Math.min(existingPositions.length, newPositions.length);
+        for (let i = 0; i < minLength; i++) {
+            const existingPosition = existingPositions[i][0]; // Extract position from tuple
+            if (existingPosition === newPositions[i]) {
+                existingPositions[i][1]++; // Increment count
+            } else {
+                // Found divergence
+                divergenceIndex = i;
+                break;
+            }
+        }
+        
+        // If we found a divergence, return info for logging
+        if (divergenceIndex >= 0) {
+            return {
+                openingName,
+                divergenceIndex,
+                storedPosition: existingPositions[divergenceIndex][0],
+                newPosition: newPositions[divergenceIndex],
+                moveNumber: divergenceIndex,
+                newMoves: this.formatMovesString(newMoves),
+                storedMoves: entry.moves
+            };
+        }
+        
+        // If no divergence found but new game has more moves, it's an extension
+        if (newPositions.length > existingPositions.length) {
+            // All existing positions matched, so this is just a longer continuation
+            return null; // No divergence to log
+        }
+        
+        // If new game is same length or shorter and no divergence found, all positions matched
+        return null;
+    }
+
+    // Log divergence to file
+    async logDivergence(divergenceInfo) {
+        const logEntry = {
+            timestamp: new Date().toISOString(),
+            openingName: divergenceInfo.openingName,
+            divergenceAtMove: divergenceInfo.divergenceIndex,
+            storedPosition: divergenceInfo.storedPosition,
+            newPosition: divergenceInfo.newPosition,
+            storedMoves: divergenceInfo.storedMoves,
+            newMoves: divergenceInfo.newMoves
+        };
+
+        try {
+            // Ensure the file exists or create it
+            let existingData = [];
+            try {
+                const fileContent = await fs.readFile('divergence.json', 'utf8');
+                existingData = JSON.parse(fileContent);
+            } catch (error) {
+                // File doesn't exist, start with empty array
+            }
+
+            existingData.push(logEntry);
+            await fs.writeFile('divergence.json', JSON.stringify(existingData, null, 2));
+        } catch (error) {
+            console.error('Failed to log divergence:', error.message);
+        }
+    }
+
+    // Parse moves string back to array for comparison
+    parseMovesFromString(movesString) {
+        if (!movesString) return [];
+        return movesString.split(/\d+\.\s*/).filter(Boolean).join(' ').split(' ').filter(Boolean);
+    }
+
+    // Format moves array into proper chess notation string
+    formatMovesString(moves) {
+        if (!moves || moves.length === 0) return '';
+        
+        let formatted = '';
+        for (let i = 0; i < moves.length; i += 2) {
+            const moveNumber = Math.floor(i / 2) + 1;
+            const whiteMove = moves[i];
+            const blackMove = moves[i + 1];
+            
+            if (i > 0) formatted += ' ';
+            
+            formatted += `${moveNumber}. ${whiteMove}`;
+            if (blackMove) {
+                formatted += ` ${blackMove}`;
+            }
+        }
+        return formatted;
     }
 
     // Parse PGN content
@@ -309,6 +493,28 @@ class PGNAnalyzer {
         try {
             const data = await fs.readFile(this.config.outputFile, 'utf8');
             this.database = JSON.parse(data);
+            
+            // Convert old format to new tuple format (backward compatibility)
+            for (const [openingName, entry] of Object.entries(this.database.openings)) {
+                if (entry.positionCounts && Array.isArray(entry.positions) && !Array.isArray(entry.positions[0])) {
+                    // Old format: separate positions and positionCounts arrays
+                    const newPositions = [];
+                    for (let i = 0; i < entry.positions.length; i++) {
+                        const position = entry.positions[i];
+                        const count = entry.positionCounts[i] || 1;
+                        newPositions.push([position, count]);
+                    }
+                    // Sort by count descending
+                    newPositions.sort((a, b) => b[1] - a[1]);
+                    entry.positions = newPositions;
+                    delete entry.positionCounts; // Remove old format
+                } else if (entry.positions && !entry.positionCounts && !Array.isArray(entry.positions[0])) {
+                    // Very old format: just positions array, no counts
+                    entry.positions = entry.positions.map(pos => [pos, entry.count || 1]);
+                    entry.positions.sort((a, b) => b[1] - a[1]);
+                }
+            }
+            
             console.log(
                 `Loaded existing database with ${
                     Object.keys(this.database.openings).length
@@ -504,10 +710,12 @@ class PGNAnalyzer {
             );
         }
 
-        console.log('\nTop 10 openings:');
+        console.log('\nTop 10 openings with positions:');
         for (let i = 0; i < Math.min(10, openings.length); i++) {
             const [name, data] = openings[i];
-            console.log(`${i + 1}. ${name}: ${data.count} games`);
+            const positionCount = data.positions ? data.positions.length : 0;
+            const highestPositionCount = data.positions && data.positions.length > 0 ? data.positions[0][1] : 0;
+            console.log(`${i + 1}. ${name}: ${data.count} games (${positionCount} positions tracked, highest count: ${highestPositionCount})`);
         }
 
         // Show opening hierarchy statistics

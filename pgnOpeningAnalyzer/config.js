@@ -19,7 +19,7 @@ export const config = {
     linksFile: 'pgn-links.json',
     outputFile: 'openings.json',
     cacheDir: './cache',
-    maxMoves: 25,
+    maxPlies: 50, // Maximum plies (half-moves) to track per game (generates maxPlies+1 FEN positions including starting position)
     maxFilesPerSitePerSession: 2, //12,
     linkPatterns: [
         /\.pgn$/i,
