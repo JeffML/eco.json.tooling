@@ -347,8 +347,8 @@ class PGNAnalyzer {
                 entry.moves = this.formatMovesString(moves);
             }
             
-            // Sort positions by count (descending order)
-            entry.positions.sort((a, b) => b[1] - a[1]);
+            // Truncate moves and positions to the most common position (before any sorting)
+            this.truncateMovesToMostCommonPosition(entry);
         }
 
         const entry = this.database.openings[opening];
@@ -367,22 +367,63 @@ class PGNAnalyzer {
         }
     }
 
+    // Truncate moves and positions to the most common position
+    truncateMovesToMostCommonPosition(entry) {
+        if (!entry.positions || entry.positions.length === 0) return;
+        
+        // Before sorting, find the most common position(s) and the deepest one
+        const highestCount = Math.max(...entry.positions.map(([pos, count]) => count));
+        
+        // Find the deepest (latest in sequence) position with the highest count
+        let deepestMostCommonIndex = -1;
+        for (let i = 0; i < entry.positions.length; i++) {
+            if (entry.positions[i][1] === highestCount) {
+                deepestMostCommonIndex = i;
+            }
+        }
+        
+        if (deepestMostCommonIndex >= 0) {
+            // Positions array includes starting position (index 0), so:
+            // - Position 0 = starting position (before any moves)
+            // - Position 1 = after move 1
+            // - Position 2 = after move 2, etc.
+            // So to get moves leading to position N, we need moves[0..N-1]
+            const movesToKeep = deepestMostCommonIndex; // This many moves lead to the deepest most common position
+            
+            // Parse the current moves string back to an array
+            const currentMoves = this.parseMovesFromString(entry.moves);
+            
+            // Truncate to only the moves that lead to the deepest most common position
+            const truncatedMoves = currentMoves.slice(0, movesToKeep);
+            entry.moves = this.formatMovesString(truncatedMoves);
+            
+            // Also truncate positions array to match (keep up to and including the deepest most common position)
+            entry.positions = entry.positions.slice(0, deepestMostCommonIndex + 1);
+        }
+    }
+
     // Update position counts and detect divergence
     updatePositionCounts(entry, newPositions, newMoves, openingName) {
         const existingPositions = entry.positions; // Array of [position, count] tuples
         let divergenceIndex = -1;
+        let lastCommonIndex = -1;
         
-        // Check each position for matches and find first divergence
+        // Check each position for matches and find the last common position
         const minLength = Math.min(existingPositions.length, newPositions.length);
         for (let i = 0; i < minLength; i++) {
             const existingPosition = existingPositions[i][0]; // Extract position from tuple
             if (existingPosition === newPositions[i]) {
-                existingPositions[i][1]++; // Increment count
+                lastCommonIndex = i; // Track the last position that matched
             } else {
                 // Found divergence
                 divergenceIndex = i;
                 break;
             }
+        }
+        
+        // Only increment count for the last common position
+        if (lastCommonIndex >= 0) {
+            existingPositions[lastCommonIndex][1]++; // Increment count only for the last common position
         }
         
         // If we found a divergence, return info for logging
@@ -424,14 +465,14 @@ class PGNAnalyzer {
             // Ensure the file exists or create it
             let existingData = [];
             try {
-                const fileContent = await fs.readFile('divergence.json', 'utf8');
+                const fileContent = await fs.readFile('output/divergence.json', 'utf8');
                 existingData = JSON.parse(fileContent);
             } catch (error) {
                 // File doesn't exist, start with empty array
             }
 
             existingData.push(logEntry);
-            await fs.writeFile('divergence.json', JSON.stringify(existingData, null, 2));
+            await fs.writeFile('output/divergence.json', JSON.stringify(existingData, null, 2));
         } catch (error) {
             console.error('Failed to log divergence:', error.message);
         }

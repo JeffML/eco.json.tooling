@@ -8,6 +8,7 @@ temp
 pgnOpeningAnalyzer/cache
 pgnOpeningAnalyzer/openings.json
 pgnOpeningAnalyzer/pgn-links.json
+pgnOpeningAnalyzer/tests
 
 
 # Logs
