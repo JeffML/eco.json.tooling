@@ -81,27 +81,32 @@ class PGNDataGatherer {
     async makeRequest(url, options = {}) {
         return new Promise((resolve, reject) => {
             const client = url.startsWith('https://') ? https : http;
-            const request = client.request(url, {
-                ...options,
-                timeout: this.config.requestTimeout || 30000,
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (compatible; PGN-Analyzer/1.0)',
-                    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                    ...options.headers,
+            const request = client.request(
+                url,
+                {
+                    ...options,
+                    timeout: this.config.requestTimeout || 30000,
+                    headers: {
+                        'User-Agent':
+                            'Mozilla/5.0 (compatible; PGN-Analyzer/1.0)',
+                        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                        ...options.headers,
+                    },
                 },
-            }, (response) => {
-                const chunks = [];
-                response.on('data', (chunk) => chunks.push(chunk));
-                response.on('end', () => {
-                    const body = Buffer.concat(chunks);
-                    resolve({
-                        statusCode: response.statusCode,
-                        headers: response.headers,
-                        body,
-                        bodyText: body.toString('utf8') // Also provide text version
+                (response) => {
+                    const chunks = [];
+                    response.on('data', (chunk) => chunks.push(chunk));
+                    response.on('end', () => {
+                        const body = Buffer.concat(chunks);
+                        resolve({
+                            statusCode: response.statusCode,
+                            headers: response.headers,
+                            body,
+                            bodyText: body.toString('utf8'), // Also provide text version
+                        });
                     });
-                });
-            });
+                }
+            );
 
             request.on('error', reject);
             request.setTimeout(this.config.requestTimeout || 30000, () => {
@@ -190,9 +195,13 @@ class PGNDataGatherer {
 
                 if (pgnEntries && pgnEntries.length > 0) {
                     // Process the ZIP file with callback to this.parsePGN
-                    return await processZipFile(zipBuffer, url, (pgnContent) => {
-                        this.parsePGN(pgnContent);
-                    });
+                    return await processZipFile(
+                        zipBuffer,
+                        url,
+                        (pgnContent) => {
+                            this.parsePGN(pgnContent);
+                        }
+                    );
                 } else {
                     console.log(`ZIP file contains no PGN files: ${fileName}`);
                     return 0;
@@ -207,26 +216,42 @@ class PGNDataGatherer {
             console.error(
                 `Failed to download/process ${url}: ${error.message}`
             );
-            
+
             // For ZIP files, try to provide more specific error information
             if (url.toLowerCase().endsWith('.zip')) {
                 console.error('ZIP processing failed. Possible solutions:');
-                console.error('- File may be corrupted or use unsupported compression');
-                console.error('- Try downloading manually and extracting to .pgn files');
-                console.error('- Some ZIP files may have encoding or naming issues');
-                console.error('- Consider using a different source or file format');
-                
+                console.error(
+                    '- File may be corrupted or use unsupported compression'
+                );
+                console.error(
+                    '- Try downloading manually and extracting to .pgn files'
+                );
+                console.error(
+                    '- Some ZIP files may have encoding or naming issues'
+                );
+                console.error(
+                    '- Consider using a different source or file format'
+                );
+
                 // Attempt to save the problematic file for manual inspection
                 try {
                     const fileName = path.basename(url);
-                    const debugPath = path.join(this.config.cacheDir || './cache', `failed_${fileName}`);
-                    await fs.writeFile(debugPath, response?.body || Buffer.alloc(0));
+                    const debugPath = path.join(
+                        this.config.cacheDir || './cache',
+                        `failed_${fileName}`
+                    );
+                    await fs.writeFile(
+                        debugPath,
+                        response?.body || Buffer.alloc(0)
+                    );
                     console.log(`Saved problematic ZIP file to: ${debugPath}`);
                 } catch (saveError) {
-                    console.error(`Could not save file for debugging: ${saveError.message}`);
+                    console.error(
+                        `Could not save file for debugging: ${saveError.message}`
+                    );
                 }
             }
-            
+
             return 0;
         }
     }
@@ -344,7 +369,6 @@ class PGNDataGatherer {
         };
     }
 
-
     // Generate FEN positions for each move
     generatePositions(moves) {
         const position = new ChessPosition();
@@ -389,7 +413,7 @@ class PGNDataGatherer {
             existingPositions.length === 0 ||
             newPositions.length === 0
         ) {
-            return {lastCommon: null, lastCommonIndex: -1};
+            return { lastCommon: null, lastCommonIndex: -1 };
         }
 
         // Find the last common position by comparing from the start
@@ -399,23 +423,53 @@ class PGNDataGatherer {
             newPositions.length
         );
 
-        for (let i = 0; i < minLength; i++) {
+        for (let i = minLength - 1; i > 0; i--) {
             if (existingPositions[i] === newPositions[i]) {
                 lastCommonIndex = i;
-            } else {
-                break; // Stop at first difference
+                break;
             }
         }
 
         // Return null if no common positions found
         if (lastCommonIndex === -1) {
-            return {lastCommon:null, lastCommonIndex};
+            return { lastCommon: null, lastCommonIndex };
         }
 
         return {
             lastCommon: existingPositions[lastCommonIndex],
-            index: lastCommonIndex,
+            lastCommonIndex,
         };
+    }
+
+    addTransposition(existing, transposition) {
+        existing.transpositions ??= [];
+
+        let found = false;
+        for (let trans of existing.transpositions) {
+            if (
+                JSON.stringify(trans) ===
+                JSON.stringify(transposition)
+            ) {
+                found = true;
+                break; //already have it
+            }
+        }
+        if (!found) existing.transpositions.push(transposition);
+    }
+
+    toMoveList(plies) {
+        let moveList = ""
+
+        plies.forEach((ply, i) => {
+            if (i%2 === 0) {
+                const moveNum = Math.floor(i/2) + 1
+                moveList += `${moveNum}. ${ply} `
+            } else {
+                moveList += `${ply} `
+            }       
+        })
+
+        return moveList
     }
 
     // Add or update opening record
@@ -435,25 +489,30 @@ class PGNDataGatherer {
             const existing = this.database.openings[openingKey];
 
             // Find the last common position
-            const { lastCommon, lastCommonIndex } = this.findLastCommonPosition(
+            const { lastCommonIndex } = this.findLastCommonPosition(
                 existing.positions,
                 positions
             );
 
-            if (!lastCommon) throw Error("expected lastCommon, got null");
+            if (lastCommonIndex >= 0) {
+                // Truncate to the common position
+                existing.moves = existing.moves.slice(0, lastCommonIndex);
+                existing.positions = existing.positions.slice(0, lastCommonIndex + 1);
+                
+                const truncatedMoves = moves.slice(0, lastCommonIndex);
 
-            existing.moves.splice(0, lastCommonIndex);
-            const truncatedMoves = moves.slice(0, lastCommonIndex)
+                console.assert(truncatedMoves.length !== 0, "No moves??")
 
-            if (JSON.stringify(truncatedMoves) !== JSON.stringify(existing.moves)) {
-                existing.transpositions??=[]
-                existing.transpositions.push(truncatedMoves)
+                if (
+                    JSON.stringify(truncatedMoves) !==
+                    JSON.stringify(existing.moves)
+                ) {
+                    this.addTransposition(existing, truncatedMoves);
+                }
             }
 
-            existing.occurrenceCount += 1
-
+            existing.occurrenceCount += 1;
         } else {
-
             // New opening record
             const fullName = this.buildFullOpeningName(
                 opening,
@@ -467,7 +526,7 @@ class PGNDataGatherer {
                 variation: variation,
                 subvariation: subvariation,
                 eco: eco,
-                moves, 
+                moves,
                 positions,
                 lastCommonPosition: positions.at(-1),
                 occurrenceCount: 1,
@@ -511,7 +570,8 @@ class PGNDataGatherer {
 
     // Parse PGN content
     parsePGN(content) {
-        const text = typeof content === 'string' ? content : content.toString('utf8');
+        const text =
+            typeof content === 'string' ? content : content.toString('utf8');
         const games = text.split(/\n\s*\n(?=\[Event)/);
 
         let processed = 0;

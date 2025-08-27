@@ -1,7 +1,6 @@
 # temporary and intermediate data files
-output/*.json
-input/*.json
-output/toMerge/*.json
+output
+input
 debugNotes.txt
 protoTests
 temp
@@ -9,6 +8,8 @@ pgnOpeningAnalyzer/cache
 pgnOpeningAnalyzer/openings.json
 pgnOpeningAnalyzer/pgn-links.json
 pgnOpeningAnalyzer/tests
+pgnOpeningAnalyzer/output/*.json
+pgnOpeningAnalyzer/input
 
 
 # Logs

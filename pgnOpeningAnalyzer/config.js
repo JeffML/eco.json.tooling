@@ -3,7 +3,7 @@ export const config = {
         {
             name: 'pgnmentor',
             url: 'https://www.pgnmentor.com/files.html',
-            enabled: true,
+            enabled: false,
         },
         {
             name: 'twic',
@@ -20,7 +20,7 @@ export const config = {
     outputFile: 'output/openings.json',
     cacheDir: './cache',
     maxPlies: 50, // Maximum plies (half-moves) to track per game (generates maxPlies+1 FEN positions including starting position)
-    maxFilesPerSitePerSession: 2, //12,
+    maxFilesPerSitePerSession: 1, //12,
     linkPatterns: [
         /\.pgn$/i,
         /\.pgn\.zip$/i,
