@@ -528,7 +528,7 @@ class PGNDataGatherer {
                 eco: eco,
                 moves,
                 positions,
-                lastCommonPosition: positions.at(-1),
+                // lastCommonPosition: positions.at(-1),
                 occurrenceCount: 1,
             };
         }
