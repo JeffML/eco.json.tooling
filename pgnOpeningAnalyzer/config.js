@@ -1,6 +1,7 @@
 export const config = {
     htmlSources: [
         {
+            note: "this site's pgn files do not appear to contain any opening headers",
             name: 'pgnmentor',
             url: 'https://www.pgnmentor.com/files.html',
             enabled: false,
@@ -8,12 +9,12 @@ export const config = {
         {
             name: 'twic',
             url: 'https://theweekinchess.com/twic',
-            enabled: true,
+            enabled: false,
         },
         {
             name: 'lichess_db',
             url: 'https://database.lichess.org/',
-            enabled: false,
+            enabled: true,
         },
     ],
     linksFile: 'output/pgn-links.json',
@@ -37,4 +38,7 @@ export const config = {
     
     // Scheduler settings
     schedulerIntervalHours: 6,
+
+    // Minimum occurrence count for candidate openings
+    candidateOccurenceMinimum: 5,
 };

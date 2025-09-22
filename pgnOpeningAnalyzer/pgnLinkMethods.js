@@ -1,20 +1,21 @@
 import fs from 'fs/promises';
-import path from 'path';
 
 // Extract PGN links from HTML content
 export function extractPgnLinks(html, baseUrl, linkPatterns) {
     const links = new Set();
 
     // Simple regex to find href attributes
-    const hrefRegex = /href\s*=\s*["']([^"']+)["']/gi;
+    // const hrefRegex = /href\s*=\s*["']([^"']+)["']/gi;
+    const hrefRegex = /<a\s+(?:[^>]*?\s+)?href\s*=\s*["']([^"']+)["']/gi;
     let match;
 
     while ((match = hrefRegex.exec(html)) !== null) {
         const href = match[1];
 
         // Check if it matches any PGN pattern or is a ZIP file that might contain PGNs
-        const isPgnLink = linkPatterns.some((pattern) =>
-            pattern.test(href)
+        // NOTE: twic zips that end with 'c6' are chessbase formated zip files, which we don't want
+        const isPgnLink = linkPatterns.some((pattern) => 
+            pattern.test(href) && !href.endsWith('c6.zip')
         );
 
         if (!isPgnLink) continue;

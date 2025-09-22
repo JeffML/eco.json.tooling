@@ -8,6 +8,7 @@
 import fs from 'fs/promises';
 import { Chess } from 'chess.js';
 import { book } from '../utils.js';
+import {config} from './config.js'
 
 class OpeningAnalyserStage2 {
     constructor(
@@ -137,7 +138,7 @@ class OpeningAnalyserStage2 {
         const pos2Fen = this.positionToFen()
 
         for (const opening of sortedOpenings) {
-            if (opening.occurrenceCount < 3) continue;
+            if (opening.occurrenceCount < config.candidateOccurenceMinimum) continue;
 
             processed++;
 

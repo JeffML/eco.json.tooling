@@ -142,6 +142,7 @@ class PGNDataGatherer {
         const meta = await this.getPageMeta(url);
         if (!meta) return true; // Assume changed if we can't get metadata
 
+        // create meta file for page, e.g. 'twic_page.json'
         const metaFile = path.join(
             this.config.cacheDir,
             `${sourceName}_page.json`
@@ -159,6 +160,7 @@ class PGNDataGatherer {
             // File doesn't exist, treat as changed
         }
 
+        // write metadata for page to cache file
         await fs.writeFile(metaFile, JSON.stringify(meta, null, 2));
         return true; // Changed
     }
@@ -710,6 +712,10 @@ class PGNDataGatherer {
         for (const [sourceName, sourceData] of Object.entries(
             this.pgnLinks.sources
         )) {
+            // skip processing for disabled sources
+            const enabled = config.htmlSources.some(c => c.name===sourceName && c.enabled)
+            if (!enabled) continue;
+            
             console.log(`\nProcessing files from ${sourceName}...`);
 
             // Get unprocessed files for this source (limited)
