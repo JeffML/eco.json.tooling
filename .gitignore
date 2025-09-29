@@ -10,6 +10,7 @@ pgnOpeningAnalyzer/pgn-links.json
 pgnOpeningAnalyzer/tests
 pgnOpeningAnalyzer/output/*.json
 pgnOpeningAnalyzer/input
+pgnOpeningAnalyzer/notes.md
 
 
 # Logs
