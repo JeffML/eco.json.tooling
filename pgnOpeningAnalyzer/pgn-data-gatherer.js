@@ -7,6 +7,7 @@ import https from 'https';
 import http from 'http';
 import { Chess } from 'chess.js';
 import { config } from './config.js';
+import { toMoveList } from './utils.js';
 import { inspectZipFile, processZipFile } from './zipMethods.js';
 import {
     scrapePgnLinks,
@@ -123,6 +124,7 @@ class PGNDataGatherer {
         try {
             const response = await this.makeRequest(url, { method: 'HEAD' });
             return {
+                url,
                 lastModified:
                     response.headers['last-modified'] || response.headers.date,
                 contentType: response.headers['content-type'],
@@ -460,18 +462,7 @@ class PGNDataGatherer {
     }
 
     toMoveList(plies) {
-        let moveList = ""
-
-        plies.forEach((ply, i) => {
-            if (i%2 === 0) {
-                const moveNum = Math.floor(i/2) + 1
-                moveList += `${moveNum}. ${ply} `
-            } else {
-                moveList += `${ply} `
-            }       
-        })
-
-        return moveList
+        return toMoveList(plies)
     }
 
     // Add or update opening record

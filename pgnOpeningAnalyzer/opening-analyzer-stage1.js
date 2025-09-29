@@ -7,7 +7,7 @@
  */
 
 import fs from 'fs/promises';
-import path from 'path';
+import { toMoveList } from './utils';
 
 class OpeningsAnalyzer {
     constructor(inputFile = 'output/openings.json', outputFile = 'output/analysis.json') {
@@ -27,18 +27,7 @@ class OpeningsAnalyzer {
     }
 
     toMoveList(plies) {
-        let moveList = ""
-
-        plies.forEach((ply, i) => {
-            if (i%2 === 0) {
-                const moveNum = Math.floor(i/2) + 1
-                moveList += `${moveNum}. ${ply} `
-            } else {
-                moveList += `${ply} `
-            }       
-        })
-
-        return moveList
+        return toMoveList(plies)
     }
 
     // Main function to create sorted analysis

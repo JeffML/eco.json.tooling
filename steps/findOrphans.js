@@ -7,7 +7,7 @@
  *                         [parentFEN, childFEN, parent.src, child.src].
  * @returns {Array} An array of orphan FEN strings.
  */
-export const findOrphans = (added, fromTo) => {
+export const findOrphans = (added, fromTo, book=null) => {
     if (!added || typeof added !== 'object') {
         throw new Error('Invalid input: "added" must be an object.');
     }

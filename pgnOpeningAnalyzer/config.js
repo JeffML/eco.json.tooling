@@ -12,8 +12,8 @@ export const config = {
             enabled: false,
         },
         {
-            name: 'lichess_db',
-            url: 'https://database.lichess.org/',
+            name: 'Lichess Elite',
+            url: 'https://database.nikonoel.fr/',
             enabled: true,
         },
     ],

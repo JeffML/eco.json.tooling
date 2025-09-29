@@ -1,0 +1,86 @@
+{  
+  "rnbqk2r/ppp2pbp/3p2p1/3Pp2n/2P1P3/2N2P2/PP4PP/R1BQKBNR w KQkq - 1 7": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5",
+    "rootSrc": "eco_tsv",
+    "src": "interpolated"
+  },
+  "rnbqk2r/ppp2pbp/3p2p1/3Pp2n/2P1P3/2N1BP2/PP4PP/R2QKBNR b KQkq - 2 7": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5 7. Be3",
+    "rootSrc": "eco_tsv",
+    "src": "interpolated"
+  },
+  "r1bqk2r/ppp2pbp/n2p2p1/3Pp2n/2P1P3/2N1BP2/PP4PP/R2QKBNR w KQkq - 3 8": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5 7. Be3 Na6",
+    "rootSrc": "eco_tsv",
+    "src": "interpolated"
+  },
+  "r1bqk2r/ppp2pbp/n2p2p1/3Pp2n/2P1P3/2N1BP2/PP1Q2PP/R3KBNR b KQkq - 4 8": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5 7. Be3 Na6 8. Qd2",
+    "rootSrc": "eco_tsv",
+    "src": "interpolated"
+  },
+  "r1b1k2r/ppp2pbp/n2p2p1/3Pp2n/2P1P2q/2N1BP2/PP1Q2PP/R3KBNR w KQkq - 5 9": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5 7. Be3 Na6 8. Qd2 Qh4+",
+    "rootSrc": "eco_tsv",
+    "src": "interpolated"
+  },
+  "r1b1k2r/ppp2pbp/n2p2p1/3Pp2n/2P1P2q/2N1BPP1/PP1Q3P/R3KBNR b KQkq - 0 9": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5 7. Be3 Na6 8. Qd2 Qh4+ 9. g3",
+    "rootSrc": "eco_tsv",
+    "src": "interpolated"
+  },
+  "r1b1k2r/ppp2pbp/n2p2p1/3Pp3/2P1P2q/2N1BPn1/PP1Q3P/R3KBNR w KQkq - 0 10": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5 7. Be3 Na6 8. Qd2 Qh4+ 9. g3 Nxg3",
+    "rootSrc": "eco_tsv",
+    "src": "interpolated"
+  },
+  "r1b1k2r/ppp2pbp/n2p2p1/3Pp3/2P1P2q/2N1BPn1/PP3Q1P/R3KBNR b KQkq - 1 10": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5 7. Be3 Na6 8. Qd2 Qh4+ 9. g3 Nxg3 10. Qf2",
+    "rootSrc": "eco_tsv",
+    "src": "interpolated"
+  },
+  "r1b1k2r/ppp2pbp/n2p2p1/3Pp3/2P1P2q/2N1BP2/PP3Q1P/R3KnNR w KQkq - 0 11": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5 7. Be3 Na6 8. Qd2 Qh4+ 9. g3 Nxg3 10. Qf2 Nxf1",
+    "rootSrc": "eco_tsv",
+    "src": "interpolated"
+  },
+  "r1b1k2r/ppp2pbp/n2p2p1/3Pp3/2P1P2Q/2N1BP2/PP5P/R3KnNR b KQkq - 0 11": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5 7. Be3 Na6 8. Qd2 Qh4+ 9. g3 Nxg3 10. Qf2 Nxf1 11. Qxh4",
+    "rootSrc": "eco_tsv",
+    "src": "interpolated"
+  },
+  "r1b1k2r/ppp2pbp/n2p2p1/3Pp3/2P1P2Q/2N1nP2/PP5P/R3K1NR w KQkq - 0 12": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5 7. Be3 Na6 8. Qd2 Qh4+ 9. g3 Nxg3 10. Qf2 Nxf1 11. Qxh4 Nxe3",
+    "rootSrc": "eco_tsv",
+    "src": "interpolated"
+  },
+  "r1b1k2r/ppp2pbp/n2p2p1/3Pp3/2P1P2Q/2N1nP2/PP3K1P/R5NR b kq - 1 12": {
+    "eco": "E80 ",
+    "name": "Ruy Lopez: Marshall Attack, Modern Variation",
+    "moves": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. f3 e5 6. d5 Nh5 7. Be3 Na6 8. Qd2 Qh4+ 9. g3 Nxg3 10. Qf2 Nxf1 11. Qxh4 Nxe3 12. Kf2",
+    "src": "interpolated",
+    "rootSrc": "eco_tsv"
+  }
+}
