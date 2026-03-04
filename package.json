@@ -1,11 +1,12 @@
 {
   "name": "eco.json.tooling",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Tooling for maintaining eco.json ",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "exit 0"
+    "test": "exit 0",
+    "generate:fromto": "node fromToPositionIndexed.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,7 @@
     "chess.js": "^1.2.0",
     "leven": "^4.0.0",
     "node-fetch": "^3.3.2",
-    "node-uci": "^1.3.4",
+    "node-uci": "^1.3.1",
     "octokit": "^4.1.3"
   }
 }
