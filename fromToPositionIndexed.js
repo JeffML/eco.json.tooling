@@ -2,7 +2,7 @@ import fs from 'fs'
 const pos = (fen) => fen.split(' ')[0];
 
 async function fromTo () {
-    const response = await fetch('https://raw.githubusercontent.com/hayatbiralem/eco.json/master/fromTo.json')
+    const response = await fetch('https://raw.githubusercontent.com/JeffML/eco.json/master/fromTo.json')
 
     const FT = await response.json()
 

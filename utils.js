@@ -10,7 +10,7 @@ async function getDownloadUrls() {
     const { data } = await octokit.request(
         'GET /repos/{owner}/{repo}/contents/',
         {
-            owner: 'hayatbiralem',
+            owner: 'JeffML',
             repo: 'eco.json',
         }
     );
@@ -70,7 +70,7 @@ let openingsByCat;
 // pulls the opening data from eco.json github repo
 export async function getLatestEcoJson() {
     const ROOT =
-        'https://raw.githubusercontent.com/hayatbiralem/eco.json/master/';
+        'https://raw.githubusercontent.com/JeffML/eco.json/master/';
     if (openingsByCat) return openingsByCat;
 
     openingsByCat = {
