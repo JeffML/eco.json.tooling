@@ -76,6 +76,53 @@ const fenFromMoves = (moves) => {
     }
 };
 
+// ── ECO lookup (truncate moves to find parent in eco.json) ───────────────────
+
+const findEcoCode = (moves) => {
+    const game = new ChessPGN();
+    try {
+        game.loadPgn(moves);
+    } catch {
+        return null;
+    }
+
+    // Walk backward through the move history, checking eco.json at each step
+    const history = game.history({ verbose: true });
+    for (let i = history.length - 1; i >= 0; i--) {
+        game.undo();
+        const fen = game.fen();
+        const entry = book[fen];
+        if (entry && entry.eco && entry.eco !== "??") {
+            return entry.eco;
+        }
+    }
+    return "??";
+};
+
+// ── Write input/opening.json for pipeline ─────────────────────────────────────
+
+const writeInputFile = (newOpenings, src) => {
+    const data = [
+        {
+            src,
+            url: "https://en.wikibooks.org/wiki/Chess_Opening_Theory",
+        },
+    ];
+
+    for (const o of newOpenings) {
+        data.push({
+            name: `Wiki opening (edit me)`,
+            eco: o.eco || "??",
+            moves: o.moves,
+        });
+    }
+
+    const filePath = path.join(ROOT, "input", "opening.json");
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + "\n");
+    console.log(`Wrote ${newOpenings.length} opening(s) to input/opening.json`);
+    console.log("Edit the name and eco fields before running generatePullRequest.js");
+};
+
 // ── Get URLs ─────────────────────────────────────────────────────────────────
 
 async function getUrls(args) {
@@ -159,13 +206,31 @@ async function main() {
         newOpenings.push({ moves, fen, url });
     }
 
+    const toInput = args.includes("--to-input");
+    const src = "wiki_crawler";
+
+    if (toInput) {
+        // Look up ECO codes by truncating moves to find parent in eco.json
+        console.log("Looking up ECO codes...");
+        for (const o of newOpenings) {
+            o.eco = findEcoCode(o.moves);
+            console.log(`  ${o.eco}  ${o.moves}`);
+        }
+    }
+
     console.log(
-        `${newOpenings.length} new opening variations found (${parseFailures} parse failures, ${urls.length - newOpenings.length - parseFailures} already in eco.json)\n`
+        `\n${newOpenings.length} new opening variations found (${parseFailures} parse failures, ${urls.length - newOpenings.length - parseFailures} already in eco.json)`
     );
 
     if (newOpenings.length === 0) {
-        console.log("Nothing new to report.");
+        console.log("\nNothing new to report.");
+        return;
+    }
+
+    if (toInput) {
+        writeInputFile(newOpenings, src);
     } else {
+        console.log("");
         for (const o of newOpenings) {
             console.log(`  ${o.moves}`);
             console.log(`  fen: ${o.fen}`);
