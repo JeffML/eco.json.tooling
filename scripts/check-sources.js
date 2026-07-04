@@ -378,7 +378,8 @@ async function detailWikiCrawler(cache) {
         console.log("No pages modified since last parse.");
     } else {
         for (const [title, ts] of modified) {
-            console.log(`  ${ts.slice(0, 10)}  ${title}`);
+            const url = "https://en.wikibooks.org/wiki/" + encodeURI(title);
+            console.log(`  ${ts.slice(0, 10)}  ${url}`);
         }
     }
 }
