@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "exit 0",
-    "generate:fromto": "node fromToPositionIndexed.js"
+    "generate:fromto": "node fromToPositionIndexed.js",
+    "check-sources": "node scripts/check-sources.js"
   },
   "repository": {
     "type": "git",
