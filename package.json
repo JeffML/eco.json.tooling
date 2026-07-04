@@ -7,7 +7,8 @@
   "scripts": {
     "test": "exit 0",
     "generate:fromto": "node fromToPositionIndexed.js",
-    "check-sources": "node scripts/check-sources.js"
+    "check-sources": "node scripts/check-sources.js",
+    "diff-wiki": "node scripts/diff-wiki.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   },
   "homepage": "https://github.com/JeffML/eco.json.tooling#readme",
   "dependencies": {
+    "@chess-pgn/chess-pgn": "file:../chessPGN",
     "chess.js": "^1.2.0",
     "leven": "^4.0.0",
     "node-fetch": "^3.3.2",
