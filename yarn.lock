@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@chess-pgn/chess-pgn@file:../chessPGN":
+  version "1.2.0"
+  resolved "file:../chessPGN"
+
 "@octokit/app@^15.1.6":
   version "15.1.6"
   resolved "https://registry.npmjs.org/@octokit/app/-/app-15.1.6.tgz"
