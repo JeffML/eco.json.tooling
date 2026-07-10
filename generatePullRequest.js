@@ -67,15 +67,20 @@ const { valid: validCount, failed: failedCount } = (() => {
 })();
 writeln(`Validation complete: ${validCount} valid, ${failedCount} failed.`);
 
-if (collector.hasFailures()) {
+// Always write + summarize corrections (normalize stage), but only abort
+// on actual validate-stage failures (not corrections).
+if (collector.total > 0) {
     collector.writeAll(ERRORS_DIR);
     collector.printSummary();
-    if (!FLAG_LENIENT) {
-        writeln('\nValidation failures found (fail-closed). See errors/*.json.');
-        writeln('Use --lenient to continue past validation failures.');
-        process.exit(1);
-    }
+}
+if (collector.count('validate') > 0 && !FLAG_LENIENT) {
+    writeln('\nValidation failures found (fail-closed). See errors/validate.json.');
+    writeln('Use --lenient to continue past validation failures.');
+    process.exit(1);
+} else if (collector.count('validate') > 0) {
     writeln('(continuing in --lenient mode)');
+} else if (collector.count('normalize') > 0) {
+    writeln(`${collector.count('normalize')} auto-correction(s) applied (see errors/normalize.json).`);
 }
 writeln('');
 

@@ -13,6 +13,7 @@ const ECO_RE = /^[A-E]\d{2}[a-z]?$/;
  *   - Castling notation: `0-0-0` → `O-O-O`, `0-0` → `O-O`
  *   - Bare move numbers: `1 c4` → `1. c4` (add missing period)
  *   - Pawn captures missing 'x': `bc3` → `bxc3`, `cd5` → `cxd5`
+ *   - Doubled move numbers: `6. 6. Re1` → `6. Re1` (collapse duplicate)
  *
  * The pawn-capture transform is universally safe in standard SAN: a token
  * matching /^[a-h][a-h][1-8]$/ (two lowercase file letters + rank) can ONLY
@@ -60,6 +61,16 @@ export function normalizeMoves(moves, collector, ctx) {
         const before = out;
         out = out.replace(/\b([a-h])([a-h])([1-8])\b/g, "$1x$2$3");
         corrections.push({ from: before, to: out, rule: "pawn_capture_missing_x" });
+    }
+
+    // 4. Doubled move numbers: "6. 6. Re1" → "6. Re1"
+    //    Matches the same number repeated in white-format (N. N.) but NOT
+    //    "N. N..." (white-then-black, a different error — missing white move).
+    //    The negative lookahead (?!\.) prevents matching N. inside N...
+    if (/\b(\d+)\.\s+\1\.(?!\.)\s+/.test(out)) {
+        const before = out;
+        out = out.replace(/\b(\d+)\.\s+\1\.(?!\.)\s+/g, "$1. ");
+        corrections.push({ from: before, to: out, rule: "doubled_move_number" });
     }
 
     if (corrections.length && collector) {
