@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import leven from 'leven';
 import {book} from '../utils.js'
+import { validate as validateStructured, shouldAbort } from './validate.js';
 
 let allOpenings = book;
 
@@ -83,8 +84,11 @@ const filterIncoming = (incoming) => {
 
 /**
  * Validates the structure and content of incoming openings.
+ * @deprecated Use steps/validate.js `validate(incoming, collector)` for
+ *   structured failure collection. This wrapper is kept for backward
+ *   compatibility and returns a boolean (logs failures to console only).
  * @param {Array} incoming - Array of incoming opening objects.
- * @returns {boolean} True if valid, false otherwise.
+ * @returns {boolean} True if no loadPgn/structural failures, false otherwise.
  */
 const validate = (incoming) => {
     const chess = new Chess();
@@ -94,6 +98,7 @@ const validate = (incoming) => {
         return false;
     }
 
+    let failed = false;
     for (const opening of incoming.slice(1)) {
         const { name, eco, moves } = opening;
         if (!(name || eco || moves)) {
@@ -102,9 +107,11 @@ const validate = (incoming) => {
                     opening
                 )}`
             );
-            return false;
+            failed = true;
+            continue;
         }
         try {
+            chess.reset();
             chess.loadPgn(opening.moves);
             opening.fen = chess.fen();
         } catch (e) {
@@ -114,20 +121,32 @@ const validate = (incoming) => {
                     opening
                 )} - ${e.message}`
             );
+            failed = true;
         }
     }
-    return true;
+    return !failed;
 };
+
+export { validateStructured, shouldAbort };
 
 /**
  * Loads and validates the opening.json file from disk.
+ * @param {object} [opts]
+ * @param {ErrorCollector} [opts.collector] - if provided, records failures
+ *   structurally and does NOT exit on failure (caller decides via shouldAbort).
+ *   If omitted, falls back to the legacy boolean validate() and exits on failure.
  * @returns {Array} Parsed and validated openings array.
  */
-const getIncomingOpenings = () => {
+const getIncomingOpenings = (opts = {}) => {
     const filePath = path.resolve(process.cwd(), 'input/opening.json');
     const text = fs.readFileSync(filePath, 'utf-8');
     const json = JSON.parse(text);
 
+    if (opts.collector) {
+        validateStructured(json, opts.collector);
+        return json;
+    }
+    // legacy path
     if (!validate(json)) process.exit(-1);
     return json;
 };

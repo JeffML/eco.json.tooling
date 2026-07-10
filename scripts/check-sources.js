@@ -194,95 +194,136 @@ function saveCache(cache) {
     fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2) + "\n");
 }
 
+// ── Per-source status ────────────────────────────────────────────────────────
+//
+// Extracted so run-parser.js can query a single source's status without
+// re-implementing the probe logic. Returns a plain object; callers print.
+
+async function getSourceStatus(source, cache) {
+    const cached = cache[source.name];
+    const lastParsed = cached?.lastParsed;
+
+    if (source.method === "remote") {
+        const result = await getRemoteEtag(source.urls);
+        if (result.skipped) {
+            return { state: "skipped", message: `SKIPPED (${result.reason})`, source };
+        }
+        const storedEtag = cached?.sourceEtag;
+        if (!lastParsed) {
+            return { state: "new", message: `NEVER PARSED (etag: ${result.etag.slice(0, 40)}...)`, etag: result.etag, source };
+        }
+        if (storedEtag && storedEtag !== result.etag) {
+            return { state: "changed", message: `CHANGED — etag differs, last parsed ${lastParsed}`, etag: result.etag, source };
+        }
+        if (!storedEtag) {
+            // Has lastParsed but no stored etag (first run after seed)
+            return { state: "unchanged", message: `FIRST CHECK (last parsed: ${lastParsed}, etag: ${result.etag.slice(0, 40)}...)`, etag: result.etag, source };
+        }
+        return { state: "unchanged", message: `unchanged (last parsed: ${lastParsed})`, source };
+    }
+
+    if (source.method === "mediawiki") {
+        const result = await getMediaWikiDate(source.apiUrl);
+        if (result.skipped) {
+            return { state: "skipped", message: `SKIPPED (${result.reason})`, source };
+        }
+        if (!result.date) {
+            return { state: "unreachable", message: `UNREACHABLE (${result.error || "no revision data"})`, source };
+        }
+        if (!lastParsed) {
+            return { state: "new", message: `NEVER PARSED (last wiki revision: ${result.date})`, date: result.date, source };
+        }
+        if (result.date > lastParsed) {
+            return { state: "changed", message: `CHANGED — wiki revised ${result.date}, last parsed ${lastParsed}`, date: result.date, source };
+        }
+        return { state: "unchanged", message: `unchanged (last parsed: ${lastParsed}, wiki revision: ${result.date})`, source };
+    }
+
+    // Local file source
+    const sourceDate = getLatestGitDate(source.inputFiles);
+    if (!sourceDate) {
+        const missingFile = source.inputFiles.find(
+            (f) => !fs.existsSync(path.join(ROOT, f))
+        );
+        return { state: "missing", message: `MISSING FILE — ${missingFile || source.inputFiles[0]}`, source };
+    }
+    if (!lastParsed) {
+        return { state: "new", message: `NEVER PARSED (source date: ${sourceDate})`, sourceDate, source };
+    }
+    if (sourceDate > lastParsed) {
+        return { state: "changed", message: `CHANGED — source modified ${sourceDate}, last parsed ${lastParsed}`, sourceDate, source };
+    }
+    return { state: "unchanged", message: `unchanged (last parsed: ${lastParsed}, source: ${sourceDate})`, sourceDate, source };
+}
+
+// ── Output readiness (for --verify-output) ──────────────────────────────────
+//
+// For CHANGED/NEW sources, confirm a parsed opening.json exists and is newer
+// than the source-change signal. Catches the "source changed but nobody
+// re-parsed" situation (e.g. wiki reported CHANGED with only a placeholder
+// input/opening.json on disk).
+
+function verifyOutput(status) {
+    const outputFile = path.join(ROOT, "parsers", status.source.name, "output", "opening.json");
+    if (!fs.existsSync(outputFile)) {
+        return { outputState: "not_parsed", message: "not parsed" };
+    }
+    const outStat = fs.statSync(outputFile);
+    const outDate = outStat.mtime.toISOString().slice(0, 10);
+    const refDate = status.sourceDate || status.date || null;
+    if (refDate && outDate < refDate) {
+        return { outputState: "stale", message: `output stale (output ${outDate} < source ${refDate})` };
+    }
+    return { outputState: "ready", message: `output ready (${outDate})` };
+}
+
 // ── Check ────────────────────────────────────────────────────────────────────
 
-async function checkAll(cache) {
+async function checkAll(cache, verifyOutputFlag) {
     let changed = 0,
         unchanged = 0,
         new_ = 0,
         missing = 0,
-        skipped = 0;
+        skipped = 0,
+        unreachable = 0;
 
     for (const source of SOURCES) {
-        const cached = cache[source.name];
-        const lastParsed = cached?.lastParsed;
+        const status = await getSourceStatus(source, cache);
+        let line = `  ${source.name}: ${status.message}`;
 
-        if (source.method === "remote") {
-            const result = await getRemoteEtag(source.urls);
-            if (result.skipped) {
-                console.log(`  ${source.name}: SKIPPED (${result.reason})`);
-                skipped++;
-                continue;
-            }
+        if (
+            verifyOutputFlag &&
+            (status.state === "changed" || status.state === "new")
+        ) {
+            const out = verifyOutput(status);
+            line += ` — ${out.message}`;
+        }
+        console.log(line);
 
-            const storedEtag = cached?.sourceEtag;
-
-            if (!lastParsed) {
-                console.log(`  ${source.name}: NEVER PARSED (etag: ${result.etag.slice(0, 40)}...)`);
-                new_++;
-            } else if (storedEtag && storedEtag !== result.etag) {
-                console.log(`  ${source.name}: CHANGED — etag differs, last parsed ${lastParsed}`);
+        switch (status.state) {
+            case "changed":
                 changed++;
-            } else if (!storedEtag) {
-                // Has lastParsed but no stored etag (first run after seed)
-                console.log(`  ${source.name}: FIRST CHECK (last parsed: ${lastParsed}, etag: ${result.etag.slice(0, 40)}...)`);
+                break;
+            case "new":
+                new_++;
+                break;
+            case "unchanged":
                 unchanged++;
-            } else {
-                console.log(`  ${source.name}: unchanged (last parsed: ${lastParsed})`);
-                unchanged++;
-            }
-        } else if (source.method === "mediawiki") {
-            const result = await getMediaWikiDate(source.apiUrl);
-            if (result.skipped) {
-                console.log(`  ${source.name}: SKIPPED (${result.reason})`);
-                skipped++;
-                continue;
-            }
-            if (!result.date) {
-                console.log(`  ${source.name}: UNREACHABLE (${result.error || "no revision data"})`);
+                break;
+            case "missing":
                 missing++;
-                continue;
-            }
-
-            if (!lastParsed) {
-                console.log(`  ${source.name}: NEVER PARSED (last wiki revision: ${result.date})`);
-                new_++;
-            } else if (result.date > lastParsed) {
-                console.log(`  ${source.name}: CHANGED — wiki revised ${result.date}, last parsed ${lastParsed}`);
-                changed++;
-            } else {
-                console.log(`  ${source.name}: unchanged (last parsed: ${lastParsed}, wiki revision: ${result.date})`);
-                unchanged++;
-            }
-        } else {
-            // Local file source
-            const sourceDate = getLatestGitDate(source.inputFiles);
-            if (!sourceDate) {
-                const missingFile = source.inputFiles.find(
-                    (f) => !fs.existsSync(path.join(ROOT, f))
-                );
-                console.log(
-                    `  ${source.name}: MISSING FILE — ${missingFile || source.inputFiles[0]}`
-                );
+                break;
+            case "unreachable":
                 missing++;
-                continue;
-            }
-
-            if (!lastParsed) {
-                console.log(`  ${source.name}: NEVER PARSED (source date: ${sourceDate})`);
-                new_++;
-            } else if (sourceDate > lastParsed) {
-                console.log(`  ${source.name}: CHANGED — source modified ${sourceDate}, last parsed ${lastParsed}`);
-                changed++;
-            } else {
-                console.log(`  ${source.name}: unchanged (last parsed: ${lastParsed}, source: ${sourceDate})`);
-                unchanged++;
-            }
+                break;
+            case "skipped":
+                skipped++;
+                break;
         }
     }
 
     console.log(
-        `\nSummary: ${changed} changed, ${new_} new, ${unchanged} unchanged, ${missing} missing files, ${skipped} skipped`
+        `\nSummary: ${changed} changed, ${new_} new, ${unchanged} unchanged, ${missing} missing/unreachable, ${skipped} skipped`
     );
 }
 
@@ -429,12 +470,21 @@ async function main() {
     }
 
     // Default: check all
+    const verifyOutputFlag = args.includes("--verify-output");
     const cache = loadCache();
     console.log("Checking sources for modifications since last parsed...\n");
-    await checkAll(cache);
+    await checkAll(cache, verifyOutputFlag);
 }
 
-main().catch((err) => {
-    console.error("Fatal error:", err);
-    process.exit(1);
-});
+// ── Exports (for run-parser.js) ──────────────────────────────────────────────
+
+export { SOURCES, getSourceStatus, verifyOutput, loadCache };
+
+// Run main() only when invoked directly, not when imported.
+const invokedAs = process.argv[1] || "";
+if (invokedAs.endsWith("check-sources.js")) {
+    main().catch((err) => {
+        console.error("Fatal error:", err);
+        process.exit(1);
+    });
+}

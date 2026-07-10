@@ -10,11 +10,29 @@ import {
     moreFromTos,
 } from './steps/addedContinuations.js';
 import { applyData, writeNew } from './steps/createEcoJsonFiles.js';
+import { ErrorCollector } from './utils/errors.js';
+import { writeDiffReport } from './steps/diffReport.js';
+
+const ERRORS_DIR = './errors';
+
+// ── CLI flags ────────────────────────────────────────────────────────────────
+const args = process.argv.slice(2);
+const FLAG_YES = args.includes('--yes');          // skip interactive prompts
+const FLAG_LENIENT = args.includes('--lenient');  // continue past validation failures
+const FLAG_APPLY = args.includes('--apply');      // write toMerge/ (default: dry-run)
+const DRY_RUN = !FLAG_APPLY;
 
 const writeln = (str) => process.stdout.write(str + '\n');
 
-// Helper function to handle prompts and exit if the user declines
+const collector = new ErrorCollector();
+
+// Helper function to handle prompts and exit if the user declines.
+// In --yes mode, prints the message and continues without prompting.
 const confirmStep = async (message) => {
+    if (FLAG_YES) {
+        writeln(`${message} (--yes, continuing)\n`);
+        return;
+    }
     let answer;
     do {
         answer = await prompt(`${message} (y/N)? `);
@@ -29,6 +47,10 @@ const confirmStep = async (message) => {
     }
 };
 
+writeln(DRY_RUN
+    ? 'Running in DRY-RUN mode (toMerge/ will NOT be written). Use --apply to write merge files.'
+    : 'Running in APPLY mode (will write toMerge/).');
+
 const existingOpenings = await getLatestEcoJson();  // organized by category
 
 // Step 1: Parse and validate the opening data
@@ -37,8 +59,25 @@ writeln(
 );
 await confirmStep('Ready');
 
-const incomingOpenings = getIncomingOpenings(); // performs validation of input
-writeln('Validation complete.\n');
+const incomingOpenings = getIncomingOpenings({ collector }); // performs validation of input
+const { valid: validCount, failed: failedCount } = (() => {
+    // validate already ran inside getIncomingOpenings via the collector
+    const v = incomingOpenings.length - 1 - collector.count('validate');
+    return { valid: v, failed: collector.count('validate') };
+})();
+writeln(`Validation complete: ${validCount} valid, ${failedCount} failed.`);
+
+if (collector.hasFailures()) {
+    collector.writeAll(ERRORS_DIR);
+    collector.printSummary();
+    if (!FLAG_LENIENT) {
+        writeln('\nValidation failures found (fail-closed). See errors/*.json.');
+        writeln('Use --lenient to continue past validation failures.');
+        process.exit(1);
+    }
+    writeln('(continuing in --lenient mode)');
+}
+writeln('');
 
 // Step 2: Filter out redundant openings
 writeln('Step 2: Filter out any redundantant openings.');
@@ -57,6 +96,17 @@ writeln(`Of the ${incomingOpenings.length - 1} in opening.json, there were:
     ${excluded} redundant openings
     ${keyLen(modified)} modifications to existing eco.json openings
     ${formerInterpolated.length} formerly interpolated openings\n`);
+
+// Emit an early diff report so the diff is available even if the run is
+// cancelled at the Step 3 review prompt.
+const { jsonPath, mdPath } = writeDiffReport({
+    added,
+    modified,
+    formerInterpolated,
+    excluded,
+    source: incomingOpenings[0]?.src ?? 'unknown',
+});
+writeln(`Diff report (early): ${jsonPath} / ${mdPath}\n`);
 
 // Step 3: Create intermediate data files for review
 writeln(
@@ -178,9 +228,26 @@ const newExisting = applyData(
     formerInterpolated,
     modified
 );
-writeNew(newExisting);
+
+if (DRY_RUN) {
+    writeln('\nDRY-RUN: skipping writeNew() (toMerge/ not written).');
+    writeln('Re-run with --apply to write the merge files.');
+} else {
+    writeNew(newExisting);
+}
+
+// Final diff report (now complete with interpolations + fromTo changes)
+writeDiffReport({
+    added,
+    modified,
+    formerInterpolated,
+    interpolations: linesOfDescent,
+    fromToChanges: [...newFromTos, ...mft],
+    excluded,
+    source: incomingOpenings[0]?.src ?? 'unknown',
+});
 
 writeln(`
-Done! The files in the ./output/toMerge folder mirror those in your cloned eco.json project. 
+Done! Diff report written to ./diff-report/. The files in the ./output/toMerge folder mirror those in your cloned eco.json project. 
 These will be the files that are to be submitted
 in your pull request to the original eco.json github repository.`);

@@ -1,6 +1,8 @@
 # temporary and intermediate data files
 output
 input
+errors
+parsers/*/opening.json
 parsers/.source-cache.json
 debugNotes.txt
 protoTests

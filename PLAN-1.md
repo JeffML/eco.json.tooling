@@ -78,8 +78,9 @@ For each opening (after the src descriptor):
 1. **Field check:** `name`, `eco`, `moves` all present and non-empty. Missing → collect, skip.
 2. **ECO format:** `/^[A-E]\d{2}[a-z]?$/`. Mismatch → collect (flag, don't skip — arasan's regex `[A-E]\d{2}` allows `B00` but not `B00a`; we want to know).
 3. **`chess.loadPgn(moves)`** in try/catch. Failure → collect `{input: opening, reason: 'loadPgn_failed', raw: e.message}`, skip.
-4. **Material-balance check** on resulting FEN: parse position field, count pieces per side. Violations (>8 pawns, >9 queens, >2 kings — see Open Question 1) → collect `{reason: 'material_imbalance'}`, skip.
-5. On success: attach `opening.fen = chess.fen()`.
+4. On success: attach `opening.fen = chess.fen()`.
+
+> Material-balance check dropped (Open Question 1): promotion-possible anomalies are rare and not worth the processing. `loadPgn` already rejects strictly illegal positions.
 
 Returns `{valid: <count of successful>, failed: <count>}`.
 
@@ -145,11 +146,11 @@ node scripts/run-parser.js arasan [--force]
 
 ---
 
-## Open questions (resolve before implementing)
+## Open questions — RESOLVED 2026-07-10
 
-1. **Material-balance thresholds** — listed `>8 pawns, >9 queens, >2 kings` as violations. Sound right, or stricter (e.g. flag 3 knights, which *is* possible via promotion)? Default proposed: only flag strictly-impossible counts; promotion-possible counts are flagged as warnings, not errors.
-2. **`--dry-run` default** — should the *default* `generatePullRequest.js` run be dry-run (safe), with `--apply` required to write `toMerge/`? Or keep current behavior (writes by default) and require `--dry-run` to opt out? Proposed: safe-by-default given the fragility.
-3. **diff-report location** — `output/diff-report.{json,md}` (gitignored, ephemeral) or a tracked `diff-report/` so PRs can reference them? Given patches were lost precisely *because* output was untracked, consider tracking these. Proposed: tracked `diff-report/` for the report itself, `output/` stays gitignored for intermediates.
+1. **Material-balance thresholds** — DROPPED. Not worth the processing; `loadPgn` already catches illegal positions.
+2. **`--dry-run` default** — CONFIRMED. `generatePullRequest.js` is dry-run by default; `--apply` required to write `toMerge/`.
+3. **diff-report location** — CONFIRMED. Tracked `diff-report/` for the report; `output/` stays gitignored for intermediates.
 
 ---
 
