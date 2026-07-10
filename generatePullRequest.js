@@ -60,8 +60,9 @@ const existingOpenings = await getLatestEcoJson();  // organized by category
 writeln('Phase 1: Validate, classify, and generate diff report.');
 
 const incomingOpenings = getIncomingOpenings({ collector });
-const validCount = incomingOpenings.length - 1 - collector.count('validate');
-const failedCount = collector.count('validate');
+const totalRecords = incomingOpenings.length - 1;
+const validCount = incomingOpenings.slice(1).filter(o => o.fen).length;
+const failedCount = totalRecords - validCount;
 writeln(`Validation: ${validCount} valid, ${failedCount} failed.`);
 
 // Always write + summarize corrections (normalize stage), but only abort

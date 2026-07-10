@@ -34,7 +34,7 @@ const ROOT = path.resolve(new URL("..", import.meta.url).pathname);
 // In PLAN-2 this becomes parsers/<name>/index.js exporting parse().
 const PARSER_ENTRY = {
     arasan: "arasan.js",
-    icsbot: null, // TODO: confirm entry script name
+    icsbot: "icsparser.js",
     lichess: "parseLichess.js",
     // others TBD
 };

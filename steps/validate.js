@@ -10,9 +10,12 @@ const ECO_RE = /^[A-E]\d{2}[a-z]?$/;
  * under the "normalize" stage so the change is auditable (before→after).
  *
  * Currently handles:
+ *   - Trailing whitespace: strip from eco, name, moves (TSV artifact)
  *   - Castling notation: `0-0-0` → `O-O-O`, `0-0` → `O-O`
  *   - Bare move numbers: `1 c4` → `1. c4` (add missing period)
  *   - Pawn captures missing 'x': `bc3` → `bxc3`, `cd5` → `cxd5`
+ *   - Compact move numbers: `1.Nf3` → `1. Nf3` (missing space after period)
+ *   - Doubled move numbers: `6. 6. Re1` → `6. Re1` (collapse duplicate)
  *   - Doubled move numbers: `6. 6. Re1` → `6. Re1` (collapse duplicate)
  *
  * The pawn-capture transform is universally safe in standard SAN: a token
@@ -63,7 +66,21 @@ export function normalizeMoves(moves, collector, ctx) {
         corrections.push({ from: before, to: out, rule: "pawn_capture_missing_x" });
     }
 
-    // 4. Doubled move numbers: "6. 6. Re1" → "6. Re1"
+    // 4. Compact move numbers: "1.Nf3" → "1. Nf3" (missing space after period)
+    //    icsbot uses this format. Safe: only digits followed by period and
+    //    immediately a letter (not a digit — that would be a sub-move like 1.e4).
+    if (/(?:^|\s)\d+\.[a-zA-Z]/.test(out)) {
+        const before = out;
+        out = out.replace(/(^|\s)(\d+)\.([a-zA-Z])/g, "$1$2. $3");
+        corrections.push({ from: before, to: out, rule: "compact_move_number" });
+    }
+
+    // 5. Doubled move numbers: "6. 6. Re1" → "6. Re1"
+    if (/\b(\d+)\.\s+\1\.(?!\.)\s+/.test(out)) {
+        const before = out;
+        out = out.replace(/\b(\d+)\.\s+\1\.(?!\.)\s+/g, "$1. ");
+        corrections.push({ from: before, to: out, rule: "doubled_move_number" });
+    }
     //    Matches the same number repeated in white-format (N. N.) but NOT
     //    "N. N..." (white-then-black, a different error — missing white move).
     //    The negative lookahead (?!\.) prevents matching N. inside N...
@@ -120,13 +137,21 @@ export function validate(incoming, collector, opts = {}) {
     let failed = 0;
 
     for (const opening of incoming.slice(1)) {
-        const { name, eco, moves } = opening;
+        let { name, eco, moves } = opening;
 
         // 1. Field check
         if (!name || !eco || !moves) {
             collector.add("validate", opening, "missing_fields", "name|eco|moves required");
             failed++;
             continue;
+        }
+
+        // 1a. Strip trailing whitespace (TSV/parser artifact). Done before
+        //     ECO check so eco_format passes cleanly.
+        if (eco !== eco.trim() || name !== name.trim() || moves !== moves.trim()) {
+            eco = opening.eco = eco.trim();
+            name = opening.name = name.trim();
+            moves = opening.moves = moves.trim();
         }
 
         // 2. ECO format (flag only — don't skip; a non-conforming ECO may still
