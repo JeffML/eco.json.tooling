@@ -1,4 +1,4 @@
-import { Chess } from 'chess.js';
+import { ChessPGN } from '@chess-pgn/chess-pgn';
 import fs from 'fs';
 import path from 'path';
 import leven from 'leven';
@@ -91,7 +91,7 @@ const filterIncoming = (incoming) => {
  * @returns {boolean} True if no loadPgn/structural failures, false otherwise.
  */
 const validate = (incoming) => {
-    const chess = new Chess();
+    const chess = new ChessPGN();
     const source = incoming[0]?.src;
     if (!source) {
         console.error('Missing src component');
@@ -111,7 +111,6 @@ const validate = (incoming) => {
             continue;
         }
         try {
-            chess.reset();
             chess.loadPgn(opening.moves);
             opening.fen = chess.fen();
         } catch (e) {

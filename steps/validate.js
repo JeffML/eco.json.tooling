@@ -1,4 +1,4 @@
-import { Chess } from "chess.js";
+import { ChessPGN } from "@chess-pgn/chess-pgn";
 import { ErrorCollector } from "../utils/errors.js";
 
 const ECO_RE = /^[A-E]\d{2}[a-z]?$/;
@@ -12,10 +12,15 @@ const ECO_RE = /^[A-E]\d{2}[a-z]?$/;
  * Currently handles:
  *   - Castling notation: `0-0-0` → `O-O-O`, `0-0` → `O-O`
  *   - Bare move numbers: `1 c4` → `1. c4` (add missing period)
+ *   - Pawn captures missing 'x': `bc3` → `bxc3`, `cd5` → `cxd5`
  *
- * Deliberately NOT handled (needs chess context, ambiguous):
- *   - Lowercase pawn captures missing 'x': `bc3` → `bxc3` (could be a
- *     malformed `Bc3` bishop move; only the position disambiguates)
+ * The pawn-capture transform is universally safe in standard SAN: a token
+ * matching /^[a-h][a-h][1-8]$/ (two lowercase file letters + rank) can ONLY
+ * be a pawn capture missing 'x'. Pieces are uppercase (N/B/R/Q/K), pawn
+ * pushes are destination-only (c3, e4), so two lowercase letters + rank is
+ * unambiguously a pawn capture (file + destination). The loadPgn call after
+ * normalization is the safety net — if the transform is wrong, loadPgn
+ * fails and the record is flagged.
  *
  * @param {string} moves
  * @param {ErrorCollector} [collector] - if provided, records each correction
@@ -42,12 +47,19 @@ export function normalizeMoves(moves, collector, ctx) {
     //    or whitespace) not followed by a period, then whitespace and a
     //    letter. The (^|\s) prefix ensures we don't match digits inside move
     //    tokens like d4, e4, c5 (those are preceded by a letter, not space).
-    //    After castling fix, the only standalone digits in PGN move text are
-    //    move numbers.
     if (/(?:^|\s)\d+(?!\.)\s+[a-zA-Z]/.test(out)) {
         const before = out;
         out = out.replace(/(^|\s)(\d+)(?!\.)\s+([a-zA-Z])/g, "$1$2. $3");
         corrections.push({ from: before, to: out, rule: "bare_move_number" });
+    }
+
+    // 3. Pawn captures missing 'x': bc3 → bxc3, ed5 → exd5
+    //    Safe in standard SAN: [a-h][a-h][1-8] is unambiguously a pawn
+    //    capture (lowercase = pawn file; pieces are uppercase).
+    if (/\b[a-h][a-h][1-8]\b/.test(out)) {
+        const before = out;
+        out = out.replace(/\b([a-h])([a-h])([1-8])\b/g, "$1x$2$3");
+        corrections.push({ from: before, to: out, rule: "pawn_capture_missing_x" });
     }
 
     if (corrections.length && collector) {
@@ -67,10 +79,12 @@ export function normalizeMoves(moves, collector, ctx) {
  *   2. ECO format — /^[A-E]\d{2}[a-z]?$/ (flag, don't skip — arasan's regex
  *      allows B00 but not B00a; we want to know about the mismatch).
  *   3. normalizeMoves() — deterministic corrections (castling, bare move
- *      numbers); logged to the collector under "normalize".
- *   4. chess.loadPgn(moves) — catches malformed AND illegal moves. Retried
- *      after normalization.
+ *      numbers, pawn captures missing 'x'); logged to the collector.
+ *   4. chessPGN.loadPgn(moves) — catches malformed AND illegal moves.
  *   5. On success: attach opening.fen = chess.fen().
+ *
+ * Uses chessPGN (@chess-pgn/chess-pgn) instead of chess.js — same API
+ * (loadPgn, fen, reset, move), and loadPgn auto-resets between calls.
  *
  * Failures are recorded in the ErrorCollector under the "validate" stage and
  * the offending opening is skipped (no fen attached). Does NOT throw on
@@ -84,7 +98,7 @@ export function normalizeMoves(moves, collector, ctx) {
  */
 export function validate(incoming, collector, opts = {}) {
     const { normalize = true } = opts;
-    const chess = new Chess();
+    const chess = new ChessPGN();
     const source = incoming[0]?.src;
     if (!source) {
         collector.add("validate", incoming[0], "missing_src_descriptor");
@@ -122,8 +136,6 @@ export function validate(incoming, collector, opts = {}) {
 
         // 4. loadPgn — rejects both malformed notation and illegal moves
         try {
-            // chess.js loadPgn mutates the instance; reset to avoid carryover
-            chess.reset();
             chess.loadPgn(moveText);
             opening.fen = chess.fen();
             valid++;
