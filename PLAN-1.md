@@ -1,6 +1,6 @@
 # PLAN-1 — Validate→Flag→Diff pilot on arasan
 
-Status: **planned** (not yet implemented)
+Status: **complete** ✅ (2026-07-10) — with scope evolution documented below
 Created: 2026-07-10
 Scope: Step 0 + Step 1 only. Builds the validate→flag→diff loop end-to-end on one deterministic local-file parser (arasan) to prove the pattern before extending to other parsers or wiki cleanup.
 
@@ -154,9 +154,24 @@ node scripts/run-parser.js arasan [--force]
 
 ---
 
-## Follow-on plans (not in scope here)
+## Follow-on plans — RE-EVALUATED 2026-07-10
 
-- **PLAN-2** — parser adapter interface (`parsers/<name>/index.js` exporting `parse() → {openings, errors, meta}`), `run-parser.js` unified, per-parser smoke test (10-record pre-validation).
-- **PLAN-3** — wiki cleanup: `corrections.json`, dual-path fix, Docker pre-flight, `--verify-output` wiring.
-- **PLAN-4** — auto-fix (opt-in, logged): `normalizeMoves()`, externalized `data/name-corrections.json`, material-balance as warning vs error.
-- **PLAN-5** — single deterministic pipeline (`npm run sync`): check sources → parse changed → validate → diff → optional merge.
+- **PLAN-2** — parser adapter interface. **Still valid.** `run-parser.js` works via subprocess for arasan+icsbot but other parsers (lichess, chessGraph, chronos) need their entry scripts verified. Adapter would unify. Priority: medium (not blocking).
+
+- **PLAN-3** — wiki cleanup. **Still valid, highest priority.** Wiki is the only CHANGED source per check-sources. Docker dependency + path bug need fixing first. `--verify-output` correctly reports it as "CHANGED (not parsed)".
+
+- **PLAN-4** — ~~auto-fix~~ → **corrections overlay.** **Reduced scope.** The normalizeMoves() step with 5 auto-fix rules already covers deterministic fixes (bare move numbers, castling, pawn captures, compact numbers, doubled numbers). What remains: externalize parser-specific corrections (arasan's bad lines, icsbot's illegal moves) into tracked `parsers/<name>/corrections.json` files.
+
+- **PLAN-5** — single `npm run sync` pipeline. **Still valid but lower priority.** `run-parser.js` + `generatePullRequest.js` is 2 commands away from a single command. A thin `scripts/sync.js` wrapping both would close the gap. Priority: low.
+
+## Deviation log
+
+| Plan said | Actually happened | Reason |
+|---|---|---|
+| Flag only, no auto-fix | 5 auto-fix rules (bare number, castling, pawn capture, compact number, doubled number) | User pushed for deterministic fixes; each proven safe by chessPGN loadPgn re-check |
+| diff-report in `output/` (gitignored) | diff-report in `diff-report/` (tracked) | Open Question 3: user wanted survivable reports |
+| errors in flat `errors/` | namespaced `errors/<source>/` | Prevented clobbering between parser runs (found during icsbot pilot) |
+| chess.js | chessPGN | User's package, stricter validation caught 286 silent drops chess.js missed |
+| arasan only | arasan + icsbot | User pushed to confirm generalization; both clean |
+| 8-step pipeline with prompts | 3-phase, 0 prompt dry-run | PLAN-1b consolidation: steps 4-7 had no decision points |
+| arasan diff expected empty | 880 additions, 936 modifications | eco.json may have drifted since last arasan merge (finding, not failure) |
