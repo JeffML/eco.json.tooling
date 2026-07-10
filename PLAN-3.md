@@ -1,6 +1,6 @@
 # PLAN-3 — Wiki crawler cleanup + ECO assignment
 
-Status: **planned** (not yet implemented)
+Status: **planned** — Docker removed 2026-07-10, 2 bugs remain
 Created: 2026-07-10
 Depends on: PLAN-1 (complete) — uses validate.js, ErrorCollector, chessPGN
 
@@ -13,16 +13,16 @@ Wiki is the **only CHANGED source** per `check-sources` (wiki revised 2026-04-04
 The wiki flow is fundamentally different from arasan/icsbot:
 
 ```
-Docker crawl → /storage/datasets/default/*.json   (user runs manually)
+npm start → ./storage/datasets/default/*.json   (Crawlee crawl, ~500 pages)
   ↓
-genPartialOpeningData.js → openingMinusEco.json   (no ECO codes, URL-keyed)
+genPartialOpeningData.js → openingMinusEco.json  (no ECO codes, URL-keyed)
   ↓
 ECO assignment step → input/opening.json           (MISSING — to be built)
   ↓
 generatePullRequest.js                             (standard pipeline)
 ```
 
-## Known bugs (3 to fix)
+## Known bugs (2 to fix)
 
 ### Bug 1: Dual-path mismatch (genPartialOpeningData.js, lines 31, 53-55)
 
@@ -35,15 +35,9 @@ fs.readdirSync(filePath).forEach((file) => {
     );
 ```
 
-`filePath` is relative to cwd; `readJsonFile` uses the absolute Docker path. If run outside Docker (which it is — `genPartialOpeningData.js` runs on the host), neither path works. The storage directory needs to be a configurable path, defaulting to `parsers/wikiChessOpeningTheoryCrawler/storage/datasets/default` relative to the project root.
+`filePath` uses `process.cwd()/storage/...`; `readJsonFile` uses `/my_crawler/storage/...` (a Docker-only path). With Docker removed, Crawlee writes to `./storage/datasets/default/` relative to cwd — the first path is correct, the second is wrong and will throw `ENOENT`.
 
-**Fix**: use `ROOT/storage/datasets/default` or accept a `--storage` argument.
-
-### Bug 2: No path validation / Docker check
-
-`genPartialOpeningData.js` assumes `storage/datasets/default` exists. If the crawl hasn't been run (or the storage was cleaned), `fs.readdirSync` throws `ENOENT` with no helpful message.
-
-**Fix**: pre-flight check — if the directory doesn't exist or is empty, print "Run the Docker crawl first (see README.md)" and exit.
+**Fix**: use a single consistent path. Crawlee default is `./storage/datasets/default/`, so `path.resolve(__dirname, 'storage/datasets/default')` works regardless of where the script is invoked from.
 
 ### Bug 3: Duplicated corrections (DRY violation)
 
@@ -116,14 +110,14 @@ New file: `parsers/wikiChessOpeningTheoryCrawler/assignEcoCodes.js`
 
 ### Wiring into run-parser.js
 
-Add wiki to PARSER_ENTRY but mark it as requiring manual Docker step:
+Add wiki to PARSER_ENTRY. Since the crawl (`npm start`) is interactive and slow, `run-parser.js` only handles the post-crawl steps:
 
 ```
 node scripts/run-parser.js wikiCrawler --force
 ```
 
 Flow:
-1. Check `storage/datasets/default/` exists (pre-flight; exit with instructions if not)
+1. Check `storage/datasets/default/` has files (pre-flight; exit with instructions if not — "Run `cd parsers/wikiCrawler && npm start` first")
 2. Run `genPartialOpeningData.js` → `openingMinusEco.json`
 3. Run `assignEcoCodes.js` → `output/opening.json` (standard format)
 4. Copy to `input/opening.json`
@@ -160,6 +154,5 @@ Flow:
 ## Risks
 
 1. **ECO lookup coverage** — some wiki openings may not exist in eco.json at all, producing '??' ECO codes. These need manual review before PR submission. The `errors/wiki_crawler/eco_assignment.json` file makes this visible.
-2. **Docker dependency** — the crawl still requires Docker. `run-parser.js` can't automate it; it can only detect missing storage and report clearly.
-3. **Name aliases** — 4,244 aliases in `aliases.txt`. Consolidating into `corrections.json` is mechanical but large. Could defer and keep both files side-by-side initially.
-4. **genPartialOpeningData.js uses chess.js** — this is a separate chess instance from the pipeline (which uses chessPGN). The `moveList()` regex produces raw move strings that are validated downstream by our pipe. The pipeline validation will catch any regex failures.
+2. **Name aliases** — 4,244 aliases in `aliases.txt`. Consolidating into `corrections.json` is mechanical but large. Could defer and keep both files side-by-side initially.
+3. **genPartialOpeningData.js uses chess.js** — this is a separate chess instance from the pipeline (which uses chessPGN). The `moveList()` regex produces raw move strings that are validated downstream by our pipe. The pipeline validation will catch any regex failures. Could migrate to chessPGN as part of this plan.

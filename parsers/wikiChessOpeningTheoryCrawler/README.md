@@ -1,26 +1,39 @@
 
+# Wiki Chess Opening Theory Crawler
 
-# Usage
-This parser first runs a crawler for Wikipedia's Chess Opening Theory pages. It is deliberately throttled to 250 requests/min. The crawler creates a /storage folder with many datasets in JSON format. Each dataset is of the format:
+Crawls [Wikibooks Chess Opening Theory](https://en.wikibooks.org/wiki/Chess_Opening_Theory) pages
+to extract opening names and moves, then feeds them into the eco.json pipeline.
+
+## Quick start
+
+```bash
+# 1. Install dependencies (first time only)
+npm install
+
+# 2. Run the crawl (~500+ pages, throttled to 250 req/min)
+npm start
+
+# Crawler writes to ./storage/datasets/default/ as JSON files.
+# Each file: { "url": "...", "text": "1. d4 · Queen's Pawn Opening" }
+
+# 3. Process crawl output → openingMinusEco.json
+node genPartialOpeningData.js
 ```
-{
-    "url": "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._d4",
-	"text": "1. d4 · Queen's Pawn Opening"
-}
-```
 
-The crawler will finish when it has no more URLs to process. The next step is to run `genPartialOpeningData.js`. This will generate an `openingMinusEco.json` file. As the name suggests, what's missing are the ECO codes that are *required* for eco.json pull requests. This is left as an exercise for the reader (Hint: almost all the openings will be in one of the eco.json files, so you can lookup an ECO code from those entries; the remainder you can mark as '??' and manually figure out what the code should be and enter it.)
+## Output
 
-## corrections
-Sometimes Wikipedia is wrong, or the page is malformed, or the parsing algorithm is too stupid. Attempts have been made to compensate.
+`genPartialOpeningData.js` produces `openingMinusEco.json` — a map of URL to `{ name, moves }`.
+**No ECO codes** are assigned; this is done by the pipeline's ECO assignment step.
 
-# Further Reading
-## Crawlee + CheerioCrawler + JavaScript project
+## Corrections
 
-This template is a production ready boilerplate for developing with `CheerioCrawler`. Use this to bootstrap your projects using the most up-to-date code.
+Sometimes Wikipedia is wrong, or the page is malformed, or the parser is too fragile.
+Corrections are applied in `genPartialOpeningData.js`:
 
-If you're looking for examples or want to learn more visit:
+- **URL corrections** — 8 known malformed wiki URLs are remapped
+- **Move extraction** — regex pipeline converts wiki URL segments to SAN moves
+- **Name aliases** — `aliases.txt` (4,244 entries) maps raw wiki names to canonical opening names
 
-- [Tutorial](https://crawlee.dev/docs/guides/cheerio-crawler-guide)
-- [Documentation](https://crawlee.dev/api/cheerio-crawler/class/CheerioCrawler)
-- [Examples](https://crawlee.dev/docs/examples/cheerio-crawler)
+## Storage
+
+Crawl output goes to `./storage/` (gitignored). Delete `storage/` to force a fresh crawl.
