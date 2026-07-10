@@ -91,6 +91,7 @@ const {
 updateInterpolated(formerInterpolated, added, modified, existingOpenings);
 
 // Write intermediate files (debugging artifacts, no longer gated by prompts)
+if (!fs.existsSync('./output')) fs.mkdirSync('./output', { recursive: true });
 fs.writeFileSync('./output/added.json', JSON.stringify(added, null, 2));
 fs.writeFileSync('./output/modified.json', JSON.stringify(modified, null, 2));
 fs.writeFileSync('./output/formerlyInterpolated.json', JSON.stringify(formerInterpolated, null, 4));

@@ -1,4 +1,4 @@
-import { writeFileSync } from 'fs';
+import { writeFileSync, existsSync, mkdirSync } from 'fs';
 import { hardAssert } from '../utils.js';
 
 /**
@@ -75,25 +75,47 @@ const removeFormerInterpolated = (formerInterpolated, interpolated) => {
 /**
  * Applies new continuations to the `fromTo` relationships.
  *
+ * A fromTo entry is `[from_fen, to_fen, from_source, to_source]`. Duplicates
+ * (same from + to) are expected when re-processing a source that partially
+ * overlaps existing eco.json data — they are no-ops, not errors.
+ *
+ * - Same from + to + same source → skip (exact duplicate, no-op).
+ * - Same from + to + different source → update the source in place, skip push.
+ * - New from + to → push.
+ *
  * @param {Array} fromTos - New `fromTo` relationships.
- * @param {Array} existingFromTos - Existing `fromTo` relationships.
+ * @param {Array} existingFromTos - Existing `fromTo` relationships (mutated).
+ * @param {object} [opts]
+ * @param {boolean} [opts.logSkips=true] - log skipped duplicates to stderr.
  */
-const applyContinuations = (fromTos, existingFromTos) => {
+const applyContinuations = (fromTos, existingFromTos, opts = {}) => {
+    const { logSkips = true } = opts;
+    let skipped = 0;
+    let updated = 0;
+
     fromTos.forEach((ft) => {
-        const found = existingFromTos.find((eft) => {
-            if (eft[0] === ft[0] && eft[1] === ft[1]) {
-                if (eft[2] !== ft[2]) {
-                    eft[2] = ft[2];
-                    return false;
-                }
-                return true;
+        const existingIdx = existingFromTos.findIndex(
+            (eft) => eft[0] === ft[0] && eft[1] === ft[1]
+        );
+        if (existingIdx >= 0) {
+            const existing = existingFromTos[existingIdx];
+            if (existing[2] !== ft[2]) {
+                // Different source — update in place, don't push duplicate
+                existing[2] = ft[2];
+                updated++;
+            } else {
+                skipped++;
             }
-            return false;
-        });
-        hardAssert(!found, 'new fromTo already exists!');
+            return; // don't push
+        }
+        existingFromTos.push(ft);
     });
 
-    existingFromTos.push(...fromTos); // add 'em
+    if (logSkips && (skipped > 0 || updated > 0)) {
+        console.error(
+            `applyContinuations: ${skipped} duplicate(s) skipped, ${updated} source(s) updated, ${fromTos.length - skipped - updated} new`
+        );
+    }
 };
 
 export const moreFromTos = (moreFromTos) => {
@@ -207,6 +229,8 @@ export const applyData = (
  * @param {Object} newExisting - Updated openings data.
  */
 export const writeNew = (newExisting) => {
+    const outDir = './output/toMerge';
+    if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
     for (const cat in newExisting) {
         if (cat === 'FT') {
             writeFileSync(
