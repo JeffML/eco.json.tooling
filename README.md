@@ -2,7 +2,14 @@
 
 The generatePullRequest.js file is a command-line tool that can be used to prepare pull requests for eco.json. First, run `yarn install`, then subsequently you can run `node generatePullRequest.js`.
 
-There are several steps to the process, and at each step the tool will explain what the step is and give an option to continue or stop.
+The tool runs in three phases. By default it operates in dry-run mode (no merge files written); use `--apply` to write the merge files. Use `--yes` to skip the single confirmation prompt (Phase 3).
+
+```
+node generatePullRequest.js --dry-run        # default: validate, classify, diff report, no merge files
+node generatePullRequest.js --apply          # also write merge files (prompts once unless --yes)
+node generatePullRequest.js --apply --yes    # fully non-interactive
+node generatePullRequest.js --lenient        # continue past validation failures
+```
 
 ## Generate merge data for pull request
 
@@ -29,9 +36,9 @@ The data must be of this format:
 
 The the first element is a src field which indicates where the data came from; the current recognized sources are listed [here](https://github.com/hayatbiralem/eco.json/tree/master?tab=readme-ov-file#encyclopedia-of-chess-openings-eco-data). If your data is derived from a new source, then mention it in the pull request. It is recommended to put the first element ({src:...}) into the pull request.
 
-### parse opening.js
+### Phase 1: Parse + validate + classify
 
-The `opening.json` file is parsed, compared to the existing [eco.json](https://github.com/jeffml/eco.json) opening data. First, the FEN string will be derived from the moves of each opening, then the following actions will be performed:
+The `opening.json` file is parsed, validated, and compared to the existing [eco.json](https://github.com/jeffml/eco.json) opening data. First, the FEN string will be derived from the moves of each opening, then the following actions are performed:
 
 1. if the opening FEN is found in eco_interpolated.json
    a) it will be removed
@@ -45,23 +52,19 @@ The `opening.json` file is parsed, compared to the existing [eco.json](https://g
    b) if the existing name (or an alias name) are the same, no action is taken
 3. if no existing opening is found in any of the eco or interpolated files, then a new opening is added to the appropriate eco?.json file
 
-Intermediate data will be written to the /output folder for further processing in the next steps.
+A diff report (`diff-report/diff-report.{json,md}`) is generated listing all additions, modifications, and deletions per FEN. Validation failures and auto-corrections are written to `errors/`. Intermediate data is written to the `/output` folder for debugging.
 
-### generate interpolations
+### Phase 2: Generate interpolations + build fromTo
 
-Interpolations fill in the gaps between named openings. Details can be found in the README in eco.json github project.
+Interpolations fill in the gaps between named openings. For each added opening (including interpolations), from-to linkages are created. See eco.json at github for details. Intermediate files are written to `/output` for debugging.
 
-### build fromTo table
+### Phase 3: Generate merge files
 
-For each added opening (including interpolations), from-to linkages are created. See eco.json at github.
-
-### generate merge data for pull requests
-
-Step 4: Generate new eco?.json, eco_interplated.json, and fromTo.json files. Copy these and move them to your fork of eco.json. Push the changes to your fork and submit a pull request. If you're adding opening data from a new source, note it in the PR.
+Generate new eco?.json, eco_interpolated.json, and fromTo.json files in `./output/toMerge/`. Copy these to your fork of eco.json. Push the changes to your fork and submit a pull request. If you're adding opening data from a new source, note it in the PR.
 
 ### parsers
 
-consider these to be fragile an in need of occasional maintenance.
+consider these to be fragile an in need of occasional maintenance. Use `node scripts/run-parser.js <name> [--force]` to run a parser and stage its output into `input/opening.json`. Use `node scripts/check-sources.js [--verify-output]` to detect which sources have changed since last parsed.
 
 ## Opening evaluations
 

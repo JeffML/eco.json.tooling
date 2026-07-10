@@ -1,16 +1,16 @@
 # Diff report — `arasan`
 
-Generated: 2026-07-10T17:03:31.045Z
+Generated: 2026-07-10T17:42:29.094Z
 
 ## Summary
 
 | Category | Count |
 |---|---|
 | Additions | 880 |
-| Modifications | 890 |
+| Modifications | 936 |
 | Deletions (formerly interpolated) | 48 |
-| Interpolations added | 0 |
-| From/To changes | 0 |
+| Interpolations added | 731 |
+| From/To changes | 3126 |
 | Excluded (redundant) | 270 |
 
 ## Additions
@@ -1814,6 +1814,52 @@ Generated: 2026-07-10T17:03:31.045Z
 | `r1bqnrk1/ppp1npbp/3p2p1/3Pp3/2P1P3/2N5/PP2BPPP/R1BQNRK1 w - - 3 10` | name, moves, eco, aliases | King's Indian: Mar del Plata, 9.Ne1 Ne8 |
 | `r1bq1rk1/pppnn1bp/3p2p1/3Ppp2/2P1P3/2N2P2/PP2B1PP/R1BQNRK1 w - - 0 11` | name, moves, eco, aliases | King's Indian Defense: Orthodox Variation, Classical System, Traditional Line |
 | `r1bq1rk1/pppnn1bp/3p2p1/3Ppp2/2P1P3/2NN4/PP2BPPP/R1BQ1RK1 w - - 0 11` | name, moves, eco, aliases | King's Indian: Mar del Plata, 9.Ne1 Nd7 10.Nd3 f5 |
+| `rnbqkb1r/p2p1ppp/1p2pn2/2p5/2P5/2N2NP1/PP1PPPBP/R1BQK2R b KQkq - 1 5` | name, moves, eco | English: Symmetrical, 3 Knights, 3...e6 4.g3 |
+| `rn1qkb1r/pb1p1ppp/1p2pn2/2p5/2P5/2N2NP1/PP1PPPBP/R1BQK2R w KQkq - 2 6` | name, moves, eco | English: Symmetrical, 3 Knights, 3...e6 4.g3 |
+| `rn1qkb1r/pb1p1ppp/1p2pn2/2p5/2P5/2N2NP1/PP1PPPBP/R1BQ1RK1 b kq - 3 6` | name, moves, eco | English: Symmetrical, 3 Knights, 3...e6 4.g3 |
+| `rnbqkb1r/ppp1pp1p/1n1p2p1/4P3/2PP4/5N1P/PP3PP1/RNBQKB1R b KQkq - 0 6` | name, moves, eco | Alekhine Defense: Modern Variation, Alburt Variation |
+| `rnbqk2r/ppp1ppbp/1n1p2p1/4P3/2PP4/5N1P/PP3PP1/RNBQKB1R w KQkq - 1 7` | name, moves, eco | Alekhine Defense: Modern Variation, Alburt Variation |
+| `rnbqkb1r/ppp2ppp/5n2/4p3/4P3/2N5/PPP2PPP/R1BQKBNR w KQkq - 0 5` | name, moves, eco | Pirc: 3.Nc3 e5 |
+| `rnbqkb1r/pp1p1ppp/4p3/2pnP3/3P4/2P2N2/PP3PPP/RNBQKB1R b KQkq - 0 5` | name, moves, eco | Sicilian Defense: Delayed Alapin Variation, with e6 |
+| `rnb1kbnr/pp3ppp/4p3/2pq4/3P4/2P2N2/PP3PPP/RNBQKB1R b KQkq - 0 5` | name, moves, eco | Sicilian: Alapin, 2...e6 3.Nf3 d5 |
+| `rnbqk1nr/pp1pppbp/6p1/8/3pP3/2P2N2/PP3PPP/RNBQKB1R w KQkq - 0 5` | name, moves, eco | Sicilian: Hungarian, 3.c3 |
+| `r1bqk1nr/pp2bppp/2np4/2p1p3/2B1P3/2NP1N2/PPP2PPP/R1BQK2R w KQkq - 1 6` | name, moves, eco | Sicilian: 2...Nc6 3.Nc3 e5 |
+| `r1bqk1nr/pp2bppp/2np4/2p1p3/2B1P3/2NP4/PPPN1PPP/R1BQK2R b KQkq - 2 6` | name, moves, eco | Sicilian: 2...Nc6 3.Nc3 e5 |
+| `r1bqkbnr/1p3ppp/p1np4/4p3/4P3/N1N5/PPP2PPP/R1BQKB1R b KQkq - 1 7` | name, moves, eco | Sicilian: Loewenthal, Kalashnikov, 6.N1c3 |
+| `r1b1k2r/1pq1bppp/p1nppn2/8/3NPP2/2N1B3/PPP1B1PP/R3QRK1 b kq - 1 10` | name, moves, eco | Sicilian: Taimanov, 6.Be3 a6 7.Be2 Nf6 8.O-O Be7 |
+| `r1b1k2r/2qnbppp/p2ppB2/1p6/3NPP2/2N2Q2/PPP1B1PP/2KR3R b kq - 0 11` | name, moves, eco | Sicilian: Najdorf, Main Line, Keres Variation |
+| `r1b1k2r/2q1bppp/p2ppn2/1p6/3NPP2/2N2Q2/PPP1B1PP/2KR3R w kq - 0 12` | name, moves, eco | Sicilian: Najdorf, Main Line, Keres Variation |
+| `r1b1k2r/2q1bppp/p2ppn2/1p2P3/3N1P2/2N2Q2/PPP1B1PP/2KR3R b kq - 0 12` | name, moves, eco | Sicilian: Najdorf, Main Line, Keres Variation |
+| `r1b1kb1r/pp3ppp/2nqpn2/8/2BN4/5N2/PPP2PPP/R1BQ1RK1 b kq - 0 9` | name, moves, eco | French: Tarrasch, Open, 4.exd5 Qxd5 5.Ngf3 cxd4 6.Bc4 Qd6 |
+| `r1b1kb1r/pp3ppp/3qpn2/8/2Bn4/5N2/PPP2PPP/R1BQ1RK1 w kq - 0 10` | name, moves, eco | French: Tarrasch, Open, 4.exd5 Qxd5 5.Ngf3 cxd4 6.Bc4 Qd6 |
+| `rnbqkb1r/pppp1ppp/5n2/8/2BQ4/2N2N2/PPP2PPP/R1B1K2R b KQkq - 2 6` | name, moves, eco | Bishop's Opening: Urusov Gambit, Keidansky Gambit |
+| `r1bqkb1r/pppp1ppp/2n2n2/8/2BQ4/2N2N2/PPP2PPP/R1B1K2R w KQkq - 3 7` | name, moves, eco | Bishop's Opening: Urusov Gambit, Keidansky Gambit |
+| `rnbqkb1r/pppp1ppp/5n2/6B1/2BQ4/5N2/PPP2PPP/RN2K2R b KQkq - 2 6` | name, moves, eco | Bishop's Opening: Urusov Gambit, Keidansky Gambit |
+| `rnbqk2r/ppppbppp/5n2/6B1/2BQ4/5N2/PPP2PPP/RN2K2R w KQkq - 3 7` | name, moves, eco | Bishop's Opening: Urusov Gambit, Keidansky Gambit |
+| `rnbqk2r/ppppbppp/5n2/6B1/2BQ4/2N2N2/PPP2PPP/R3K2R b KQkq - 4 7` | name, moves, eco | Bishop's Opening: Urusov Gambit, Keidansky Gambit |
+| `r1bq1rk1/1pp2ppp/p1np1n2/2b1p3/2B1P3/2PP1N2/PP3PPP/RNBQR1K1 w - - 0 8` | name, moves, eco, aliases | Italian Game: Classical Variation, Giuoco Pianissimo |
+| `r1bq1rk1/1pp2ppp/p1np1n2/2b1p3/4P3/1BPP1N2/PP3PPP/RNBQR1K1 b - - 1 8` | name, moves, eco, aliases | Italian Game: Classical Variation, Giuoco Pianissimo |
+| `r1bq1rk1/bpp2ppp/p1np1n2/4p3/4P3/1BPP1N2/PP3PPP/RNBQR1K1 w - - 2 9` | name, moves, eco, aliases | Italian Game: Classical Variation, Giuoco Pianissimo |
+| `rnb1kb1r/pp2pppp/1q3n2/2pp4/3P1B2/4PN2/PPP2PPP/RN1QKB1R w KQkq - 1 5` | name, moves, eco | Queen's Pawn: London |
+| `r1bq1rk1/pp1n1ppp/2pbpn2/8/2pP4/2NBPN2/PPQ2PPP/R1B2RK1 w - - 0 9` | name, moves, eco | Semi-Slav: Chigorin, 7.Qc2 O-O |
+| `rnbq1rk1/pp3pp1/2p1pb1p/3p4/2PP4/2NBPN2/PP3PPP/2RQK2R b K - 1 9` | name, moves, eco | QGD: 4.Bg5 Be7 5.Nf3 h6 6.Bxf6 Bxf6 7.e3 |
+| `r1bq1rk1/pp1n1pp1/2p1pb1p/3p4/2PP4/2NBPN2/PP3PPP/2RQK2R w K - 2 10` | name, moves, eco | QGD: 4.Bg5 Be7 5.Nf3 h6 6.Bxf6 Bxf6 7.e3 |
+| `r1bq1rk1/pp1n1pp1/2p1pb1p/3p4/2PP4/2NBPN2/PP3PPP/2RQ1RK1 b - - 3 10` | name, moves, eco | QGD: 4.Bg5 Be7 5.Nf3 h6 6.Bxf6 Bxf6 7.e3 |
+| `r1bq1rk1/pp2ppbp/2n3p1/2p5/2BPP3/2P1B3/P3NPPP/R2Q1RK1 b - - 5 10` | name, moves, eco | Gruenfeld: Classical Exchange, 7...c5 |
+| `r2q1rk1/pp2ppbp/2n3p1/2p5/2BPP1b1/2P1B3/P3NPPP/R2Q1RK1 w - - 6 11` | name, moves, eco | Gruenfeld: Classical Exchange, 7...c5 |
+| `r2q1rk1/pp2ppbp/2n3p1/2p5/2BPP1b1/2P1BP2/P3N1PP/R2Q1RK1 b - - 0 11` | name, moves, eco | Gruenfeld: Classical Exchange, 7...c5 |
+| `r2q1rk1/pp2ppbp/6p1/n1p5/2BPP1b1/2P1BP2/P3N1PP/R2Q1RK1 w - - 1 12` | name, moves, eco | Gruenfeld: Classical Exchange, 7...c5 |
+| `r2q1rk1/pp2ppbp/6p1/n1p5/3PP1b1/2PBBP2/P3N1PP/R2Q1RK1 b - - 2 12` | name, moves, eco | Gruenfeld: Classical Exchange, 7...c5 |
+| `r2q1rk1/pp2ppbp/6p1/n7/3pP1b1/2PBBP2/P3N1PP/R2Q1RK1 w - - 0 13` | name, moves, eco | Gruenfeld: Classical Exchange, 7...c5 |
+| `r2q1rk1/pp2ppbp/6p1/n7/3PP1b1/3BBP2/P3N1PP/R2Q1RK1 b - - 0 13` | name, moves, eco | Gruenfeld: Classical Exchange, 7...c5 |
+| `rnbq1rk1/pp2ppbp/2p2np1/3p4/2PP4/2NBPN2/PP3PPP/R1BQK2R w KQ - 4 7` | name, moves, eco | Slav: 3.Nc3 Nf6 4.e3 |
+| `rnbq1rk1/pp2ppbp/2p2np1/3p4/2PP4/2NBPN2/PP3PPP/R1BQ1RK1 b - - 5 7` | name, moves, eco | Slav: 3.Nc3 Nf6 4.e3 |
+| `rnbqk2r/2pp1ppp/1p2pn2/p7/1bPP4/5NP1/PP1BPPBP/RN1QK2R b KQkq - 1 6` | name, moves, eco | Bogo-Indian: 4.Bd2 a5 5.g3 |
+| `r1bq1rk1/pppnppbp/3p1np1/8/2PP4/2N1PN2/PP2BPPP/R1BQ1RK1 b - - 3 7` | name, moves, eco, aliases | King's Indian Defense: Semi-Classical Variation |
+| `r1bq1rk1/pppn1pbp/3p1np1/4p3/2PP4/2N1PN2/PP2BPPP/R1BQ1RK1 w - - 0 8` | name, moves, eco, aliases | King's Indian Defense: Semi-Classical Variation |
+| `r1bq1rk1/pppn1pbp/3p1np1/4P3/2P5/2N1PN2/PP2BPPP/R1BQ1RK1 b - - 0 8` | name, moves, eco, aliases | King's Indian Defense: Semi-Classical Variation |
+| `rnbq1rk1/ppp3bp/3p1pp1/4p1B1/2PPP1n1/2N2N2/PP2BPPP/R2QK2R w KQ - 0 9` | name, moves, eco | King's Indian: Gligoric-Taimanov, 7...Ng4 |
+| `r1bqk2r/pppn1pbp/3p1np1/4p3/2PPP3/2N2N2/PP2BPPP/R1BQ1RK1 b kq - 3 7` | name, moves, eco | Old Indian: 5.e4 g6 |
 
 ## Deletions (removed from eco_interpolated.json)
 
@@ -1865,3 +1911,11 @@ Generated: 2026-07-10T17:03:31.045Z
 - `r1bq1rk1/pppn1pbp/3p1np1/8/2PNP3/2N3P1/PP3PBP/R1BQ1RK1 b - - 0 9` (→ arasan)
 - `rnbq1rk1/ppp2pbp/3p2p1/4p1B1/2PPP1n1/2N2N2/PP2BPPP/R2QK2R b KQ - 3 8` (→ arasan)
 - `r1bqk2r/pppn1pbp/3p1np1/4p3/2PPP3/2N2N2/PP2BPPP/R1BQK2R w KQkq - 2 7` (→ arasan)
+
+## Interpolations added (731)
+
+_See output/linesOfDescent.json for full detail._
+
+## From/To changes (3126)
+
+_See output/moreFromTos.json for full detail._
