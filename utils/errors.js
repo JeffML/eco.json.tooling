@@ -74,11 +74,11 @@ export class ErrorCollector {
     }
 
     /** Print a one-line summary per stage to stdout. */
-    printSummary() {
+    printSummary(dir = 'errors') {
         for (const stage of Object.keys(this.stages)) {
             const n = this.stages[stage].length;
             if (n > 0) {
-                console.log(`  ${stage}: ${n} failure(s) — see errors/${stage}.json`);
+                console.log(`  ${stage}: ${n} failure(s) — see ${dir}/${stage}.json`);
             }
         }
     }

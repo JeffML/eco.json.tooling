@@ -13,8 +13,6 @@ import { applyData, writeNew } from './steps/createEcoJsonFiles.js';
 import { ErrorCollector } from './utils/errors.js';
 import { writeDiffReport } from './steps/diffReport.js';
 
-const ERRORS_DIR = './errors';
-
 // ── CLI flags ────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
 const FLAG_YES = args.includes('--yes');          // skip interactive prompts
@@ -53,26 +51,31 @@ writeln(DRY_RUN
 
 const existingOpenings = await getLatestEcoJson();  // organized by category
 
+// Errors and corrections are namespaced by source so different parser runs
+// don't clobber each other. Write after we know the source tag.
 // ════════════════════════════════════════════════════════════════════════════
 // PHASE 1: Validate + filter + diff
-// Combines former steps 1–3. One summary print, no prompts.
 // ────────────────────────────────────────────────────────────────────────────
 writeln('Phase 1: Validate, classify, and generate diff report.');
 
 const incomingOpenings = getIncomingOpenings({ collector });
+const source = incomingOpenings[0]?.src ?? 'unknown';
 const totalRecords = incomingOpenings.length - 1;
 const validCount = incomingOpenings.slice(1).filter(o => o.fen).length;
 const failedCount = totalRecords - validCount;
 writeln(`Validation: ${validCount} valid, ${failedCount} failed.`);
 
+// Namespace errors by source so different parser runs don't overwrite
+const errorsDir = `./errors/${source}`;
+
 // Always write + summarize corrections (normalize stage), but only abort
 // on actual validate-stage failures (not corrections).
 if (collector.total > 0) {
-    collector.writeAll(ERRORS_DIR);
-    collector.printSummary();
+    collector.writeAll(errorsDir);
+    collector.printSummary(errorsDir);
 }
 if (collector.count('validate') > 0 && !FLAG_LENIENT) {
-    writeln('\nValidation failures found (fail-closed). See errors/validate.json.');
+    writeln(`\nValidation failures found (fail-closed). See ${errorsDir}/validate.json.`);
     writeln('Use --lenient to continue past validation failures.');
     process.exit(1);
 } else if (collector.count('validate') > 0) {
@@ -98,7 +101,6 @@ fs.writeFileSync('./output/modified.json', JSON.stringify(modified, null, 2));
 fs.writeFileSync('./output/formerlyInterpolated.json', JSON.stringify(formerInterpolated, null, 4));
 
 // Early diff report — now accurate (post-updateInterpolated)
-const source = incomingOpenings[0]?.src ?? 'unknown';
 const { jsonPath: earlyJson, mdPath: earlyMd } = writeDiffReport({
     added, modified, formerInterpolated, excluded, source,
 });
