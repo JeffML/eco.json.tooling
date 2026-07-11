@@ -1,4 +1,3 @@
-
 # Wiki Chess Opening Theory Crawler
 
 Crawls [Wikibooks Chess Opening Theory](https://en.wikibooks.org/wiki/Chess_Opening_Theory) pages

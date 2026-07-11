@@ -42,6 +42,7 @@ fs.readdirSync(filePath).forEach((file) => {
 ### Bug 3: Duplicated corrections (DRY violation)
 
 `genPartialOpeningData.js` and `scripts/diff-wiki.js` both maintain their own copies of:
+
 - `correctedUrls` (8 URL corrections, identical)
 - `moveList()` URL→moves parser (nearly identical regex pipeline)
 
@@ -51,12 +52,12 @@ fs.readdirSync(filePath).forEach((file) => {
 
 Four correction mechanisms exist, none centralized:
 
-| Source | What | Format | Tracked? |
-|---|---|---|---|
-| `genPartialOpeningData.js` | 8 URL corrections | Hardcoded object | Yes (code) |
-| `scripts/diff-wiki.js` | Same 8 URL corrections | Duplicated hardcoded object | Yes (code) |
-| `aliases.txt` | 4,244 name→alias mappings | NDJSON | Yes |
-| `genPartialOpeningData.js` `moveList()` | URL→moves regex pipeline | Inline code | Yes (code) |
+| Source                                  | What                      | Format                      | Tracked?   |
+| --------------------------------------- | ------------------------- | --------------------------- | ---------- |
+| `genPartialOpeningData.js`              | 8 URL corrections         | Hardcoded object            | Yes (code) |
+| `scripts/diff-wiki.js`                  | Same 8 URL corrections    | Duplicated hardcoded object | Yes (code) |
+| `aliases.txt`                           | 4,244 name→alias mappings | NDJSON                      | Yes        |
+| `genPartialOpeningData.js` `moveList()` | URL→moves regex pipeline  | Inline code                 | Yes (code) |
 
 ### Proposed: `corrections.json` schema
 
@@ -65,9 +66,7 @@ Four correction mechanisms exist, none centralized:
   "urlCorrections": {
     "<bad url>": "<good url>"
   },
-  "nameAliases": [
-    { "openingName": "Queen's Pawn Game", "alias": "1. d4 · Queen's Pawn Opening" }
-  ],
+  "nameAliases": [{ "openingName": "Queen's Pawn Game", "alias": "1. d4 · Queen's Pawn Opening" }],
   "moveListRules": {
     "description": "Regex pipelines applied to wiki URLs to extract SAN moves",
     "rules": [
@@ -117,6 +116,7 @@ node scripts/run-parser.js wikiCrawler --force
 ```
 
 Flow:
+
 1. Check `storage/datasets/default/` has files (pre-flight; exit with instructions if not — "Run `cd parsers/wikiCrawler && npm start` first")
 2. Run `genPartialOpeningData.js` → `openingMinusEco.json`
 3. Run `assignEcoCodes.js` → `output/opening.json` (standard format)
@@ -142,14 +142,14 @@ Flow:
 
 ## Files touched
 
-| File | Status | Purpose |
-|---|---|---|
-| `parsers/wikiChessOpeningTheoryCrawler/genPartialOpeningData.js` | edit | fix path bug, add pre-flight, import corrections.json |
-| `parsers/wikiChessOpeningTheoryCrawler/corrections.json` | new | URL corrections + name aliases + moveList rules |
-| `parsers/wikiChessOpeningTheoryCrawler/assignEcoCodes.js` | new | ECO assignment using chessPGN + eco.json lookup |
-| `scripts/diff-wiki.js` | edit | import corrections.json instead of hardcoded |
-| `scripts/run-parser.js` | edit | register wikiCrawler in PARSER_ENTRY |
-| `parsers/wikiChessOpeningTheoryCrawler/aliases.txt` | delete? | subsumed by corrections.json |
+| File                                                             | Status  | Purpose                                               |
+| ---------------------------------------------------------------- | ------- | ----------------------------------------------------- |
+| `parsers/wikiChessOpeningTheoryCrawler/genPartialOpeningData.js` | edit    | fix path bug, add pre-flight, import corrections.json |
+| `parsers/wikiChessOpeningTheoryCrawler/corrections.json`         | new     | URL corrections + name aliases + moveList rules       |
+| `parsers/wikiChessOpeningTheoryCrawler/assignEcoCodes.js`        | new     | ECO assignment using chessPGN + eco.json lookup       |
+| `scripts/diff-wiki.js`                                           | edit    | import corrections.json instead of hardcoded          |
+| `scripts/run-parser.js`                                          | edit    | register wikiCrawler in PARSER_ENTRY                  |
+| `parsers/wikiChessOpeningTheoryCrawler/aliases.txt`              | delete? | subsumed by corrections.json                          |
 
 ## Risks
 

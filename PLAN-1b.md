@@ -7,16 +7,16 @@ Scope: Consolidate the 8 interactive `confirmStep` prompts into 3 logical phases
 
 ## Current state: 8 steps, 8 prompts
 
-| Step | Module | Prompt? | Decision point? |
-|---|---|---|---|
-| 1 Validate | `getIncomingOpenings` | yes | no (just "ready to start") |
-| 2 Filter | `filterIncoming` | yes | no |
-| 3 Write intermediates + review | `updateInterpolated` + fs writes | yes ×2 | **redundant** — early diff report (emitted after Step 2) replaces the review |
-| 4 Continuations | `addedContinuations` | yes | no |
-| 5 Orphans + roots | `findOrphans`/`findRoots` | yes | no |
-| 6 Line of descent | `lineOfDescent` | yes | no |
-| 7 Link fromTo | `moreFromTos` | yes | no |
-| 8 Write merge files | `applyData`/`writeNew` | yes | **yes** — "commit to writing?" (now gated by `--apply`) |
+| Step                           | Module                           | Prompt? | Decision point?                                                              |
+| ------------------------------ | -------------------------------- | ------- | ---------------------------------------------------------------------------- |
+| 1 Validate                     | `getIncomingOpenings`            | yes     | no (just "ready to start")                                                   |
+| 2 Filter                       | `filterIncoming`                 | yes     | no                                                                           |
+| 3 Write intermediates + review | `updateInterpolated` + fs writes | yes ×2  | **redundant** — early diff report (emitted after Step 2) replaces the review |
+| 4 Continuations                | `addedContinuations`             | yes     | no                                                                           |
+| 5 Orphans + roots              | `findOrphans`/`findRoots`        | yes     | no                                                                           |
+| 6 Line of descent              | `lineOfDescent`                  | yes     | no                                                                           |
+| 7 Link fromTo                  | `moreFromTos`                    | yes     | no                                                                           |
+| 8 Write merge files            | `applyData`/`writeNew`           | yes     | **yes** — "commit to writing?" (now gated by `--apply`)                      |
 
 Steps 4–7 are four sequential computations with no human decision between them — each writes an intermediate file immediately consumed by the next. The prompts are speed bumps, not reviews.
 

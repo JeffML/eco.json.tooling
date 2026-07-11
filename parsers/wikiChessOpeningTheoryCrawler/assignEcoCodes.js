@@ -29,20 +29,21 @@ const ERRORS_DIR = path.resolve(__dirname, "..", "..", "errors", "wiki_crawler")
 // ── ECO lookup ───────────────────────────────────────────────────────────────
 
 /**
- * Find the nearest ECO code for a move sequence by replaying moves and
- * walking backward through the move history to find a parent opening in
- * eco.json.
+ * Find the nearest ECO code and parent opening name for a move sequence
+ * by replaying moves and walking backward through move history.
  *
  * @param {string} moves - PGN move text
  * @param {object} openings - eco.json opening collection (FEN → opening)
- * @returns {{ eco: string, fen: string, movesBack: number }} ECO code and metadata
+ * @returns {{ eco: string, fen: string, name: string|null, movesBack: number }}
+ *   ECO code, resolved FEN, inherited parent name (null when exact match),
+ *   and how many half-moves back the parent is
  */
 export function findEcoCode(moves, openings) {
   const game = new ChessPGN();
   try {
     game.loadPgn(moves);
   } catch {
-    return { eco: "??", fen: null, movesBack: -1 };
+    return { eco: "??", fen: null, name: null, movesBack: -1 };
   }
 
   const fen = game.fen();
@@ -50,7 +51,7 @@ export function findEcoCode(moves, openings) {
   // Check exact match first
   const exactEntry = openings[fen];
   if (exactEntry && exactEntry.eco && exactEntry.eco !== "??") {
-    return { eco: exactEntry.eco, fen, movesBack: 0 };
+    return { eco: exactEntry.eco, fen, name: exactEntry.name || null, movesBack: 0 };
   }
 
   // Position-only fallback: same position, different game state
@@ -60,7 +61,8 @@ export function findEcoCode(moves, openings) {
     (k) => k.split(" ")[0] === posOnly && openings[k].eco && openings[k].eco !== "??"
   );
   if (posMatch) {
-    return { eco: openings[posMatch].eco, fen: posMatch, movesBack: 0 };
+    const entry = openings[posMatch];
+    return { eco: entry.eco, fen: posMatch, name: entry.name || null, movesBack: 0 };
   }
 
   // Walk backward through move history to find parent opening
@@ -70,11 +72,11 @@ export function findEcoCode(moves, openings) {
     const parentFen = game.fen();
     const entry = openings[parentFen];
     if (entry && entry.eco && entry.eco !== "??") {
-      return { eco: entry.eco, fen: parentFen, movesBack: history.length - i };
+      return { eco: entry.eco, fen: parentFen, name: entry.name || null, movesBack: history.length - i };
     }
   }
 
-  return { eco: "??", fen, movesBack: -1 };
+  return { eco: "??", fen, name: null, movesBack: -1 };
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
@@ -114,7 +116,7 @@ async function main() {
       continue;
     }
 
-    const { eco, fen, movesBack } = findEcoCode(moves, allOpenings);
+    const { eco, fen, name: parentName, movesBack } = findEcoCode(moves, allOpenings);
 
     if (eco === "??") {
       unknown++;
@@ -123,9 +125,22 @@ async function main() {
       assigned++;
     }
 
+    // Clean up wiki names: inheriting from the parent opening removes
+    // raw page-title noise ("Chess Opening Theory/1. e4/...") and
+    // move-number-only names ("8. Bg3") in favor of the parent's
+    // canonical name.
+    const isRawPageTitle = /^Chess Opening Theory\//.test(name);
+    // "8. Bg3", "8...b5", "3...Ng6" — move numbers with optional spacing
+    const isMoveNumber = /^\d+\.\.?\.{0,3}\s*[a-zA-Z]/.test(name);
+    const resolvedName = (isRawPageTitle || isMoveNumber) && parentName
+      ? parentName
+      : isRawPageTitle
+        ? "TBD"
+        : name;
+
     // Only include if we have a valid FEN (moves parsed successfully)
     if (fen) {
-      output.push({ name, eco, moves, fen });
+      output.push({ name: resolvedName, eco, moves, fen });
     } else {
       skipped++;
     }

@@ -18,7 +18,8 @@ The goal: one command produces a structured diff (additions/modifications/deleti
 
 ## Pilot choice: arasan (not wiki)
 
-Wiki was the natural candidate (it's the only CHANGED source) but is the *hardest* to start with:
+Wiki was the natural candidate (it's the only CHANGED source) but is the _hardest_ to start with:
+
 - Docker-dependent crawl; storage lives in `/my_crawler/storage/datasets/default`
 - `genPartialOpeningData.js` has a latent path bug (`filePath` uses `process.cwd()/storage/...`, per-file read uses absolute `/my_crawler/storage/...`)
 - Surviving corrections are scattered: `aliases.txt` (4,244 lines NDJSON, tracked), `correctedUrls` (8 entries, hardcoded in JS), `moveList()` regex normalization (inline)
@@ -31,16 +32,16 @@ icsbot (plain TSV) is the cleaner baseline alternative; arasan's regex fragility
 
 ## Files touched
 
-| File | Status | Purpose |
-|---|---|---|
-| `scripts/check-sources.js` | edit | add `--verify-output`, `--force` |
-| `scripts/run-parser.js` | new | thin runner: check-sources gate → parser → validate → copy to `input/opening.json` |
-| `utils/errors.js` | new | `ErrorCollector` class |
-| `steps/validate.js` | new | structured validation returning `{valid, failures}` |
-| `steps/diffReport.js` | new | consolidate intermediates → `output/diff-report.{json,md}` |
-| `generatePullRequest.js` | edit | wire new `validate`, add `--lenient`/`--dry-run`/`--yes` flags |
-| `errors/` | new dir | runtime output (gitignored like `output/`) |
-| `.gitignore` | edit | add `errors/` |
+| File                       | Status  | Purpose                                                                            |
+| -------------------------- | ------- | ---------------------------------------------------------------------------------- |
+| `scripts/check-sources.js` | edit    | add `--verify-output`, `--force`                                                   |
+| `scripts/run-parser.js`    | new     | thin runner: check-sources gate → parser → validate → copy to `input/opening.json` |
+| `utils/errors.js`          | new     | `ErrorCollector` class                                                             |
+| `steps/validate.js`        | new     | structured validation returning `{valid, failures}`                                |
+| `steps/diffReport.js`      | new     | consolidate intermediates → `output/diff-report.{json,md}`                         |
+| `generatePullRequest.js`   | edit    | wire new `validate`, add `--lenient`/`--dry-run`/`--yes` flags                     |
+| `errors/`                  | new dir | runtime output (gitignored like `output/`)                                         |
+| `.gitignore`               | edit    | add `errors/`                                                                      |
 
 ---
 
@@ -75,6 +76,7 @@ icsbot (plain TSV) is the cleaner baseline alternative; arasan's regex fragility
 ### `steps/validate.js` — replaces boolean `validate()` in `steps/incoming.js`
 
 For each opening (after the src descriptor):
+
 1. **Field check:** `name`, `eco`, `moves` all present and non-empty. Missing → collect, skip.
 2. **ECO format:** `/^[A-E]\d{2}[a-z]?$/`. Mismatch → collect (flag, don't skip — arasan's regex `[A-E]\d{2}` allows `B00` but not `B00a`; we want to know).
 3. **`chess.loadPgn(moves)`** in try/catch. Failure → collect `{input: opening, reason: 'loadPgn_failed', raw: e.message}`, skip.
@@ -89,9 +91,11 @@ Returns `{valid: <count of successful>, failed: <count>}`.
 ### `steps/diffReport.js`
 
 Reads the intermediate files the pipeline already writes:
+
 - `output/added.json`, `modified.json`, `formerlyInterpolated.json`, `continuations.json`, `orphanRoots.json`, `linesOfDescent.json`, `moreFromTos.json`
 
 Consolidates into `output/diff-report.json`:
+
 ```json
 {
   "source": "arasan",
@@ -103,6 +107,7 @@ Consolidates into `output/diff-report.json`:
   "fromToChanges": [...]
 }
 ```
+
 Also writes `output/diff-report.md` — PR-ready text grouped by ECO category + source.
 
 Safe to run in `--dry-run` (before `writeNew()`), so the diff is available before merge files are written.
@@ -120,6 +125,7 @@ Safe to run in `--dry-run` (before `writeNew()`), so the diff is available befor
 ```
 node scripts/run-parser.js arasan [--force]
 ```
+
 1. Look up source in `check-sources` SOURCES registry.
 2. Unless `--force`: if source status is "unchanged", refuse with message.
 3. Run `parsers/arasan/arasan.js` body (initially via `child_process`/dynamic import — adapter refactor is deferred to PLAN-2).
@@ -166,12 +172,12 @@ node scripts/run-parser.js arasan [--force]
 
 ## Deviation log
 
-| Plan said | Actually happened | Reason |
-|---|---|---|
-| Flag only, no auto-fix | 5 auto-fix rules (bare number, castling, pawn capture, compact number, doubled number) | User pushed for deterministic fixes; each proven safe by chessPGN loadPgn re-check |
-| diff-report in `output/` (gitignored) | diff-report in `diff-report/` (tracked) | Open Question 3: user wanted survivable reports |
-| errors in flat `errors/` | namespaced `errors/<source>/` | Prevented clobbering between parser runs (found during icsbot pilot) |
-| chess.js | chessPGN | User's package, stricter validation caught 286 silent drops chess.js missed |
-| arasan only | arasan + icsbot | User pushed to confirm generalization; both clean |
-| 8-step pipeline with prompts | 3-phase, 0 prompt dry-run | PLAN-1b consolidation: steps 4-7 had no decision points |
-| arasan diff expected empty | 880 additions, 936 modifications | eco.json may have drifted since last arasan merge (finding, not failure) |
+| Plan said                             | Actually happened                                                                      | Reason                                                                             |
+| ------------------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Flag only, no auto-fix                | 5 auto-fix rules (bare number, castling, pawn capture, compact number, doubled number) | User pushed for deterministic fixes; each proven safe by chessPGN loadPgn re-check |
+| diff-report in `output/` (gitignored) | diff-report in `diff-report/` (tracked)                                                | Open Question 3: user wanted survivable reports                                    |
+| errors in flat `errors/`              | namespaced `errors/<source>/`                                                          | Prevented clobbering between parser runs (found during icsbot pilot)               |
+| chess.js                              | chessPGN                                                                               | User's package, stricter validation caught 286 silent drops chess.js missed        |
+| arasan only                           | arasan + icsbot                                                                        | User pushed to confirm generalization; both clean                                  |
+| 8-step pipeline with prompts          | 3-phase, 0 prompt dry-run                                                              | PLAN-1b consolidation: steps 4-7 had no decision points                            |
+| arasan diff expected empty            | 880 additions, 936 modifications                                                       | eco.json may have drifted since last arasan merge (finding, not failure)           |

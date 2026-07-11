@@ -98,16 +98,16 @@ node generatePullRequest.js --dry-run
 
 ### Parser reference
 
-| Source | Command | Type | Notes |
-|---|---|---|---|
-| arasan | `run-parser.js arasan` | Local file | Fixed-width text format |
-| icsbot | `run-parser.js icsbot` | Local file | TSV format |
-| lichess | `run-parser.js lichess` | Remote | Fetches 5 TSV files from GitHub |
-| wikiCrawler | `run-parser.js wikiCrawler` | Crawl | Requires `npm start` first (Crawlee) |
-| chessGraph | (not wired yet) | Local CSV | |
-| chronos | (not wired yet) | Local PGN | Multi-game PGN parsing |
-| chessTempo | (broken — missing input) | | |
-| wikiGambits | (not wired yet) | Local HTML | |
+| Source      | Command                     | Type       | Notes                                |
+| ----------- | --------------------------- | ---------- | ------------------------------------ |
+| arasan      | `run-parser.js arasan`      | Local file | Fixed-width text format              |
+| icsbot      | `run-parser.js icsbot`      | Local file | TSV format                           |
+| lichess     | `run-parser.js lichess`     | Remote     | Fetches 5 TSV files from GitHub      |
+| wikiCrawler | `run-parser.js wikiCrawler` | Crawl      | Requires `npm start` first (Crawlee) |
+| chessGraph  | (not wired yet)             | Local CSV  |                                      |
+| chronos     | (not wired yet)             | Local PGN  | Multi-game PGN parsing               |
+| chessTempo  | (broken — missing input)    |            |                                      |
+| wikiGambits | (not wired yet)             | Local HTML |                                      |
 
 ## Opening evaluations
 

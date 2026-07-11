@@ -34,13 +34,13 @@ const ROOT = path.resolve(new URL("..", import.meta.url).pathname);
 // For sources whose directory name differs from the source name, use an object:
 //   { scripts: [...], dir: "actual-dir-name" }
 const PARSER_ENTRY = {
-    arasan: "arasan.js",
-    icsbot: "icsparser.js",
-    lichess: "parseLichess.js",
-    wikiCrawler: {
-        scripts: ["genPartialOpeningData.js", "assignEcoCodes.js"],
-        dir: "wikiChessOpeningTheoryCrawler",
-    },
+  arasan: "arasan.js",
+  icsbot: "icsparser.js",
+  lichess: "parseLichess.js",
+  wikiCrawler: {
+    scripts: ["genPartialOpeningData.js", "assignEcoCodes.js"],
+    dir: "wikiChessOpeningTheoryCrawler",
+  },
 };
 
 function usage() {
@@ -87,16 +87,16 @@ function main() {
 }
 
 function runParser(name, entry) {
-    // Resolve entry to { scripts, dir }
-    let scripts, dir;
-    if (typeof entry === "object" && !Array.isArray(entry)) {
-        scripts = entry.scripts;
-        dir = entry.dir || name;
-    } else {
-        scripts = Array.isArray(entry) ? entry : [entry];
-        dir = name;
-    }
-    const parserDir = path.join(ROOT, "parsers", dir);
+  // Resolve entry to { scripts, dir }
+  let scripts, dir;
+  if (typeof entry === "object" && !Array.isArray(entry)) {
+    scripts = entry.scripts;
+    dir = entry.dir || name;
+  } else {
+    scripts = Array.isArray(entry) ? entry : [entry];
+    dir = name;
+  }
+  const parserDir = path.join(ROOT, "parsers", dir);
   // Validate all scripts exist before running any
   for (const script of scripts) {
     const scriptPath = path.join(parserDir, script);

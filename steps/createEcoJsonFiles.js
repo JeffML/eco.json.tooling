@@ -1,5 +1,5 @@
-import { writeFileSync, existsSync, mkdirSync } from 'fs';
-import { hardAssert } from '../utils.js';
+import { writeFileSync, existsSync, mkdirSync } from "fs";
+import { hardAssert } from "../utils.js";
 
 /**
  * Retrieves the JSON data for a specific category.
@@ -17,26 +17,21 @@ const getCategoryJson = (category, existing) => existing[category].json;
  * @param {Object} existing - Existing openings data.
  */
 const applyAdded = (added, existing) => {
-    for (const fen in added) {
-        const newOpening = added[fen];
-        const category =
-            newOpening.src === 'interpolated' ? 'IN' : newOpening.eco[0];
-        const existingJson = getCategoryJson(category, existing);
+  for (const fen in added) {
+    const newOpening = added[fen];
+    const category = newOpening.src === "interpolated" ? "IN" : newOpening.eco[0];
+    const existingJson = getCategoryJson(category, existing);
 
-        if (category !== 'IN') {
-            hardAssert(
-                !existingJson[fen],
-                `Opening already exists!\n${JSON.stringify(
-                    { fen, existing: existingJson[fen], new: newOpening },
-                    null,
-                    2
-                )}`
-            );
-        }
-
-        delete newOpening.fen; // Remove redundant FEN property
-        existingJson[fen] = newOpening;
+    if (category !== "IN") {
+      hardAssert(
+        !existingJson[fen],
+        `Opening already exists!\n${JSON.stringify({ fen, existing: existingJson[fen], new: newOpening }, null, 2)}`,
+      );
     }
+
+    delete newOpening.fen; // Remove redundant FEN property
+    existingJson[fen] = newOpening;
+  }
 };
 
 /**
@@ -46,17 +41,14 @@ const applyAdded = (added, existing) => {
  * @param {Object} existing - Existing openings data.
  */
 const applyModified = (modified, existing) => {
-    for (const fen in modified) {
-        const modifiedOpening = modified[fen];
-        const category =
-            modifiedOpening.src === 'interpolated'
-                ? 'IN'
-                : modifiedOpening.eco[0];
-        const existingJson = getCategoryJson(category, existing);
+  for (const fen in modified) {
+    const modifiedOpening = modified[fen];
+    const category = modifiedOpening.src === "interpolated" ? "IN" : modifiedOpening.eco[0];
+    const existingJson = getCategoryJson(category, existing);
 
-        hardAssert(existingJson[fen], 'Cannot find record to modify!');
-        existingJson[fen] = modifiedOpening;
-    }
+    hardAssert(existingJson[fen], "Cannot find record to modify!");
+    existingJson[fen] = modifiedOpening;
+  }
 };
 
 /**
@@ -66,10 +58,10 @@ const applyModified = (modified, existing) => {
  * @param {Object} interpolated - Interpolated openings data.
  */
 const removeFormerInterpolated = (formerInterpolated, interpolated) => {
-    for (const fen of formerInterpolated) {
-        hardAssert(interpolated[fen], 'Cannot find old interpolated opening!');
-        delete interpolated[fen];
-    }
+  for (const fen of formerInterpolated) {
+    hardAssert(interpolated[fen], "Cannot find old interpolated opening!");
+    delete interpolated[fen];
+  }
 };
 
 /**
@@ -89,82 +81,74 @@ const removeFormerInterpolated = (formerInterpolated, interpolated) => {
  * @param {boolean} [opts.logSkips=true] - log skipped duplicates to stderr.
  */
 const applyContinuations = (fromTos, existingFromTos, opts = {}) => {
-    const { logSkips = true } = opts;
-    let skipped = 0;
-    let updated = 0;
+  const { logSkips = true } = opts;
+  let skipped = 0;
+  let updated = 0;
 
-    fromTos.forEach((ft) => {
-        const existingIdx = existingFromTos.findIndex(
-            (eft) => eft[0] === ft[0] && eft[1] === ft[1]
-        );
-        if (existingIdx >= 0) {
-            const existing = existingFromTos[existingIdx];
-            if (existing[2] !== ft[2]) {
-                // Different source — update in place, don't push duplicate
-                existing[2] = ft[2];
-                updated++;
-            } else {
-                skipped++;
-            }
-            return; // don't push
-        }
-        existingFromTos.push(ft);
-    });
-
-    if (logSkips && (skipped > 0 || updated > 0)) {
-        console.error(
-            `applyContinuations: ${skipped} duplicate(s) skipped, ${updated} source(s) updated, ${fromTos.length - skipped - updated} new`
-        );
+  fromTos.forEach((ft) => {
+    const existingIdx = existingFromTos.findIndex((eft) => eft[0] === ft[0] && eft[1] === ft[1]);
+    if (existingIdx >= 0) {
+      const existing = existingFromTos[existingIdx];
+      if (existing[2] !== ft[2]) {
+        // Different source — update in place, don't push duplicate
+        existing[2] = ft[2];
+        updated++;
+      } else {
+        skipped++;
+      }
+      return; // don't push
     }
+    existingFromTos.push(ft);
+  });
+
+  if (logSkips && (skipped > 0 || updated > 0)) {
+    console.error(
+      `applyContinuations: ${skipped} duplicate(s) skipped, ${updated} source(s) updated, ${fromTos.length - skipped - updated} new`,
+    );
+  }
 };
 
 export const moreFromTos = (moreFromTos) => {
-    // moreFromTos needs a little massaging
-    const flattened = [];
-    let root;
+  // moreFromTos needs a little massaging
+  const flattened = [];
+  let root;
 
-    moreFromTos.forEach((lod, i) => {
-        const from = lod.fromData;
+  moreFromTos.forEach((lod, i) => {
+    const from = lod.fromData;
 
-        if (i === 0) {
-            root = from;
-        } else if (from.name === 'TBD') {
-            from.name = root.name;
-            from.rootSrc = from.rootSrc !== 'eco_tsv' ? root.src : 'eco_tsv';
-        }
-        flattened.push([[lod.from, lod.to], {from: lod.fromData, to:lod.toData}]);
-    });
+    if (i === 0) {
+      root = from;
+    } else if (from.name === "TBD") {
+      from.name = root.name;
+      from.rootSrc = from.rootSrc !== "eco_tsv" ? root.src : "eco_tsv";
+    }
+    flattened.push([[lod.from, lod.to], { from: lod.fromData, to: lod.toData }]);
+  });
 
-    return flattened;
+  return flattened;
 };
 
 const filterInterpolated = (newInterpolated, existing) => {
-    const filtered = {};
+  const filtered = {};
 
-    for (const fen in newInterpolated) {
-        const newOpening = newInterpolated[fen];
-        const category = newOpening.eco[0];
-        const existingJson = getCategoryJson(category, existing);
-        const old = existingJson[fen]
+  for (const fen in newInterpolated) {
+    const newOpening = newInterpolated[fen];
+    const category = newOpening.eco[0];
+    const existingJson = getCategoryJson(category, existing);
+    const old = existingJson[fen];
 
-        if (newOpening.src !== 'interpolated') {
-            continue;
-        }  // head or tail of line of descent; skip
+    if (newOpening.src !== "interpolated") {
+      continue;
+    } // head or tail of line of descent; skip
 
-        if (old) {
-            hardAssert(
-                `Opening already exists! ${JSON.stringify(
-                    { newOpening, existing: old },
-                    null,
-                    2
-                )}`
-            );
-        }
-
-        filtered[fen] = newOpening;
+    if (old) {
+      hardAssert(`Opening already exists! ${JSON.stringify({ newOpening, existing: old }, null, 2)}`);
     }
 
-    return filtered;
+    filtered[fen] = newOpening;
+  }
+
+  return filtered;
 };
 
 /**
@@ -175,25 +159,25 @@ const filterInterpolated = (newInterpolated, existing) => {
  * @param {Object} existing - Existing openings data.
  */
 const applyFromTos = (newFromTos, mfts, existing) => {
-    const existingFromTos = existing.FT.json;
+  const existingFromTos = existing.FT.json;
 
-    applyContinuations(newFromTos, existingFromTos);
+  applyContinuations(newFromTos, existingFromTos);
 
-    const fromTos = moreFromTos(mfts, existingFromTos);
+  const fromTos = moreFromTos(mfts, existingFromTos);
 
-    // moreFromTos also embeds new continuations, so extract those
-    const newInterpolated = fromTos.reduce((acc, [[fen], {from}]) => {
-        acc[fen] = from;
-        return acc;
-    }, {});
+  // moreFromTos also embeds new continuations, so extract those
+  const newInterpolated = fromTos.reduce((acc, [[fen], { from }]) => {
+    acc[fen] = from;
+    return acc;
+  }, {});
 
-    const interpolated = filterInterpolated(newInterpolated, existing);
+  const interpolated = filterInterpolated(newInterpolated, existing);
 
-    applyAdded(interpolated, existing);
-    applyContinuations(
-        fromTos.map((ft) => [...ft[0], ft[1].from.src, ft[1].to.src]),
-        existingFromTos
-    );
+  applyAdded(interpolated, existing);
+  applyContinuations(
+    fromTos.map((ft) => [...ft[0], ft[1].from.src, ft[1].to.src]),
+    existingFromTos,
+  );
 };
 
 /**
@@ -207,20 +191,13 @@ const applyFromTos = (newFromTos, mfts, existing) => {
  * @param {Object} modified - Openings to be modified.
  * @returns {Object} Updated openings data.
  */
-export const applyData = (
-    existing,
-    added,
-    newFromTos,
-    moreFromTos,
-    formerInterpolated,
-    modified
-) => {
-    console.log('applying data');
-    applyAdded(added, existing);
-    applyModified(modified, existing);
-    removeFormerInterpolated(formerInterpolated, existing.IN.json);
-    applyFromTos(newFromTos, moreFromTos, existing);
-    return existing;
+export const applyData = (existing, added, newFromTos, moreFromTos, formerInterpolated, modified) => {
+  console.log("applying data");
+  applyAdded(added, existing);
+  applyModified(modified, existing);
+  removeFormerInterpolated(formerInterpolated, existing.IN.json);
+  applyFromTos(newFromTos, moreFromTos, existing);
+  return existing;
 };
 
 /**
@@ -229,24 +206,15 @@ export const applyData = (
  * @param {Object} newExisting - Updated openings data.
  */
 export const writeNew = (newExisting) => {
-    const outDir = './output/toMerge';
-    if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
-    for (const cat in newExisting) {
-        if (cat === 'FT') {
-            writeFileSync(
-                './output/toMerge/fromTo.json',
-                JSON.stringify(newExisting[cat].json)
-            );
-        } else if (cat === 'IN') {
-            writeFileSync(
-                './output/toMerge/eco_interpolated.json',
-                JSON.stringify(newExisting[cat].json, null, 2)
-            );
-        } else {
-            writeFileSync(
-                `./output/toMerge/eco${cat}.json`,
-                JSON.stringify(newExisting[cat].json, null, 4)
-            );
-        }
+  const outDir = "./output/toMerge";
+  if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
+  for (const cat in newExisting) {
+    if (cat === "FT") {
+      writeFileSync("./output/toMerge/fromTo.json", JSON.stringify(newExisting[cat].json));
+    } else if (cat === "IN") {
+      writeFileSync("./output/toMerge/eco_interpolated.json", JSON.stringify(newExisting[cat].json, null, 2));
+    } else {
+      writeFileSync(`./output/toMerge/eco${cat}.json`, JSON.stringify(newExisting[cat].json, null, 4));
     }
+  }
 };
