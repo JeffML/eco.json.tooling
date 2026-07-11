@@ -41,6 +41,9 @@ const PARSER_ENTRY = {
         scripts: ["genPartialOpeningData.js", "assignEcoCodes.js"],
         dir: "wikiChessOpeningTheoryCrawler",
     },
+};
+
+function usage() {
   console.error("Usage: node scripts/run-parser.js <name> [--force]");
   console.error("Known parsers:", Object.keys(PARSER_ENTRY).join(", "));
   process.exit(1);
