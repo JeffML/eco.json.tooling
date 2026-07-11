@@ -60,11 +60,9 @@ const filterIncoming = (incoming) => {
       const redundant = isRedundant(existingEntry.name, name);
 
       if (existingEntry.src === src) {
-        if (!redundant) {
-          modified[fen] = { ...existingEntry, name, moves, eco };
-        } else {
-          excluded++;
-        }
+        // Same source already has this FEN. Never modify the existing
+        // name — aliases handle varied names from varied sources.
+        excluded++;
       } else if (existingEntry.src === "interpolated") {
         if (redundant) {
           // Same name — wiki confirms the interpolated entry, no change needed
@@ -76,14 +74,17 @@ const filterIncoming = (incoming) => {
           toRemove.push(fen);
         }
       } else if (src === "eco_tsv" && existingEntry.src !== "eco_tsv") {
-        const aliases = existingEntry.aliases ?? {};
+        // eco_tsv supersedes all other sources. Never mutate the book
+        // in-place — clone first so diffReport.js can detect changes.
+        const aliases = { ...(existingEntry.aliases ?? {}) };
         aliases[existingEntry.src] = existingEntry.name;
         aliases[src] = undefined;
-        existingEntry.src = src;
-        existingEntry.name = name;
-        modified[fen] = { ...existingEntry, aliases };
+        modified[fen] = { ...existingEntry, src, name, aliases };
       } else if (!redundant && (!existingEntry.aliases || !existingEntry.aliases[src])) {
-        const aliases = existingEntry.aliases ?? {};
+        // Clone aliases — never mutate the existing book entry in-place.
+        // The book object is shared with diffReport.js, which needs the
+        // original state to detect what actually changed.
+        const aliases = { ...(existingEntry.aliases ?? {}) };
         aliases[src] = name;
         modified[fen] = { ...existingEntry, aliases };
       } else {

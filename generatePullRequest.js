@@ -142,16 +142,12 @@ writeln("Phase 3: Generate merge files.");
 if (DRY_RUN) {
   writeln("DRY-RUN: skipping merge file generation (toMerge/ not written).");
   writeln("Re-run with --apply to generate and write merge files.");
-} else {
-  await confirmStep("Write merge files to ./output/toMerge");
-
-  // Concatenate the new data to existing structures and output to eco?.json,
-  // eco_interpolated.json and fromTo.json files
-  const newExisting = applyData(existingOpenings, added, newFromTos, mft, formerInterpolated, modified);
-  writeNew(newExisting);
 }
 
 // Final diff report (complete with interpolations + fromTo changes)
+// Must run BEFORE applyData — applyData mutates the book object, which
+// would make all modifications appear as "(none)" since the book would
+// already reflect the changes.
 writeDiffReport({
   added,
   modified,
@@ -161,6 +157,15 @@ writeDiffReport({
   excluded,
   source,
 });
+
+if (FLAG_APPLY) {
+  await confirmStep("Write merge files to ./output/toMerge");
+
+  // Concatenate the new data to existing structures and output to eco?.json,
+  // eco_interpolated.json and fromTo.json files
+  const newExisting = applyData(existingOpenings, added, newFromTos, mft, formerInterpolated, modified);
+  writeNew(newExisting);
+}
 
 writeln(`
 Done! Diff report in ./diff-report/. Merge files in ./output/toMerge/

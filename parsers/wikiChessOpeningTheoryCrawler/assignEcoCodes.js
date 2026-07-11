@@ -8,7 +8,7 @@
  *
  * Outputs:
  *   - parsers/wikiChessOpeningTheoryCrawler/output/opening.json (standard format)
- *   - errors/wiki_crawler/eco_assignment.json (openings assigned '??')
+ *   - errors/wiki_b/eco_assignment.json (openings assigned '??')
  *
  * Usage:
  *   node parsers/wikiChessOpeningTheoryCrawler/assignEcoCodes.js
@@ -24,7 +24,7 @@ const DATA_DIR = __dirname;
 const OPENINGS_FILE = path.join(DATA_DIR, "openingMinusEco.json");
 const OUTPUT_DIR = path.join(DATA_DIR, "output");
 const OUTPUT_FILE = path.join(OUTPUT_DIR, "opening.json");
-const ERRORS_DIR = path.resolve(__dirname, "..", "..", "errors", "wiki_crawler");
+const ERRORS_DIR = path.resolve(__dirname, "..", "..", "errors", "wiki_b");
 
 // ── ECO lookup ───────────────────────────────────────────────────────────────
 
@@ -100,7 +100,7 @@ async function main() {
   // Assign ECO codes
   const output = [
     {
-      src: "wiki_crawler",
+      src: "wiki_b",
       url: "https://en.wikibooks.org/wiki/Chess_Opening_Theory",
     },
   ];
@@ -127,20 +127,83 @@ async function main() {
 
     // Clean up wiki names: inheriting from the parent opening removes
     // raw page-title noise ("Chess Opening Theory/1. e4/...") and
-    // move-number-only names ("8. Bg3") in favor of the parent's
-    // canonical name.
+    // pure move-notation names ("8. Bg3", "8...b5").
+    // But names with sub-variation markers (·, —, :) after the move
+    // carry real naming information and are preserved.
     const isRawPageTitle = /^Chess Opening Theory\//.test(name);
-    // "8. Bg3", "8...b5", "3...Ng6" — move numbers with optional spacing
     const isMoveNumber = /^\d+\.\.?\.{0,3}\s*[a-zA-Z]/.test(name);
-    const resolvedName = (isRawPageTitle || isMoveNumber) && parentName
-      ? parentName
-      : isRawPageTitle
-        ? "TBD"
-        : name;
+    const hasSubName = /[·—]/.test(name);
+    let resolvedName =
+      (isRawPageTitle || (isMoveNumber && !hasSubName)) && parentName
+        ? parentName
+        : isRawPageTitle
+          ? "TBD"
+          : name;
+
+    // Prepend parent name for sub-variations that lack context.
+    // Wiki names like "Kobo-Steinberg Variation" or "Mengarini
+    // Variation" need their root opening prepended ("Sicilian Defense:
+    // Najdorf Variation: Kobo-Steinberg Variation").
+    // Skip prefixing when the wiki name already embeds the parent
+    // context (e.g. "Vienna Countergambit" already implies Vienna).
+    // Applies to both exact matches (movesBack === 0) and walked-back
+    // matches (movesBack > 0) — in both cases the wiki name may be a
+    // bare sub-variation name without its root opening.
+    if (parentName && resolvedName !== parentName) {
+      const norm = (s) =>
+        s
+          .toLowerCase()
+          .replace(/defence/g, "defense")
+          .replace(/[·—:,]/g, " ");
+      const pWords = new Set(norm(parentName).split(/\s+/).filter((w) => w.length > 2));
+      const wWords = norm(resolvedName).split(/\s+/).filter((w) => w.length > 2);
+      const overlap = wWords.filter((w) => pWords.has(w)).length;
+      const pContainsW = norm(parentName).includes(norm(resolvedName));
+      const wContainsP = norm(resolvedName).includes(norm(parentName));
+      const allWikiWordsInParent = overlap === wWords.length;
+      // More than half the wiki words appear in the parent → shared
+      const majorityOverlap = wWords.length > 0 && overlap / wWords.length > 0.5;
+      // First significant word of wiki name appears in parent → shared
+      // (covers "Trompowsky Attack" vs "Trompowsky: 2...Ne4")
+      const firstWordInParent =
+        wWords.length > 0 && wWords[0].length > 2 && pWords.has(wWords[0]);
+      const sharedContext =
+        pContainsW || wContainsP || allWikiWordsInParent || majorityOverlap || firstWordInParent;
+
+      if (!sharedContext) {
+        let subName = resolvedName;
+        // For · sub-names, strip the move-number prefix:
+        //   "4. Nd5!? · Naroditsky variation" → "Naroditsky variation"
+        if (hasSubName) {
+          const dotIdx = resolvedName.indexOf("·");
+          if (dotIdx !== -1) subName = resolvedName.substring(dotIdx + 1).trim();
+        }
+        // Use comma for sub-variations (parent already has a colon),
+        // colon for variations (parent is just the opening name).
+        const sep = parentName.includes(":") ? ", " : ": ";
+        resolvedName = parentName + sep + subName;
+      }
+    }
+
+    // Anonymous continuations: positions whose name equals the parent
+    // opening's name and required walking backward to classify. These
+    // add zero naming information — the interpolation pipeline already
+    // handles gaps between named openings.
+    // Uses synonym normalization so "Queen's Pawn Opening" matches
+    // "Queen's Pawn Game" and "Defence" matches "Defense".
+    const normSyn = (s) =>
+      s
+        .toLowerCase()
+        .replace(/defence/g, "defense")
+        .replace(/\bopening\b/g, "game");
+    const isAnonymousContinuation =
+      movesBack > 0 && parentName && normSyn(resolvedName) === normSyn(parentName);
 
     // Only include if we have a valid FEN (moves parsed successfully)
-    if (fen) {
+    if (fen && !isAnonymousContinuation) {
       output.push({ name: resolvedName, eco, moves, fen });
+    } else if (fen) {
+      skipped++;
     } else {
       skipped++;
     }

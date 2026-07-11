@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { book } from "../utils.js";
 
 /**
  * Consolidate pipeline intermediates into a single diff report.
@@ -51,10 +52,26 @@ export function buildDiffReport(input = {}) {
 
   const modifications = Object.entries(modified).map(([fen, o]) => {
     const fieldsChanged = [];
-    if (o.name !== undefined) fieldsChanged.push("name");
-    if (o.moves !== undefined) fieldsChanged.push("moves");
-    if (o.eco !== undefined) fieldsChanged.push("eco");
-    if (o.aliases !== undefined) fieldsChanged.push("aliases");
+    const existing = book[fen];
+    if (existing) {
+      // Compare against the existing entry — only report fields that
+      // actually differ. This makes "aliases-only" modifications clear.
+      if (o.name !== undefined && o.name !== existing.name) fieldsChanged.push("name");
+      if (o.moves !== undefined && o.moves !== existing.moves) fieldsChanged.push("moves");
+      if (o.eco !== undefined && o.eco !== existing.eco) fieldsChanged.push("eco");
+      if (o.aliases !== undefined) {
+        const existingKeys = Object.keys(existing.aliases ?? {});
+        const newKeys = Object.keys(o.aliases);
+        const hasNew = newKeys.some((k) => o.aliases[k] !== (existing.aliases ?? {})[k]);
+        if (hasNew) fieldsChanged.push("aliases");
+      }
+    } else {
+      // No existing entry to compare against — report all present fields
+      if (o.name !== undefined) fieldsChanged.push("name");
+      if (o.moves !== undefined) fieldsChanged.push("moves");
+      if (o.eco !== undefined) fieldsChanged.push("eco");
+      if (o.aliases !== undefined) fieldsChanged.push("aliases");
+    }
     return {
       fen,
       after: { name: o.name, eco: o.eco, src: o.src, aliases: o.aliases },
@@ -142,10 +159,21 @@ export function renderMarkdown(report) {
   if (report.modifications.length) {
     lines.push("## Modifications");
     lines.push("");
-    lines.push(`| FEN | Fields changed | New name |`);
-    lines.push(`|---|---|---|`);
+    lines.push(`| FEN | Fields changed | Existing name | Alias added |`);
+    lines.push(`|---|---|---|---|`);
     for (const m of report.modifications) {
-      lines.push(`| \`${m.fen}\` | ${m.fieldsChanged.join(", ")} | ${m.after.name ?? ""} |`);
+      const existing = book[m.fen];
+      const existingName = existing ? existing.name : "(new)";
+      // Show the new alias value (and which source added it)
+      const aliases = m.after.aliases ?? {};
+      const existingAliases = existing ? existing.aliases ?? {} : {};
+      const newAliasKey = Object.keys(aliases).find(
+        (k) => aliases[k] !== existingAliases[k]
+      );
+      const aliasAdded = newAliasKey ? `"${aliases[newAliasKey]}" (${newAliasKey})` : "";
+      lines.push(
+        `| \`${m.fen}\` | ${m.fieldsChanged.join(", ") || "(none)"} | ${existingName} | ${aliasAdded} |`
+      );
     }
     lines.push("");
   }

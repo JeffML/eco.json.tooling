@@ -162,7 +162,7 @@ async function main() {
   }
 
   const toInput = args.includes("--to-input");
-  const src = "wiki_crawler";
+  const src = "wiki_b";
 
   if (toInput) {
     // Look up ECO codes by truncating moves to find parent in eco.json
