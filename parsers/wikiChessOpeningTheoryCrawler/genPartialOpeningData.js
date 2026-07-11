@@ -1,39 +1,46 @@
-import readJsonFile from "../../../eco2jsonTools/readJsonFile.js";
 import fs from "fs";
 import path from "path";
-import { Chess } from "chess.js";
+import { ChessPGN } from "@chess-pgn/chess-pgn";
+import { createRequire } from "module";
 
-// handle fouled-up entries
-const correctedUrls = {
-    // corrected by redirect on site
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e5/2._Nf3/2...Nc6/3._Bb5/3...a6/4._Ba4/4...Nf6/5._d3/6._Bb3":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e5/2._Nf3/2...Nc6/3._Bb5/3...a6/4._Ba4/4...Nf6/5._d3/5...b5/6._Bb3",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4.e5/4....Nfd7/5.Bd3":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4._e5/4...Nfd7/5._Bd3",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4.e5/4....Nfd7/5.Bd3/5....c5":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4._e5/4...Nfd7/5._Bd3/5...c5",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...Nc6/2._d4/2...d5/3._Nc3/3..._dxe4":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...Nc6/2._d4/2...d5/3._Nc3/3...dxe4",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...Nc6/2._d4/2...d5/3._Nc3/3..._a6":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...Nc6/2._d4/2...d5/3._Nc3/3...a6",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._d4/1...Nf6/2._Bf4/2...e6/3._e3/3...d5/4._Nd2/4...c5/5._c3/5...Nc6/6._Nf3":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._d4/1...Nf6/2._Bf4/2...e6/3._e3/3...d5/4._Nd2/4...c5/5._c3/5...Nc6/6._Ngf3",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...c6/2._d4/2...d5/3._e5/3...Bf5/4._Nf3/4...e6/5._Be2/5...Nd7/6._O-O/6...Ne7/7._Nh4/7...Bg6/8._Nd2/8...c5/9_.c3":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._d4/1...Nf6/2._Bf4/2...e6/3._e3/3...d5/4._Nd2/4...c5/5._c3/5...Nc6/6._Ngf3",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4.e5/4....Nfd7/5.Bd3/5....c5/6.c3":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4._e5/4...Nfd7/5._Bd3/5...c5/6._c3",
-};
+const require = createRequire(import.meta.url);
 
-const chess = new Chess();
+// Corrections from tracked data file (survives re-crawls)
+const corrections = JSON.parse(
+    fs.readFileSync(new URL("./corrections.json", import.meta.url), "utf-8")
+);
+const correctedUrls = corrections.urlCorrections;
 
-const wdir = process.cwd();
+const chess = new ChessPGN();
 
-const filePath = path.join(wdir, "/storage/datasets/default");
+// Crawlee writes output to ./storage/datasets/default/ relative to this dir.
+// __dirname ensures the path works regardless of where the script is invoked.
+const __dirname = new URL(".", import.meta.url).pathname;
+const storageDir = path.join(__dirname, "storage", "datasets", "default");
+
+// ── Pre-flight check ────────────────────────────────────────────────────────
+
+if (!fs.existsSync(storageDir)) {
+    console.error(`Storage directory not found: ${storageDir}`);
+    console.error("Run the crawl first: cd parsers/wikiChessOpeningTheoryCrawler && npm start");
+    process.exit(1);
+}
+
+const files = fs.readdirSync(storageDir);
+if (files.length === 0) {
+    console.error(`Storage directory is empty: ${storageDir}`);
+    console.error("Run the crawl first: cd parsers/wikiChessOpeningTheoryCrawler && npm start");
+    process.exit(1);
+}
+console.log(`Found ${files.length} dataset files in ${storageDir}`);
+
+// ── URL → moves parser ──────────────────────────────────────────────────────
 
 const moveList = (url) => {
     url = correctedUrls[url] || url;
     const idx = url.indexOf("1._");
-    const raw = url.substr(idx);
+    if (idx === -1) return null;
+    const raw = url.substring(idx);
     const pass1 = raw.replaceAll(/(\d{1,2}\.)_([a-zA-Z0-9\-]*)\/?/g, "$1 $2 ");
     const pass2 = pass1.replaceAll(
         /(\d{1,2}\.{3})([a-zA-Z0-9\-]*)\/?/g,
@@ -45,25 +52,34 @@ const moveList = (url) => {
         .replaceAll("!", "")
         .replaceAll("/", " ")
         .replaceAll(/([\s-])0/g, "$1O");
-    return pass3;
+    return pass3.trim();
 };
+
+// ── Process dataset files ────────────────────────────────────────────────────
 
 const data = {};
 
-fs.readdirSync(filePath).forEach((file) => {
-    const { url, text: name } = readJsonFile(
-        path.resolve("/my_crawler/storage/datasets/default", file)
-    );
+files.forEach((file) => {
+    const filePath = path.join(storageDir, file);
+    let raw;
+    try {
+        raw = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    } catch {
+        console.error(`Skipping unreadable file: ${file}`);
+        return;
+    }
+    const url = raw.url;
+    const name = raw.text;
+    if (!url || !name) return;
 
     const moves = moveList(url);
+    if (!moves) return;
 
-    try {
-        data[url] = { name, moves};
-
-    } catch (e) {
-        console.error({ error: e.toString(), moves, text, url });
-    }
+    data[url] = { name, moves };
 });
 
+console.log(`Extracted ${Object.keys(data).length} opening(s) from crawl data.`);
 
+// Write output
 fs.writeFileSync("openingMinusEco.json", JSON.stringify(data, null, 2));
+console.log("Wrote openingMinusEco.json");

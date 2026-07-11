@@ -32,11 +32,14 @@ const ROOT = path.resolve(new URL("..", import.meta.url).pathname);
 
 // Map source name → parser entry script (relative to parsers/<name>/).
 // In PLAN-2 this becomes parsers/<name>/index.js exporting parse().
+// Map source name → parser entry. Can be:
+//   - a string: single script (arasan, icsbot)
+//   - an array of strings: multi-step pipeline (wikiCrawler)
 const PARSER_ENTRY = {
     arasan: "arasan.js",
     icsbot: "icsparser.js",
     lichess: "parseLichess.js",
-    // others TBD
+    wikiCrawler: ["genPartialOpeningData.js", "assignEcoCodes.js"],
 };
 
 function usage() {
@@ -88,30 +91,42 @@ function main() {
 
 function runParser(name, entry) {
     const parserDir = path.join(ROOT, "parsers", name);
-    const entryPath = path.join(parserDir, entry);
-    if (!fs.existsSync(entryPath)) {
-        console.error(`Parser entry not found: ${entryPath}`);
-        process.exit(1);
+    const scripts = Array.isArray(entry) ? entry : [entry];
+
+    // Validate all scripts exist before running any
+    for (const script of scripts) {
+        const scriptPath = path.join(parserDir, script);
+        if (!fs.existsSync(scriptPath)) {
+            console.error(`Parser script not found: ${scriptPath}`);
+            process.exit(1);
+        }
     }
 
-    console.log(`Running parser: ${name} (${entry})`);
-    try {
-        // Run with cwd = parser dir so scripts that write relative paths
-        // (e.g. arasan.js writes "opening.json") land inside the parser dir.
-        execFileSync(process.execPath, [entry], {
-            cwd: parserDir,
-            stdio: "inherit",
-        });
-    } catch (e) {
-        console.error(`Parser ${name} failed: ${e.message}`);
-        process.exit(1);
+    // Run each script sequentially, cwd = parser dir
+    for (const script of scripts) {
+        console.log(`Running: ${script}`);
+        try {
+            execFileSync(process.execPath, [script], {
+                cwd: parserDir,
+                stdio: "inherit",
+            });
+        } catch (e) {
+            console.error(`Script ${script} failed: ${e.message}`);
+            process.exit(1);
+        }
     }
 
-    // 4. Standardize output location
-    const parserOutput = path.join(parserDir, "opening.json");
-    if (!fs.existsSync(parserOutput)) {
+    // 4. Locate the parser's opening.json.
+    //    Simple parsers (arasan, icsbot) write to cwd (parser dir).
+    //    Wiki writes to output/opening.json (assignEcoCodes.js).
+    const candidatePaths = [
+        path.join(parserDir, "opening.json"),
+        path.join(parserDir, "output", "opening.json"),
+    ];
+    const parserOutput = candidatePaths.find((p) => fs.existsSync(p));
+    if (!parserOutput) {
         console.error(
-            `Parser did not produce opening.json at ${parserOutput}. Check the parser script's output path.`
+            `Parser did not produce opening.json. Checked: ${candidatePaths.join(", ")}`
         );
         process.exit(1);
     }

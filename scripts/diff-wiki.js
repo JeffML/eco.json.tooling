@@ -20,26 +20,17 @@ const require = createRequire(import.meta.url);
 const __dirname = new URL(".", import.meta.url).pathname;
 const ROOT = path.resolve(__dirname, "..");
 
-// ── URL corrections (from genPartialOpeningData.js) ──────────────────────────
+// ── URL corrections (from shared corrections.json) ───────────────────────────
 
-const correctedUrls = {
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e5/2._Nf3/2...Nc6/3._Bb5/3...a6/4._Ba4/4...Nf6/5._d3/6._Bb3":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e5/2._Nf3/2...Nc6/3._Bb5/3...a6/4._Ba4/4...Nf6/5._d3/5...b5/6._Bb3",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4.e5/4....Nfd7/5.Bd3":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4._e5/4...Nfd7/5._Bd3",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4.e5/4....Nfd7/5.Bd3/5....c5":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4._e5/4...Nfd7/5._Bd3/5...c5",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...Nc6/2._d4/2...d5/3._Nc3/3..._dxe4":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...Nc6/2._d4/2...d5/3._Nc3/3...dxe4",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...Nc6/2._d4/2...d5/3._Nc3/3..._a6":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...Nc6/2._d4/2...d5/3._Nc3/3...a6",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._d4/1...Nf6/2._Bf4/2...e6/3._e3/3...d5/4._Nd2/4...c5/5._c3/5...Nc6/6._Nf3":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._d4/1...Nf6/2._Bf4/2...e6/3._e3/3...d5/4._Nd2/4...c5/5._c3/5...Nc6/6._Ngf3",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...c6/2._d4/2...d5/3._e5/3...Bf5/4._Nf3/4...e6/5._Be2/5...Nd7/6._O-O/6...Ne7/7._Nh4/7...Bg6/8._Nd2/8...c5/9_.c3":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._d4/1...Nf6/2._Bf4/2...e6/3._e3/3...d5/4._Nd2/4...c5/5._c3/5...Nc6/6._Ngf3",
-    "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4.e5/4....Nfd7/5.Bd3/5....c5/6.c3":
-        "https://en.wikibooks.org/wiki/Chess_Opening_Theory/1._e4/1...e6/2._d4/2...d5/3._Nd2/3...Nf6/4._e5/4...Nfd7/5._Bd3/5...c5/6._c3",
-};
+const corrections = JSON.parse(
+    fs.readFileSync(
+        path.join(ROOT, "parsers", "wikiChessOpeningTheoryCrawler", "corrections.json"),
+        "utf-8"
+    )
+);
+import { findEcoCode } from "../parsers/wikiChessOpeningTheoryCrawler/assignEcoCodes.js";
+
+const correctedUrls = corrections.urlCorrections;
 
 // ── URL → Move list (from genPartialOpeningData.js) ──────────────────────────
 
@@ -74,29 +65,6 @@ const fenFromMoves = (moves) => {
     } catch {
         return null;
     }
-};
-
-// ── ECO lookup (truncate moves to find parent in eco.json) ───────────────────
-
-const findEcoCode = (moves) => {
-    const game = new ChessPGN();
-    try {
-        game.loadPgn(moves);
-    } catch {
-        return null;
-    }
-
-    // Walk backward through the move history, checking eco.json at each step
-    const history = game.history({ verbose: true });
-    for (let i = history.length - 1; i >= 0; i--) {
-        game.undo();
-        const fen = game.fen();
-        const entry = book[fen];
-        if (entry && entry.eco && entry.eco !== "??") {
-            return entry.eco;
-        }
-    }
-    return "??";
 };
 
 // ── Write input/opening.json for pipeline ─────────────────────────────────────
@@ -213,7 +181,7 @@ async function main() {
         // Look up ECO codes by truncating moves to find parent in eco.json
         console.log("Looking up ECO codes...");
         for (const o of newOpenings) {
-            o.eco = findEcoCode(o.moves);
+            o.eco = findEcoCode(o.moves, book).eco;
             console.log(`  ${o.eco}  ${o.moves}`);
         }
     }
