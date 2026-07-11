@@ -20,10 +20,25 @@ npm start
 node genPartialOpeningData.js
 ```
 
+## Pipeline integration
+
+After the crawl, the full pipeline flows like this:
+
+```bash
+# From the project root:
+node scripts/run-parser.js wikiCrawler --force
+# Runs: genPartialOpeningData.js → assignEcoCodes.js → input/opening.json
+
+node generatePullRequest.js --dry-run
+# Validate, classify, diff report → review, then --apply
+```
+
 ## Output
 
 `genPartialOpeningData.js` produces `openingMinusEco.json` — a map of URL to `{ name, moves }`.
-**No ECO codes** are assigned; this is done by the pipeline's ECO assignment step.
+`assignEcoCodes.js` looks up ECO codes from eco.json by replaying moves and checking FENs,
+then writes `output/opening.json` in the standard pipeline format. Openings with no match
+are assigned `"??"` and logged to `errors/wiki_crawler/eco_assignment.json` for manual review.
 
 ## Corrections
 

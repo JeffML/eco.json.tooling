@@ -62,9 +62,52 @@ Interpolations fill in the gaps between named openings. For each added opening (
 
 Generate new eco?.json, eco_interpolated.json, and fromTo.json files in `./output/toMerge/`. Copy these to your fork of eco.json. Push the changes to your fork and submit a pull request. If you're adding opening data from a new source, note it in the PR.
 
-### parsers
+## End-to-end workflow
 
-consider these to be fragile an in need of occasional maintenance. Use `node scripts/run-parser.js <name> [--force]` to run a parser and stage its output into `input/opening.json`. Use `node scripts/check-sources.js [--verify-output]` to detect which sources have changed since last parsed.
+```bash
+# 1. Check which sources have changed
+node scripts/check-sources.js --verify-output
+
+# 2. Run a parser (force if source is "unchanged")
+node scripts/run-parser.js arasan --force      # local-file parsers
+node scripts/run-parser.js icsbot --force
+node scripts/run-parser.js lichess              # remote (needs network)
+
+# 3. Diff report (default: dry-run, no merge files written)
+node generatePullRequest.js --dry-run
+
+# 4. Review diff-report/diff-report.md, then apply
+node generatePullRequest.js --apply --yes
+```
+
+### Wiki crawler (special case)
+
+Wiki requires a two-step process because it crawls web pages, not local files:
+
+```bash
+# 1. Run the crawl (~500 pages, ~2 min)
+cd parsers/wikiChessOpeningTheoryCrawler && npm start
+
+# 2. Post-crawl: extract moves, assign ECO codes, write input/opening.json
+#    (run from the project root)
+node scripts/run-parser.js wikiCrawler --force
+
+# 3. Diff report as usual
+node generatePullRequest.js --dry-run
+```
+
+### Parser reference
+
+| Source | Command | Type | Notes |
+|---|---|---|---|
+| arasan | `run-parser.js arasan` | Local file | Fixed-width text format |
+| icsbot | `run-parser.js icsbot` | Local file | TSV format |
+| lichess | `run-parser.js lichess` | Remote | Fetches 5 TSV files from GitHub |
+| wikiCrawler | `run-parser.js wikiCrawler` | Crawl | Requires `npm start` first (Crawlee) |
+| chessGraph | (not wired yet) | Local CSV | |
+| chronos | (not wired yet) | Local PGN | Multi-game PGN parsing |
+| chessTempo | (broken — missing input) | | |
+| wikiGambits | (not wired yet) | Local HTML | |
 
 ## Opening evaluations
 

@@ -1,6 +1,6 @@
 # PLAN-3 — Wiki crawler cleanup + ECO assignment
 
-Status: **planned** — Docker removed 2026-07-10, 2 bugs remain
+Status: **complete** ✅ (2026-07-11)
 Created: 2026-07-10
 Depends on: PLAN-1 (complete) — uses validate.js, ErrorCollector, chessPGN
 
