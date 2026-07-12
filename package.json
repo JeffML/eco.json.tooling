@@ -8,6 +8,7 @@
     "test": "exit 0",
     "generate:fromto": "node fromToPositionIndexed.js",
     "check-sources": "node scripts/check-sources.js",
+    "sanity-check": "node scripts/sanity-check.js",
     "diff-wiki": "node scripts/diff-wiki.js"
   },
   "repository": {

@@ -1,4 +1,6 @@
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import { getLatestEcoJson, keyLen, prompt } from "./utils.js";
 import { filterIncoming, getIncomingOpenings } from "./steps/incoming.js";
 import { updateInterpolated, lineOfDescent } from "./steps/interpolations.js";
@@ -6,6 +8,7 @@ import { findRoots } from "./steps/findRoots.js";
 import { findOrphans } from "./steps/findOrphans.js";
 import { addedContinuations, canonicalFromTos, moreFromTos } from "./steps/addedContinuations.js";
 import { applyData, writeNew } from "./steps/createEcoJsonFiles.js";
+import { execSync } from "child_process";
 import { ErrorCollector } from "./utils/errors.js";
 import { writeDiffReport } from "./steps/diffReport.js";
 
@@ -17,6 +20,7 @@ const FLAG_APPLY = args.includes("--apply"); // write toMerge/ (default: dry-run
 const FLAG_PAUSE = args.includes("--pause"); // stop after Phase 1 for human editing
 const FLAG_RESUME = args.includes("--resume"); // continue from output/ files (skip Phase 1)
 const DRY_RUN = !FLAG_APPLY;
+const ROOT = path.dirname(fileURLToPath(import.meta.url));
 
 const writeln = (str) => process.stdout.write(str + "\n");
 
@@ -197,6 +201,15 @@ if (FLAG_APPLY) {
   // eco_interpolated.json and fromTo.json files
   const newExisting = applyData(existingOpenings, added, newFromTos, mft, formerInterpolated, modified);
   writeNew(newExisting);
+
+  // Post-generation sanity check on toMerge/ files
+  const sanityScript = path.resolve(ROOT, "scripts", "sanity-check.js");
+  const toMergeDir = path.resolve(ROOT, "output", "toMerge");
+  try {
+    execSync(`node "${sanityScript}" "${toMergeDir}"`, { stdio: "inherit" });
+  } catch {
+    writeln("⚠ Sanity check found issues — review above before submitting PR.");
+  }
 }
 
 writeln(`

@@ -62,52 +62,72 @@ Interpolations fill in the gaps between named openings. For each added opening (
 
 Generate new eco?.json, eco_interpolated.json, and fromTo.json files in `./output/toMerge/`. Copy these to your fork of eco.json. Push the changes to your fork and submit a pull request. If you're adding opening data from a new source, note it in the PR.
 
-## End-to-end workflow
+## End-to-end workflow (one source at a time)
+
+**This pipeline processes one source at a time.** To add data from multiple sources, repeat steps 2-5 for each.
 
 ```bash
 # 1. Check which sources have changed
-node scripts/check-sources.js --verify-output
+npm run check-sources
 
-# 2. Run a parser (force if source is "unchanged")
-node scripts/run-parser.js arasan --force      # local-file parsers
-node scripts/run-parser.js icsbot --force
-node scripts/run-parser.js lichess              # remote (needs network)
+# 2. Run the parser for the desired source
+node scripts/run-parser.js <name>
+# Or, for parsers not yet wired into run-parser.js, run them directly:
+#   node parsers/chessGraph/chess-graph.js
+#   node parsers/chronos/chronos.js
+#   node parsers/chessTempo/parseChessTempo.js
+#   node parsers/wikiGambits/parseWikiGambits.js
 
-# 3. Diff report (default: dry-run, no merge files written)
-node generatePullRequest.js --dry-run
+# 3. Copy parser output to pipeline input
+cp parsers/<name>/output/opening.json input/opening.json
 
-# 4. Review diff-report/diff-report.md, then apply
+# 4. Review (dry-run — no files written)
+node generatePullRequest.js
+# Inspect diff-report/diff-report.md and output/*.json
+# Use --pause to stop after Phase 1 for human editing of added.json / modified.json,
+# then --resume to continue.
+
+# 5. Apply (writes toMerge/ + runs sanity check)
 node generatePullRequest.js --apply --yes
+# Sanity check runs automatically on toMerge/ files.
+# Copy toMerge/* to your eco.json fork and open a PR.
 ```
 
 ### Wiki crawler (special case)
 
-Wiki requires a two-step process because it crawls web pages, not local files:
+The wiki crawler requires a two-step process:
 
 ```bash
 # 1. Run the crawl (~500 pages, ~2 min)
 cd parsers/wikiChessOpeningTheoryCrawler && npm start
 
 # 2. Post-crawl: extract moves, assign ECO codes, write input/opening.json
-#    (run from the project root)
-node scripts/run-parser.js wikiCrawler --force
+cd ../.. && node scripts/run-parser.js wikiCrawler --force
 
-# 3. Diff report as usual
-node generatePullRequest.js --dry-run
+# 3. Continue with pipeline steps 4-5 above
+node generatePullRequest.js
+node generatePullRequest.js --apply --yes
+```
+
+### Running the sanity check standalone
+
+```bash
+npm run sanity-check              # checks ../eco.json
+node scripts/sanity-check.js output/toMerge  # checks pending merge
 ```
 
 ### Parser reference
 
-| Source      | Command                     | Type       | Notes                                   |
-| ----------- | --------------------------- | ---------- | --------------------------------------- |
-| arasan      | (removed)                   | —          | Now mirrors lichess/eco_tsv — redundant |
-| icsbot      | `run-parser.js icsbot`      | Local file | TSV format                              |
-| lichess     | `run-parser.js lichess`     | Remote     | Fetches 5 TSV files from GitHub         |
-| wikiCrawler | `run-parser.js wikiCrawler` | Crawl      | Requires `npm start` first (Crawlee)    |
-| chessGraph  | (not wired yet)             | Local CSV  |                                         |
-| chronos     | (not wired yet)             | Local PGN  | Multi-game PGN parsing                  |
-| chessTempo  | (broken — missing input)    |            |                                         |
-| wikiGambits | (not wired yet)             | Local HTML |                                         |
+| Source      | Command                                        | Type       | Notes                                  |
+| ----------- | ---------------------------------------------- | ---------- | -------------------------------------- |
+| lichess     | `run-parser.js lichess`                        | Remote     | Fetches 5 TSV files from GitHub        |
+| wikiCrawler | `run-parser.js wikiCrawler`                    | Crawl      | Requires `npm start` first (Crawlee)   |
+| icsbot      | `run-parser.js icsbot`                         | Local file | TSV format                             |
+| chessTempo  | `node parsers/chessTempo/parseChessTempo.js`   | Local JSON | Download input from chesstempo.com     |
+| chessGraph  | `node parsers/chessGraph/chess-graph.js`       | Local CSV  | CSV from Destaq/chess-graph            |
+| chronos     | `node parsers/chronos/chronos.js`              | Local PGN  | PGN from cs.kent.ac.uk pgn-extract     |
+| wikiGambits | `node parsers/wikiGambits/parseWikiGambits.js` | Local HTML | Wikipedia "List of chess gambits" page |
+| ~~arasan~~  | (removed)                                      | —          | Mirrors lichess — redundant            |
 
 ## Pipeline output files
 
