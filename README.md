@@ -98,16 +98,16 @@ node generatePullRequest.js --dry-run
 
 ### Parser reference
 
-| Source      | Command                     | Type       | Notes                                |
-| ----------- | --------------------------- | ---------- | ------------------------------------ |
+| Source      | Command                     | Type       | Notes                                   |
+| ----------- | --------------------------- | ---------- | --------------------------------------- |
 | arasan      | (removed)                   | —          | Now mirrors lichess/eco_tsv — redundant |
-| icsbot      | `run-parser.js icsbot`      | Local file | TSV format                           |
-| lichess     | `run-parser.js lichess`     | Remote     | Fetches 5 TSV files from GitHub      |
-| wikiCrawler | `run-parser.js wikiCrawler` | Crawl      | Requires `npm start` first (Crawlee) |
-| chessGraph  | (not wired yet)             | Local CSV  |                                      |
-| chronos     | (not wired yet)             | Local PGN  | Multi-game PGN parsing               |
-| chessTempo  | (broken — missing input)    |            |                                      |
-| wikiGambits | (not wired yet)             | Local HTML |                                      |
+| icsbot      | `run-parser.js icsbot`      | Local file | TSV format                              |
+| lichess     | `run-parser.js lichess`     | Remote     | Fetches 5 TSV files from GitHub         |
+| wikiCrawler | `run-parser.js wikiCrawler` | Crawl      | Requires `npm start` first (Crawlee)    |
+| chessGraph  | (not wired yet)             | Local CSV  |                                         |
+| chronos     | (not wired yet)             | Local PGN  | Multi-game PGN parsing                  |
+| chessTempo  | (broken — missing input)    |            |                                         |
+| wikiGambits | (not wired yet)             | Local HTML |                                         |
 
 ## Pipeline output files
 
@@ -116,7 +116,7 @@ After running `generatePullRequest.js`, intermediate files are written to `./out
 | File                        | Phase | Purpose                                                                                                                  |
 | --------------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------ |
 | `added.json`                | 1     | New openings — FENs not in eco.json. Human-editable between `--pause` and `--resume`.                                    |
-| `modified.json`             | 1     | Existing openings with new aliases from the parsed source. Names are never changed.                                              |
+| `modified.json`             | 1     | Existing openings with new aliases from the parsed source. Names are never changed.                                      |
 | `formerlyInterpolated.json` | 1     | FENs promoted from `src: "interpolated"` to named. Will be removed from `eco_interpolated.json`.                         |
 | `continuations.json`        | 2     | Forward links: for each new opening, legal moves that reach a named opening (progeny).                                   |
 | `orphanRoots.json`          | 2     | `noRoots` (no ancestor found — need interpolations) and `unattached` (candidate ancestor exists but no legal move path). |

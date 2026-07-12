@@ -1,37 +1,41 @@
-import {Chess} from 'chess.js'
-import fs from 'fs'
-import { ecoJsonMerged } from '../../getLatestEcoJson.js'
-import leven from 'leven'
+import { ChessPGN } from "@chess-pgn/chess-pgn";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { book } from "../../utils.js";
+import leven from "leven";
 
-const chess = new Chess()
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const chess = new ChessPGN();
 
-// file:///home/chronos/u-a5d83366612aa8feeee6083530d5bb7f7b8939a9/MyFiles/Downloads/eco.pgn
-const pgn = fs.readFileSync('./chronos.pgn', 'utf8')
-// const pgn = fs.readFileSync('./trunc.pgn', 'utf8')
-const ob = await ecoJsonMerged()
+const pgn = fs.readFileSync(path.resolve(__dirname, "chronos.pgn"), "utf8");
 
-const openings= [
-    {src: "chronos", url: "file:///home/chronos/u-a5d83366612aa8feeee6083530d5bb7f7b8939a9/MyFiles/Downloads/eco.pgn"}
-]
+const openings = [{ src: "chronos", url: "https://www.cs.kent.ac.uk/people/staff/djb/pgn-extract/eco.pgn" }];
 
 for (const game of pgn.split(/\*|1-0|0-1/)) {
-    // console.log(game)
-    chess.loadPgn(game)
-    const fen = chess.fen()
-    if (!ob[fen]) process.stdout.write('+')
-    else {
-        const {Opening, Variation, ECO} = chess.getHeaders()
-        const obEntry = ob[fen]
-        const obName = obEntry.name 
-        const obSrc = obEntry.src
-        const pgnName = Opening + (Variation? ": " + Variation : "")
+  try {
+    chess.loadPgn(game);
+  } catch {
+    continue;
+  }
+  const fen = chess.fen();
+  const obEntry = book[fen];
+  if (!obEntry) {
+    process.stdout.write("+");
+    continue;
+  }
 
-        if (leven(obName, pgnName) > 3) {
-            const moves = game.substring(game.indexOf('1. '))
-            openings.push({name:pgnName, moves, eco:ECO})
-        }
-        if (obSrc === 'interpolated') process.write('I')
-    }
+  const h = chess.header();
+  const pgnName = [h.Opening, h.Variation].filter(Boolean).join(": ") || "";
+  const ecoTag = h.ECO || "";
+  const obName = obEntry.name;
+
+  if (pgnName && obName && leven(obName, pgnName) > 3) {
+    const moves = game.substring(game.indexOf("1. "));
+    openings.push({ src: "chronos", name: pgnName, moves, eco: ecoTag, fen });
+  }
 }
 
-fs.writeFileSync('./opening.json', JSON.stringify(openings, null, 2))
+const outDir = path.resolve(__dirname, "output");
+fs.mkdirSync(outDir, { recursive: true });
+fs.writeFileSync(path.join(outDir, "opening.json"), JSON.stringify(openings, null, 2));

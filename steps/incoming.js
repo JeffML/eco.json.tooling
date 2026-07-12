@@ -181,7 +181,10 @@ const filterIncoming = (incoming) => {
             }
             if (!ancestor) {
               for (const [af, a] of Object.entries(added)) {
-                if (af.split(" ")[0] === prevPos) { ancestor = a; break; }
+                if (af.split(" ")[0] === prevPos) {
+                  ancestor = a;
+                  break;
+                }
               }
             }
             if (ancestor) checkEntry = ancestor;
@@ -191,7 +194,11 @@ const filterIncoming = (incoming) => {
         // Exact match, prefix/suffix variant, or synonym (e.g. "Reti: KIA" ≈ "King's Indian Attack")
         const normCheck = normalizeName(checkEntry?.name);
         const normIncoming = normalizeName(name);
-        if (normCheck && normIncoming && (normCheck === normIncoming || isRedundant(normCheck, normIncoming) || isRedundant(normIncoming, normCheck))) {
+        if (
+          normCheck &&
+          normIncoming &&
+          (normCheck === normIncoming || isRedundant(normCheck, normIncoming) || isRedundant(normIncoming, normCheck))
+        ) {
           excluded++;
           continue;
         }
