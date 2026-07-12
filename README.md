@@ -109,6 +109,21 @@ node generatePullRequest.js --dry-run
 | chessTempo  | (broken — missing input)    |            |                                      |
 | wikiGambits | (not wired yet)             | Local HTML |                                      |
 
+## Pipeline output files
+
+After running `generatePullRequest.js`, intermediate files are written to `./output/`. Use `--pause` to stop after Phase 1 for human review, then `--resume` to continue.
+
+| File                        | Phase | Purpose                                                                                                                  |
+| --------------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------ |
+| `added.json`                | 1     | New openings — FENs not in eco.json. Human-editable between `--pause` and `--resume`.                                    |
+| `modified.json`             | 1     | Existing openings with new aliases from the parsed source. Names are never changed.                                              |
+| `formerlyInterpolated.json` | 1     | FENs promoted from `src: "interpolated"` to named. Will be removed from `eco_interpolated.json`.                         |
+| `continuations.json`        | 2     | Forward links: for each new opening, legal moves that reach a named opening (progeny).                                   |
+| `orphanRoots.json`          | 2     | `noRoots` (no ancestor found — need interpolations) and `unattached` (candidate ancestor exists but no legal move path). |
+| `linesOfDescent.json`       | 2     | Backward chains: interpolated bridge openings from each orphan back to its nearest named ancestor.                       |
+| `moreFromTos.json`          | 2     | `fromTo` links for the interpolation chains in `linesOfDescent.json`.                                                    |
+| `toMerge/`                  | 3     | Final `ecoA-E.json`, `eco_interpolated.json`, and `fromTo.json` ready for pull request. Written only with `--apply`.     |
+
 ## Opening evaluations
 
 The `/scoreOpenings` folder will generate scores for all currently unevaluated openings. It is not an official part of eco.json, and relies on the installation of UCI-capable chess engine, such as stockfish. Evaluations will vary according to the specs of the platform they run on.
