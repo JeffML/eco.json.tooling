@@ -100,7 +100,7 @@ node generatePullRequest.js --dry-run
 
 | Source      | Command                     | Type       | Notes                                |
 | ----------- | --------------------------- | ---------- | ------------------------------------ |
-| arasan      | `run-parser.js arasan`      | Local file | Fixed-width text format              |
+| arasan      | (removed)                   | —          | Now mirrors lichess/eco_tsv — redundant |
 | icsbot      | `run-parser.js icsbot`      | Local file | TSV format                           |
 | lichess     | `run-parser.js lichess`     | Remote     | Fetches 5 TSV files from GitHub      |
 | wikiCrawler | `run-parser.js wikiCrawler` | Crawl      | Requires `npm start` first (Crawlee) |

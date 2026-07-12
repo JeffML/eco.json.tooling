@@ -34,7 +34,7 @@ const ROOT = path.resolve(new URL("..", import.meta.url).pathname);
 // For sources whose directory name differs from the source name, use an object:
 //   { scripts: [...], dir: "actual-dir-name" }
 const PARSER_ENTRY = {
-  arasan: "arasan.js",
+  // arasan removed — now mirrors lichess/eco_tsv, which is already authoritative
   icsbot: "icsparser.js",
   lichess: "parseLichess.js",
   wikiCrawler: {

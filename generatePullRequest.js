@@ -71,7 +71,9 @@ if (FLAG_RESUME) {
     : [];
   source = Object.values(added)[0]?.src ?? "wiki_b";
   excluded = 0; // not tracked across resume
-  writeln(`Resuming from ./output/: ${keyLen(added)} added, ${keyLen(modified)} modified, ${formerInterpolated.length} formerly interpolated.`);
+  writeln(
+    `Resuming from ./output/: ${keyLen(added)} added, ${keyLen(modified)} modified, ${formerInterpolated.length} formerly interpolated.`,
+  );
 } else {
   writeln("Phase 1: Validate, classify, and generate diff report.");
 
@@ -85,43 +87,43 @@ if (FLAG_RESUME) {
   // Namespace errors by source so different parser runs don't overwrite
   const errorsDir = `./errors/${source}`;
 
-// Always write + summarize corrections (normalize stage), but only abort
-// on actual validate-stage failures (not corrections).
-if (collector.total > 0) {
-  collector.writeAll(errorsDir);
-  collector.printSummary(errorsDir);
-}
-if (collector.count("validate") > 0 && !FLAG_LENIENT) {
-  writeln(`\nValidation failures found (fail-closed). See ${errorsDir}/validate.json.`);
-  writeln("Use --lenient to continue past validation failures.");
-  process.exit(1);
-} else if (collector.count("validate") > 0) {
-  writeln("(continuing in --lenient mode)");
-}
+  // Always write + summarize corrections (normalize stage), but only abort
+  // on actual validate-stage failures (not corrections).
+  if (collector.total > 0) {
+    collector.writeAll(errorsDir);
+    collector.printSummary(errorsDir);
+  }
+  if (collector.count("validate") > 0 && !FLAG_LENIENT) {
+    writeln(`\nValidation failures found (fail-closed). See ${errorsDir}/validate.json.`);
+    writeln("Use --lenient to continue past validation failures.");
+    process.exit(1);
+  } else if (collector.count("validate") > 0) {
+    writeln("(continuing in --lenient mode)");
+  }
 
-const { added, modified, excluded, toRemove: formerInterpolated } = filterIncoming(incomingOpenings);
+  ({ added, modified, excluded, toRemove: formerInterpolated } = filterIncoming(incomingOpenings));
 
-// updateInterpolated mutates `modified` (adds entries for interpolated
-// continuations whose root was promoted). Run BEFORE the diff report so
-// the report reflects the final classification.
-updateInterpolated(formerInterpolated, added, modified, existingOpenings);
+  // updateInterpolated mutates `modified` (adds entries for interpolated
+  // continuations whose root was promoted). Run BEFORE the diff report so
+  // the report reflects the final classification.
+  updateInterpolated(formerInterpolated, added, modified, existingOpenings);
 
-// Write intermediate files (debugging artifacts, no longer gated by prompts)
-if (!fs.existsSync("./output")) fs.mkdirSync("./output", { recursive: true });
-fs.writeFileSync("./output/added.json", JSON.stringify(added, null, 2));
-fs.writeFileSync("./output/modified.json", JSON.stringify(modified, null, 2));
-fs.writeFileSync("./output/formerlyInterpolated.json", JSON.stringify(formerInterpolated, null, 4));
+  // Write intermediate files (debugging artifacts, no longer gated by prompts)
+  if (!fs.existsSync("./output")) fs.mkdirSync("./output", { recursive: true });
+  fs.writeFileSync("./output/added.json", JSON.stringify(added, null, 2));
+  fs.writeFileSync("./output/modified.json", JSON.stringify(modified, null, 2));
+  fs.writeFileSync("./output/formerlyInterpolated.json", JSON.stringify(formerInterpolated, null, 4));
 
-// Early diff report — now accurate (post-updateInterpolated)
-const { jsonPath: earlyJson, mdPath: earlyMd } = writeDiffReport({
-  added,
-  modified,
-  formerInterpolated,
-  excluded,
-  source,
-});
+  // Early diff report — now accurate (post-updateInterpolated)
+  const { jsonPath: earlyJson, mdPath: earlyMd } = writeDiffReport({
+    added,
+    modified,
+    formerInterpolated,
+    excluded,
+    source,
+  });
 
-writeln(`
+  writeln(`
 Classification: ${keyLen(added)} added, ${keyLen(modified)} modified, ${excluded} excluded, ${formerInterpolated.length} formerly interpolated.
 Diff report: ${earlyMd}
 `);

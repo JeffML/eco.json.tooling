@@ -166,14 +166,10 @@ export function renderMarkdown(report) {
       const existingName = existing ? existing.name : "(new)";
       // Show the new alias value (and which source added it)
       const aliases = m.after.aliases ?? {};
-      const existingAliases = existing ? existing.aliases ?? {} : {};
-      const newAliasKey = Object.keys(aliases).find(
-        (k) => aliases[k] !== existingAliases[k]
-      );
+      const existingAliases = existing ? (existing.aliases ?? {}) : {};
+      const newAliasKey = Object.keys(aliases).find((k) => aliases[k] !== existingAliases[k]);
       const aliasAdded = newAliasKey ? `"${aliases[newAliasKey]}" (${newAliasKey})` : "";
-      lines.push(
-        `| \`${m.fen}\` | ${m.fieldsChanged.join(", ") || "(none)"} | ${existingName} | ${aliasAdded} |`
-      );
+      lines.push(`| \`${m.fen}\` | ${m.fieldsChanged.join(", ") || "(none)"} | ${existingName} | ${aliasAdded} |`);
     }
     lines.push("");
   }

@@ -9,9 +9,31 @@ let allOpenings = book;
 
 const isRedundant = (existingName, name) => {
   if (leven(existingName, name) < 5) return true;
-  if (name.length < existingName.length && existingName.startsWith(name)) return true;
+  // One is a prefix of the other (e.g. "King's Indian Attack" ⊂ "King's Indian Attack, with Bf5")
+  if (existingName.length > name.length && existingName.startsWith(name)) return true;
+  if (name.length > existingName.length && name.startsWith(existingName)) return true;
   return false;
 };
+
+/**
+ * Synonym map: canonical eco_tsv name → [variant names from other sources].
+ * Used to normalize names before comparison so "Reti: KIA" matches
+ * "King's Indian Attack", etc.
+ */
+const SYNONYMS = {
+  "King's Indian Attack": ["Reti: KIA", "KIA", "King's Indian Attack (KIA)"],
+  // Add more as discovered
+};
+
+/** Normalize an opening name to its canonical form for comparison. */
+const normalizeName = (() => {
+  const toCanonical = new Map();
+  for (const [canon, variants] of Object.entries(SYNONYMS)) {
+    toCanonical.set(canon.toLowerCase(), canon);
+    for (const v of variants) toCanonical.set(v.toLowerCase(), canon);
+  }
+  return (name) => toCanonical.get(name?.toLowerCase()) ?? name;
+})();
 
 /**
  * Look up a FEN in the opening book with position-only fallback.
@@ -25,6 +47,38 @@ const findInBook = (fen, book) => {
   const key = Object.keys(book).find((k) => k.split(" ")[0] === posOnly);
   return key ? book[key] : undefined;
 };
+
+/**
+ * Look up an opening by its move sequence, using FEN-based matching with
+ * position-only fallback. Handles transpositions (different move orders
+ * reaching the same position).
+ * @returns {object|undefined} The book or added entry, or undefined.
+ */
+const lookupByMoves = (() => {
+  const chess = new ChessPGN();
+  return (movesStr, book, added) => {
+    try {
+      chess.loadPgn(movesStr);
+      const fen = chess.fen();
+      // Exact FEN match first
+      if (book[fen]) return book[fen];
+      for (const [af, a] of Object.entries(added)) {
+        if (af === fen) return a;
+      }
+      // Position-only fallback
+      const posOnly = fen.split(" ")[0];
+      const key = Object.keys(book).find((k) => k.split(" ")[0] === posOnly);
+      if (key) return book[key];
+      for (const [af, a] of Object.entries(added)) {
+        if (af.split(" ")[0] === posOnly) return a;
+      }
+    } catch {
+      // If loadPgn fails (shouldn't happen for validated entries), fall
+      // through to undefined.
+    }
+    return undefined;
+  };
+})();
 
 /**
  * Filters incoming openings, removing those already present and preparing lists
@@ -57,12 +111,18 @@ const filterIncoming = (incoming) => {
     const existingEntry = findInBook(fen, allOpenings);
 
     if (existingEntry) {
-      const redundant = isRedundant(existingEntry.name, name);
+      const redundant = isRedundant(normalizeName(existingEntry.name), normalizeName(name));
 
       if (existingEntry.src === src) {
-        // Same source already has this FEN. Never modify the existing
-        // name — aliases handle varied names from varied sources.
-        excluded++;
+        // Same source already has this FEN. For eco_tsv (the authoritative
+        // source), allow name changes when lichess renames an opening.
+        // For all other sources, names are never modified — aliases handle
+        // varied names.
+        if (src === "eco_tsv" && !redundant) {
+          modified[fen] = { ...existingEntry, name, moves, eco };
+        } else {
+          excluded++;
+        }
       } else if (existingEntry.src === "interpolated") {
         if (redundant) {
           // Same name — wiki confirms the interpolated entry, no change needed
@@ -91,6 +151,51 @@ const filterIncoming = (incoming) => {
         excluded++;
       }
     } else {
+      // Skip anonymous continuations: if the parent position (one move back)
+      // has the same name, this is just a sub-variation with no new naming
+      // knowledge. The fromTo graph will interpolate gaps as needed.
+      //
+      // Uses FEN-based parent lookup (not moves-based) to handle
+      // transpositions — e.g. 1.Nf3 d5 vs 1.c4 e6 reaching the same position.
+      const movesArr = moves.split(" ");
+      if (movesArr.length > 2) {
+        const parentMoves = movesArr.slice(0, -2).join(" ");
+        const parentEntry = lookupByMoves(parentMoves, allOpenings, added);
+        let checkEntry = parentEntry;
+        // scid/wiki_b continuation names append move notation to the root
+        // name, e.g. "..., 5...O-O 6.b3 c5" (black) or "..., 5.Qa4+ Nbd7"
+        // (white). A digit-then-dot pattern in the name signals this.
+        const isContinuationName = (n) => /\d+\./.test(n);
+        if (checkEntry?.name && isContinuationName(checkEntry.name)) {
+          const undoChess = new ChessPGN();
+          undoChess.loadPgn(moves);
+          while (checkEntry?.name && isContinuationName(checkEntry.name)) {
+            const prev = undoChess.undo();
+            if (!prev) break;
+            const prevFen = undoChess.fen();
+            const prevPos = prevFen.split(" ")[0];
+            let ancestor = book[prevFen];
+            if (!ancestor) {
+              const key = Object.keys(book).find((k) => k.split(" ")[0] === prevPos);
+              if (key) ancestor = book[key];
+            }
+            if (!ancestor) {
+              for (const [af, a] of Object.entries(added)) {
+                if (af.split(" ")[0] === prevPos) { ancestor = a; break; }
+              }
+            }
+            if (ancestor) checkEntry = ancestor;
+            else break;
+          }
+        }
+        // Exact match, prefix/suffix variant, or synonym (e.g. "Reti: KIA" ≈ "King's Indian Attack")
+        const normCheck = normalizeName(checkEntry?.name);
+        const normIncoming = normalizeName(name);
+        if (normCheck && normIncoming && (normCheck === normIncoming || isRedundant(normCheck, normIncoming) || isRedundant(normIncoming, normCheck))) {
+          excluded++;
+          continue;
+        }
+      }
       added[fen] = { ...inc, src };
     }
   }

@@ -73,7 +73,7 @@ export function findEcoCode(moves, openings) {
   // (matches fensterchess's findOpening behavior via positionBook)
   const posOnly = fen.split(" ")[0];
   const posMatch = Object.keys(openings).find(
-    (k) => k.split(" ")[0] === posOnly && openings[k].eco && openings[k].eco !== "??"
+    (k) => k.split(" ")[0] === posOnly && openings[k].eco && openings[k].eco !== "??",
   );
   if (posMatch) {
     const entry = openings[posMatch];
@@ -149,11 +149,7 @@ async function main() {
     const isMoveNumber = /^\d+\.\.?\.{0,3}\s*[a-zA-Z]/.test(name);
     const hasSubName = /[·—]/.test(name);
     let resolvedName =
-      (isRawPageTitle || (isMoveNumber && !hasSubName)) && parentName
-        ? parentName
-        : isRawPageTitle
-          ? "TBD"
-          : name;
+      (isRawPageTitle || (isMoveNumber && !hasSubName)) && parentName ? parentName : isRawPageTitle ? "TBD" : name;
 
     // Strip move-number prefix from · sub-names unconditionally:
     //   "2. exf5 · Duras gambit accepted" → "Duras gambit accepted"
@@ -179,8 +175,14 @@ async function main() {
           .toLowerCase()
           .replace(/defence/g, "defense")
           .replace(/[·—:,]/g, " ");
-      const pWords = new Set(norm(parentName).split(/\s+/).filter((w) => w.length > 2));
-      const wWords = norm(resolvedName).split(/\s+/).filter((w) => w.length > 2);
+      const pWords = new Set(
+        norm(parentName)
+          .split(/\s+/)
+          .filter((w) => w.length > 2),
+      );
+      const wWords = norm(resolvedName)
+        .split(/\s+/)
+        .filter((w) => w.length > 2);
       const overlap = wWords.filter((w) => pWords.has(w)).length;
       const pContainsW = norm(parentName).includes(norm(resolvedName));
       const wContainsP = norm(resolvedName).includes(norm(parentName));
@@ -188,12 +190,8 @@ async function main() {
       // More than half the wiki words appear in the parent → shared,
       // BUT if the parent is significantly more specific (2+ more words),
       // the wiki name is a generic label — still prefix.
-      const majorityOverlap =
-        wWords.length > 0 &&
-        overlap / wWords.length > 0.5 &&
-        pWords.size <= wWords.length + 1;
-      const sharedContext =
-        pContainsW || wContainsP || allWikiWordsInParent || majorityOverlap;
+      const majorityOverlap = wWords.length > 0 && overlap / wWords.length > 0.5 && pWords.size <= wWords.length + 1;
+      const sharedContext = pContainsW || wContainsP || allWikiWordsInParent || majorityOverlap;
 
       if (!sharedContext) {
         let subName = resolvedName;
@@ -204,12 +202,22 @@ async function main() {
         // Guardrails: need ≥2 common words AND ≥2 words remaining
         // after stripping. Prevents "French"→"Defence, Winawer" and
         // "Caro-Kann Panov-Botvinnik"→"Attack".
-        const subNorm = subName.toLowerCase().replace(/defence/g, "defense").replace(/[·—:,]/g, " ");
-        const parentNorm = parentName.toLowerCase().replace(/defence/g, "defense").replace(/[·—:,]/g, " ");
-        const subWords = subNorm.split(/\s+/).filter(w => w.length > 0);
-        const parWords = parentNorm.split(/\s+/).filter(w => w.length > 0);
+        const subNorm = subName
+          .toLowerCase()
+          .replace(/defence/g, "defense")
+          .replace(/[·—:,]/g, " ");
+        const parentNorm = parentName
+          .toLowerCase()
+          .replace(/defence/g, "defense")
+          .replace(/[·—:,]/g, " ");
+        const subWords = subNorm.split(/\s+/).filter((w) => w.length > 0);
+        const parWords = parentNorm.split(/\s+/).filter((w) => w.length > 0);
         let commonPrefixLen = 0;
-        while (commonPrefixLen < subWords.length && commonPrefixLen < parWords.length && subWords[commonPrefixLen] === parWords[commonPrefixLen]) {
+        while (
+          commonPrefixLen < subWords.length &&
+          commonPrefixLen < parWords.length &&
+          subWords[commonPrefixLen] === parWords[commonPrefixLen]
+        ) {
           commonPrefixLen++;
         }
         const remainingAfterStrip = subWords.length - commonPrefixLen;
