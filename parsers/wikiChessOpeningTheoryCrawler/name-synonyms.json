@@ -1,0 +1,9 @@
+{
+  "description": "Wiki names that are synonyms of existing eco.json openings. When a wiki entry's name matches a key here, it is treated as an alias of the corresponding existing opening rather than a new addition. The synonym check runs after parent-name prefixing, so the wiki name already has its root opening prepended (e.g., 'Ruy Lopez: Schliemann Defense, Jaenisch Gambit Accepted, Schliemann Defence Accepted').",
+  "synonyms": {
+    "Schliemann Defence Accepted": "Ruy Lopez: Schliemann Defense, Jaenisch Gambit Accepted",
+    "Two Knights Defence": "Two Knights: Morphy, Polerio, 6...c6",
+    "Trompowsky Attack": "Trompowsky: 2...Ne4",
+    "Ware Opening, Wing Gambit Accepted": "Ware Opening, 1...b5"
+  }
+}

@@ -26,6 +26,21 @@ const OUTPUT_DIR = path.join(DATA_DIR, "output");
 const OUTPUT_FILE = path.join(OUTPUT_DIR, "opening.json");
 const ERRORS_DIR = path.resolve(__dirname, "..", "..", "errors", "wiki_b");
 
+// ── Name synonym map ─────────────────────────────────────────────────────────
+// Load known wiki→eco.json name equivalences. When a wiki entry's name
+// (after parent-name prefixing) is a synonym of its parent opening, the
+// entry is skipped — it adds no new naming information. The map keys
+// are wiki sub-names (bare, without root prefix); values are unused
+// (lookup is key existence against the wiki suffix).
+const SYNONYMS_FILE = path.join(DATA_DIR, "name-synonyms.json");
+let synonymKeys = new Set();
+try {
+  const syn = JSON.parse(fs.readFileSync(SYNONYMS_FILE, "utf-8"));
+  synonymKeys = new Set(Object.keys(syn.synonyms ?? {}));
+} catch {
+  // file missing or malformed — no synonyms active
+}
+
 // ── ECO lookup ───────────────────────────────────────────────────────────────
 
 /**
@@ -161,14 +176,15 @@ async function main() {
       const pContainsW = norm(parentName).includes(norm(resolvedName));
       const wContainsP = norm(resolvedName).includes(norm(parentName));
       const allWikiWordsInParent = overlap === wWords.length;
-      // More than half the wiki words appear in the parent → shared
-      const majorityOverlap = wWords.length > 0 && overlap / wWords.length > 0.5;
-      // First significant word of wiki name appears in parent → shared
-      // (covers "Trompowsky Attack" vs "Trompowsky: 2...Ne4")
-      const firstWordInParent =
-        wWords.length > 0 && wWords[0].length > 2 && pWords.has(wWords[0]);
+      // More than half the wiki words appear in the parent → shared,
+      // BUT if the parent is significantly more specific (2+ more words),
+      // the wiki name is a generic label — still prefix.
+      const majorityOverlap =
+        wWords.length > 0 &&
+        overlap / wWords.length > 0.5 &&
+        pWords.size <= wWords.length + 1;
       const sharedContext =
-        pContainsW || wContainsP || allWikiWordsInParent || majorityOverlap || firstWordInParent;
+        pContainsW || wContainsP || allWikiWordsInParent || majorityOverlap;
 
       if (!sharedContext) {
         let subName = resolvedName;
@@ -182,6 +198,11 @@ async function main() {
         // colon for variations (parent is just the opening name).
         const sep = parentName.includes(":") ? ", " : ": ";
         resolvedName = parentName + sep + subName;
+      } else if (allWikiWordsInParent && parentName.length > resolvedName.length) {
+        // Wiki name is a proper subset of the parent ("Mengarini Variation"
+        // within "Sicilian Defense: Mengarini Variation"). Inherit the
+        // more specific parent name.
+        resolvedName = parentName;
       }
     }
 
@@ -191,13 +212,17 @@ async function main() {
     // handles gaps between named openings.
     // Uses synonym normalization so "Queen's Pawn Opening" matches
     // "Queen's Pawn Game" and "Defence" matches "Defense".
+    // Also checks the name-synonyms.json map: "Schliemann Defence
+    // Accepted" is a synonym of "Ruy Lopez: Schliemann Defense,
+    // Jaenisch Gambit Accepted" and should be skipped.
     const normSyn = (s) =>
       s
         .toLowerCase()
         .replace(/defence/g, "defense")
         .replace(/\bopening\b/g, "game");
     const isAnonymousContinuation =
-      movesBack > 0 && parentName && normSyn(resolvedName) === normSyn(parentName);
+      (movesBack > 0 && parentName && normSyn(resolvedName) === normSyn(parentName)) ||
+      (parentName && synonymKeys.has(name));
 
     // Only include if we have a valid FEN (moves parsed successfully)
     if (fen && !isAnonymousContinuation) {
