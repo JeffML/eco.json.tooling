@@ -155,6 +155,15 @@ async function main() {
           ? "TBD"
           : name;
 
+    // Strip move-number prefix from · sub-names unconditionally:
+    //   "2. exf5 · Duras gambit accepted" → "Duras gambit accepted"
+    if (hasSubName) {
+      const dotIdx = resolvedName.indexOf("·");
+      if (dotIdx !== -1) {
+        resolvedName = resolvedName.substring(dotIdx + 1).trim();
+      }
+    }
+
     // Prepend parent name for sub-variations that lack context.
     // Wiki names like "Kobo-Steinberg Variation" or "Mengarini
     // Variation" need their root opening prepended ("Sicilian Defense:
@@ -188,11 +197,22 @@ async function main() {
 
       if (!sharedContext) {
         let subName = resolvedName;
-        // For · sub-names, strip the move-number prefix:
-        //   "4. Nd5!? · Naroditsky variation" → "Naroditsky variation"
-        if (hasSubName) {
-          const dotIdx = resolvedName.indexOf("·");
-          if (dotIdx !== -1) subName = resolvedName.substring(dotIdx + 1).trim();
+        // Strip word-prefix overlap with parent:
+        //   parent "Latvian Gambit: Poisoned Pawn Variation"
+        //   sub    "Latvian Gambit: Mayet Attack"
+        //   → strip "Latvian Gambit" → "Mayet Attack"
+        const subNorm = subName.toLowerCase().replace(/defence/g, "defense").replace(/[·—:,]/g, " ");
+        const parentNorm = parentName.toLowerCase().replace(/defence/g, "defense").replace(/[·—:,]/g, " ");
+        const subWords = subNorm.split(/\s+/);
+        const parWords = parentNorm.split(/\s+/);
+        let commonPrefixLen = 0;
+        while (commonPrefixLen < subWords.length && commonPrefixLen < parWords.length && subWords[commonPrefixLen] === parWords[commonPrefixLen]) {
+          commonPrefixLen++;
+        }
+        if (commonPrefixLen >= 1) {
+          let stripped = subName;
+          for (let i = 0; i < commonPrefixLen; i++) stripped = stripped.replace(/^\S+\s*/, "");
+          if (stripped.trim()) subName = stripped.trim();
         }
         // Use comma for sub-variations (parent already has a colon),
         // colon for variations (parent is just the opening name).
