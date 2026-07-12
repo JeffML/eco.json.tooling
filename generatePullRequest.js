@@ -14,6 +14,8 @@ const args = process.argv.slice(2);
 const FLAG_YES = args.includes("--yes"); // skip interactive prompts
 const FLAG_LENIENT = args.includes("--lenient"); // continue past validation failures
 const FLAG_APPLY = args.includes("--apply"); // write toMerge/ (default: dry-run)
+const FLAG_PAUSE = args.includes("--pause"); // stop after Phase 1 for human editing
+const FLAG_RESUME = args.includes("--resume"); // continue from output/ files (skip Phase 1)
 const DRY_RUN = !FLAG_APPLY;
 
 const writeln = (str) => process.stdout.write(str + "\n");
@@ -54,17 +56,34 @@ const existingOpenings = await getLatestEcoJson(); // organized by category
 // ════════════════════════════════════════════════════════════════════════════
 // PHASE 1: Validate + filter + diff
 // ────────────────────────────────────────────────────────────────────────────
-writeln("Phase 1: Validate, classify, and generate diff report.");
 
-const incomingOpenings = getIncomingOpenings({ collector });
-const source = incomingOpenings[0]?.src ?? "unknown";
-const totalRecords = incomingOpenings.length - 1;
-const validCount = incomingOpenings.slice(1).filter((o) => o.fen).length;
-const failedCount = totalRecords - validCount;
-writeln(`Validation: ${validCount} valid, ${failedCount} failed.`);
+let added, modified, excluded, formerInterpolated, source;
 
-// Namespace errors by source so different parser runs don't overwrite
-const errorsDir = `./errors/${source}`;
+if (FLAG_RESUME) {
+  if (!fs.existsSync("./output/added.json") || !fs.existsSync("./output/modified.json")) {
+    writeln("--resume requires ./output/added.json and ./output/modified.json from a prior --pause run.");
+    process.exit(1);
+  }
+  added = JSON.parse(fs.readFileSync("./output/added.json", "utf-8"));
+  modified = JSON.parse(fs.readFileSync("./output/modified.json", "utf-8"));
+  formerInterpolated = fs.existsSync("./output/formerlyInterpolated.json")
+    ? JSON.parse(fs.readFileSync("./output/formerlyInterpolated.json", "utf-8"))
+    : [];
+  source = Object.values(added)[0]?.src ?? "wiki_b";
+  excluded = 0; // not tracked across resume
+  writeln(`Resuming from ./output/: ${keyLen(added)} added, ${keyLen(modified)} modified, ${formerInterpolated.length} formerly interpolated.`);
+} else {
+  writeln("Phase 1: Validate, classify, and generate diff report.");
+
+  const incomingOpenings = getIncomingOpenings({ collector });
+  source = incomingOpenings[0]?.src ?? "unknown";
+  const totalRecords = incomingOpenings.length - 1;
+  const validCount = incomingOpenings.slice(1).filter((o) => o.fen).length;
+  const failedCount = totalRecords - validCount;
+  writeln(`Validation: ${validCount} valid, ${failedCount} failed.`);
+
+  // Namespace errors by source so different parser runs don't overwrite
+  const errorsDir = `./errors/${source}`;
 
 // Always write + summarize corrections (normalize stage), but only abort
 // on actual validate-stage failures (not corrections).
@@ -106,6 +125,17 @@ writeln(`
 Classification: ${keyLen(added)} added, ${keyLen(modified)} modified, ${excluded} excluded, ${formerInterpolated.length} formerly interpolated.
 Diff report: ${earlyMd}
 `);
+
+  if (FLAG_PAUSE) {
+    writeln(`
+Paused after Phase 1. Edit the files in ./output/:
+  - added.json          new openings (rename, remove, or adjust)
+  - modified.json       alias additions (review names)
+  - formerlyInterpolated.json  positions to remove from interpolations.
+Then re-run:  node generatePullRequest.js --resume [--apply]`);
+    process.exit(0);
+  }
+} // end Phase 1 (FLAG_RESUME else block)
 
 // ════════════════════════════════════════════════════════════════════════════
 // PHASE 2: Wire up graph

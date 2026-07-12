@@ -201,17 +201,24 @@ async function main() {
         //   parent "Latvian Gambit: Poisoned Pawn Variation"
         //   sub    "Latvian Gambit: Mayet Attack"
         //   → strip "Latvian Gambit" → "Mayet Attack"
+        // Guardrails: need ≥2 common words AND ≥2 words remaining
+        // after stripping. Prevents "French"→"Defence, Winawer" and
+        // "Caro-Kann Panov-Botvinnik"→"Attack".
         const subNorm = subName.toLowerCase().replace(/defence/g, "defense").replace(/[·—:,]/g, " ");
         const parentNorm = parentName.toLowerCase().replace(/defence/g, "defense").replace(/[·—:,]/g, " ");
-        const subWords = subNorm.split(/\s+/);
-        const parWords = parentNorm.split(/\s+/);
+        const subWords = subNorm.split(/\s+/).filter(w => w.length > 0);
+        const parWords = parentNorm.split(/\s+/).filter(w => w.length > 0);
         let commonPrefixLen = 0;
         while (commonPrefixLen < subWords.length && commonPrefixLen < parWords.length && subWords[commonPrefixLen] === parWords[commonPrefixLen]) {
           commonPrefixLen++;
         }
-        if (commonPrefixLen >= 1) {
+        const remainingAfterStrip = subWords.length - commonPrefixLen;
+        if (commonPrefixLen >= 2 && remainingAfterStrip >= 2) {
           let stripped = subName;
           for (let i = 0; i < commonPrefixLen; i++) stripped = stripped.replace(/^\S+\s*/, "");
+          // Also strip a leading "Defence," or "Defense," if it's just
+          // a classifier left dangling after the real opening name.
+          stripped = stripped.replace(/^Defen[cs]e,?\s*/i, "");
           if (stripped.trim()) subName = stripped.trim();
         }
         // Use comma for sub-variations (parent already has a colon),
