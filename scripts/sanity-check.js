@@ -16,7 +16,9 @@
  *   5. No duplicate fromTo — no repeated (from, to) pairs
  *   6. Valid sources — every src, rootSrc, aliases key is a known source
  *   7. rootSrc on interpolated — every interpolated entry has rootSrc
- *   8. No orphans — every opening has its parent in the database
+ *   8. No orphans — every opening has its parent in the database.
+ *      Use --added path/to/added.json to also scan pipeline additions.
+ *      Orphans are written to output/foundOrphans.txt.
  */
 
 import fs from "fs";
@@ -170,41 +172,49 @@ const checkRootSrc = (interpolated) => {
 };
 
 /** 8. Every opening (except start position) has its parent in the database */
-const checkNoOrphans = (ecoFiles, interpolated, allFens) => {
+const checkNoOrphans = (ecoFiles, interpolated, allFens, addedData = {}) => {
   const chess = new ChessPGN();
   const startPos = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
-  // eco.json matches by position-only FEN (first field) — not full FEN
   const allPositions = new Set([...allFens].map((f) => f.split(" ")[0]));
   allPositions.add(startPos);
-  const allData = { ...Object.values(ecoFiles).reduce((a, b) => ({ ...a, ...b }), {}), ...interpolated };
-  let orphanCount = 0;
+  const allData = {
+    ...Object.values(ecoFiles).reduce((a, b) => ({ ...a, ...b }), {}),
+    ...interpolated,
+    ...addedData,
+  };
+  const orphans = [];
   for (const [fen, entry] of Object.entries(allData)) {
-    if (fen.split(" ")[0] === startPos.split(" ")[0]) continue; // skip start
+    if (fen.split(" ")[0] === startPos) continue;
     try {
       chess.loadPgn(entry.moves);
       const history = chess.history({ verbose: true });
-      if (history.length === 0) continue; // 1-move? shouldn't happen
+      if (history.length === 0) continue;
       chess.undo();
-      const parentFen = chess.fen();
-      const parentPos = parentFen.split(" ")[0];
+      const parentPos = chess.fen().split(" ")[0];
       if (!allPositions.has(parentPos)) {
-          orphanCount++;
-          if (orphanCount <= 10) {
-            fail("no-orphan", `Orphan: ${entry.name || "?"} (${entry.moves?.slice(0, 40)}...) — parent ${parentPos.slice(0, 30)}... not found`);
-          }
+        orphans.push({ fen, name: entry.name, moves: entry.moves, parentPos, src: entry.src });
       }
-    } catch {
-      // skip entries whose moves don't parse
-    }
+    } catch { /* skip unparseable moves */ }
   }
-  if (orphanCount > 10) fail("no-orphan", `... and ${orphanCount - 10} more orphans`);
-  if (orphanCount === 0) console.log(`  ✓ no-orphan: all ${Object.keys(allData).length} openings have a parent in the database`);
+  if (orphans.length === 0) {
+    console.log(`  ✓ no-orphan: all ${Object.keys(allData).length} openings have a parent in the database`);
+  } else {
+    for (let i = 0; i < Math.min(orphans.length, 10); i++) {
+      const o = orphans[i];
+      fail("no-orphan", `Orphan: ${o.name || "?"} (${o.moves?.slice(0, 40)}...) — parent ${o.parentPos.slice(0, 30)}... not found`);
+    }
+    if (orphans.length > 10) fail("no-orphan", `... and ${orphans.length - 10} more orphans`);
+  }
+  return orphans;
 };
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 const main = () => {
-  const targetDir = process.argv[2] || path.resolve(ROOT, "..", "eco.json");
+  const args = process.argv.slice(2);
+  const addedFlag = args.indexOf("--added");
+  const addedPath = addedFlag >= 0 ? args[addedFlag + 1] : null;
+  const targetDir = args.filter((a, i) => a !== "--added" && i !== addedFlag + 1)[0] || path.resolve(ROOT, "..", "eco.json");
 
   console.log(`Sanity-checking eco.json data in: ${targetDir}\n`);
 
@@ -234,7 +244,24 @@ const main = () => {
   checkDuplicateFromTo(fromTos);
   checkValidSources(ecoFiles, interpolated);
   checkRootSrc(interpolated);
-  checkNoOrphans(ecoFiles, interpolated, allFens);
+
+  // Load added.json if --added flag provided
+  let addedData = {};
+  if (addedPath && fs.existsSync(addedPath)) {
+    addedData = loadJson(addedPath);
+    console.log(`  (including ${Object.keys(addedData).length} entries from ${addedPath})`);
+  }
+
+  const orphans = checkNoOrphans(ecoFiles, interpolated, allFens, addedData);
+
+  // Write orphans to output file
+  if (orphans.length > 0) {
+    const outDir = path.resolve(ROOT, "output");
+    fs.mkdirSync(outDir, { recursive: true });
+    const outPath = path.join(outDir, "foundOrphans.json");
+    fs.writeFileSync(outPath, JSON.stringify(orphans, null, 2));
+    console.log(`  → ${orphans.length} orphans written to ${outPath}`);
+  }
 
   console.log(
     `\n${errors === 0 ? "✓ All checks passed" : `✗ ${errors} failure(s)`}${warnings > 0 ? `, ${warnings} warning(s)` : ""}`,
