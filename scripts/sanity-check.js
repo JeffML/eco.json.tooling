@@ -247,22 +247,24 @@ const main = () => {
   checkValidSources(ecoFiles, interpolated);
   checkRootSrc(interpolated);
 
-  // Load added.json if --added flag provided
+  // Check #8 (orphans) only runs in post-merge mode (--check-orphans).
+  // Pre-merge, orphans are expected — Phase 2 hasn't generated interpolations yet.
+  const checkOrphans = args.includes("--check-orphans");
   let addedData = {};
-  if (addedPath && fs.existsSync(addedPath)) {
+  if (checkOrphans && addedPath && fs.existsSync(addedPath)) {
     addedData = loadJson(addedPath);
     console.log(`  (including ${Object.keys(addedData).length} entries from ${addedPath})`);
   }
 
-  const orphans = checkNoOrphans(ecoFiles, interpolated, allFens, addedData);
-
-  // Write orphans to output file
-  if (orphans.length > 0) {
-    const outDir = path.resolve(ROOT, "output");
-    fs.mkdirSync(outDir, { recursive: true });
-    const outPath = path.join(outDir, "foundOrphans.json");
-    fs.writeFileSync(outPath, JSON.stringify(orphans, null, 2));
-    console.log(`  → ${orphans.length} orphans written to ${outPath}`);
+  if (checkOrphans) {
+    const orphans = checkNoOrphans(ecoFiles, interpolated, allFens, addedData);
+    if (orphans.length > 0) {
+      const outDir = path.resolve(ROOT, "output");
+      fs.mkdirSync(outDir, { recursive: true });
+      const outPath = path.join(outDir, "foundOrphans.json");
+      fs.writeFileSync(outPath, JSON.stringify(orphans, null, 2));
+      console.log(`  → ${orphans.length} orphans written to ${outPath}`);
+    }
   }
 
   console.log(

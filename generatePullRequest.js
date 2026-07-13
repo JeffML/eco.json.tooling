@@ -205,8 +205,9 @@ if (FLAG_APPLY) {
   // Post-generation sanity check on toMerge/ files
   const sanityScript = path.resolve(ROOT, "scripts", "sanity-check.js");
   const toMergeDir = path.resolve(ROOT, "output", "toMerge");
+  const addedPath = path.resolve(ROOT, "output", "added.json");
   try {
-    execSync(`node "${sanityScript}" "${toMergeDir}"`, { stdio: "inherit" });
+    execSync(`node "${sanityScript}" "${toMergeDir}" --check-orphans --added "${addedPath}"`, { stdio: "inherit" });
   } catch {
     writeln("⚠ Sanity check found issues — review above before submitting PR.");
   }
