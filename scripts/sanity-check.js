@@ -172,9 +172,10 @@ const checkRootSrc = (interpolated) => {
 /** 8. Every opening (except start position) has its parent in the database */
 const checkNoOrphans = (ecoFiles, interpolated, allFens) => {
   const chess = new ChessPGN();
-  const startPos = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-  const allFensWithStart = new Set([...allFens, startPos]);
-  const startPosOnly = startPos.split(" ")[0];
+  const startPos = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+  // eco.json matches by position-only FEN (first field) — not full FEN
+  const allPositions = new Set([...allFens].map((f) => f.split(" ")[0]));
+  allPositions.add(startPos);
   const allData = { ...Object.values(ecoFiles).reduce((a, b) => ({ ...a, ...b }), {}), ...interpolated };
   let orphanCount = 0;
   for (const [fen, entry] of Object.entries(allData)) {
@@ -186,15 +187,11 @@ const checkNoOrphans = (ecoFiles, interpolated, allFens) => {
       chess.undo();
       const parentFen = chess.fen();
       const parentPos = parentFen.split(" ")[0];
-      if (!allFensWithStart.has(parentFen)) {
-        // position-only fallback (ignore turn/castling/en passant differences)
-        const hasParent = [...allFensWithStart].some((f) => f.split(" ")[0] === parentPos);
-        if (!hasParent) {
+      if (!allPositions.has(parentPos)) {
           orphanCount++;
           if (orphanCount <= 10) {
             fail("no-orphan", `Orphan: ${entry.name || "?"} (${entry.moves?.slice(0, 40)}...) — parent ${parentPos.slice(0, 30)}... not found`);
           }
-        }
       }
     } catch {
       // skip entries whose moves don't parse
