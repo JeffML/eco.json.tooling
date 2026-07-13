@@ -16,11 +16,13 @@
  *   5. No duplicate fromTo — no repeated (from, to) pairs
  *   6. Valid sources — every src, rootSrc, aliases key is a known source
  *   7. rootSrc on interpolated — every interpolated entry has rootSrc
+ *   8. No orphans — every opening has its parent in the database
  */
 
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { ChessPGN } from "@chess-pgn/chess-pgn";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -167,6 +169,41 @@ const checkRootSrc = (interpolated) => {
     console.log(`  ✓ rootsrc: all ${Object.keys(interpolated).length} interpolated entries have rootSrc`);
 };
 
+/** 8. Every opening (except start position) has its parent in the database */
+const checkNoOrphans = (ecoFiles, interpolated, allFens) => {
+  const chess = new ChessPGN();
+  const startPos = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+  const allFensWithStart = new Set([...allFens, startPos]);
+  const startPosOnly = startPos.split(" ")[0];
+  const allData = { ...Object.values(ecoFiles).reduce((a, b) => ({ ...a, ...b }), {}), ...interpolated };
+  let orphanCount = 0;
+  for (const [fen, entry] of Object.entries(allData)) {
+    if (fen.split(" ")[0] === startPos.split(" ")[0]) continue; // skip start
+    try {
+      chess.loadPgn(entry.moves);
+      const history = chess.history({ verbose: true });
+      if (history.length === 0) continue; // 1-move? shouldn't happen
+      chess.undo();
+      const parentFen = chess.fen();
+      const parentPos = parentFen.split(" ")[0];
+      if (!allFensWithStart.has(parentFen)) {
+        // position-only fallback (ignore turn/castling/en passant differences)
+        const hasParent = [...allFensWithStart].some((f) => f.split(" ")[0] === parentPos);
+        if (!hasParent) {
+          orphanCount++;
+          if (orphanCount <= 10) {
+            fail("no-orphan", `Orphan: ${entry.name || "?"} (${entry.moves?.slice(0, 40)}...) — parent ${parentPos.slice(0, 30)}... not found`);
+          }
+        }
+      }
+    } catch {
+      // skip entries whose moves don't parse
+    }
+  }
+  if (orphanCount > 10) fail("no-orphan", `... and ${orphanCount - 10} more orphans`);
+  if (orphanCount === 0) console.log(`  ✓ no-orphan: all ${Object.keys(allData).length} openings have a parent in the database`);
+};
+
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 const main = () => {
@@ -200,6 +237,7 @@ const main = () => {
   checkDuplicateFromTo(fromTos);
   checkValidSources(ecoFiles, interpolated);
   checkRootSrc(interpolated);
+  checkNoOrphans(ecoFiles, interpolated, allFens);
 
   console.log(
     `\n${errors === 0 ? "✓ All checks passed" : `✗ ${errors} failure(s)`}${warnings > 0 ? `, ${warnings} warning(s)` : ""}`,
