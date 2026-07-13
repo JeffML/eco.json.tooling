@@ -192,10 +192,12 @@ const checkNoOrphans = (ecoFiles, interpolated, allFens, addedData = {}) => {
       chess.undo();
       const parentPos = chess.fen().split(" ")[0];
       if (!allPositions.has(parentPos)) {
-        orphans.push({ fen, name: entry.name, moves: entry.moves, parentPos, src: entry.src });
+        orphans.push({ fen, name: entry.name, moves: entry.moves, parentPos, src: entry.src, added: fen in addedData });
       }
     } catch { /* skip unparseable moves */ }
   }
+  // Sort: added=true first, then by name
+  orphans.sort((a, b) => (b.added - a.added) || a.name.localeCompare(b.name));
   if (orphans.length === 0) {
     console.log(`  ✓ no-orphan: all ${Object.keys(allData).length} openings have a parent in the database`);
   } else {
