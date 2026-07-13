@@ -9,6 +9,7 @@
     "generate:fromto": "node fromToPositionIndexed.js",
     "check-sources": "node scripts/check-sources.js",
     "sanity-check": "node scripts/sanity-check.js",
+    "dedupe-fromto": "node scripts/dedupe-fromto.js",
     "fix-orphans": "node scripts/fix-orphans.js",
     "diff-wiki": "node scripts/diff-wiki.js"
   },

@@ -202,6 +202,11 @@ if (FLAG_APPLY) {
   const newExisting = applyData(existingOpenings, added, newFromTos, mft, formerInterpolated, modified);
   writeNew(newExisting);
 
+  // Deduplicate fromTo.json
+  writeln("\n→ Deduplicating fromTo.json...");
+  const dedupeScript = path.resolve(ROOT, "scripts", "dedupe-fromto.js");
+  execSync(`node "${dedupeScript}" --to-merge`, { stdio: "inherit" });
+
   // Post-generation sanity check on toMerge/ files
   const sanityScript = path.resolve(ROOT, "scripts", "sanity-check.js");
   const toMergeDir = path.resolve(ROOT, "output", "toMerge");

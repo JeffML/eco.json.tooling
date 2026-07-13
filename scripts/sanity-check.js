@@ -5,8 +5,7 @@
  * Usage:
  *   node scripts/sanity-check.js [path/to/output]
  *
- * If no path given, checks the local eco.json data files (ecoA-E.json,
- * eco_interpolated.json, fromTo.json) in the parent eco.json repo.
+ * If no path given, checks the toMerge output (output/toMerge/).
  *
  * Checks:
  *   1. FEN uniqueness — no FEN in both ecoA-E and eco_interpolated
@@ -16,7 +15,8 @@
  *   5. No duplicate fromTo — no repeated (from, to) pairs
  *   6. Valid sources — every src, rootSrc, aliases key is a known source
  *   7. rootSrc on interpolated — every interpolated entry has rootSrc
- *   8. No orphans — every opening has its parent in the database.
+ *   8. No orphans — every opening has its parent in the database
+ *   9. Interpolated connectivity — every interpolated entry has fromTo links
  *      Use --added path/to/added.json to also scan pipeline additions.
  *      Orphans are written to output/foundOrphans.txt.
  */
@@ -136,6 +136,31 @@ const checkDuplicateFromTo = (fromTos) => {
   if (errors === 0) console.log(`  ✓ fromto-dup: no duplicate transitions`);
 };
 
+/** 9. Interpolated openings have from/to in the fromTo graph */
+const checkInterpolatedConnectivity = (interpolated, fromTos) => {
+  const hasFrom = new Set(); // FENs that are a "to" target in fromTo
+  const hasTo = new Set();   // FENs that are a "from" source in fromTo
+  for (const [from, to] of fromTos) {
+    hasFrom.add(to);
+    hasTo.add(from);
+  }
+  let missingFrom = 0;
+  let missingTo = 0;
+  for (const fen of Object.keys(interpolated)) {
+    if (!hasFrom.has(fen)) {
+      fail("interp-connect", `Interpolated entry has no "from" in fromTo graph: ${fen.slice(0, 40)}...`);
+      missingFrom++;
+    }
+    if (!hasTo.has(fen)) {
+      missingTo++;
+    }
+  }
+  if (missingFrom === 0) {
+    const leafNote = missingTo > 0 ? ` (${missingTo} leaf nodes with no "to")` : "";
+    console.log(`  ✓ interp-connect: all ${Object.keys(interpolated).length} interpolated entries connected in fromTo graph${leafNote}`);
+  }
+};
+
 /** 6. Valid OpeningSource values */
 const checkValidSources = (ecoFiles, interpolated) => {
   const allData = { ...Object.values(ecoFiles).reduce((a, b) => ({ ...a, ...b }), {}), ...interpolated };
@@ -216,7 +241,7 @@ const main = () => {
   const args = process.argv.slice(2);
   const addedFlag = args.indexOf("--added");
   const addedPath = addedFlag >= 0 ? args[addedFlag + 1] : null;
-  const targetDir = args.filter((a, i) => a !== "--added" && i !== addedFlag + 1)[0] || path.resolve(ROOT, "..", "eco.json");
+  const targetDir = args.filter((a, i) => a !== "--added" && i !== addedFlag + 1)[0] || path.resolve(ROOT, "output", "toMerge");
 
   console.log(`Sanity-checking eco.json data in: ${targetDir}\n`);
 
@@ -244,6 +269,7 @@ const main = () => {
   checkInterpolatedIsolation(ecoFiles, interpolated);
   checkFromToIntegrity(fromTos, allFens);
   checkDuplicateFromTo(fromTos);
+  checkInterpolatedConnectivity(interpolated, fromTos);
   checkValidSources(ecoFiles, interpolated);
   checkRootSrc(interpolated);
 
