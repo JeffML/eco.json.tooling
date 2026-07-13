@@ -46,7 +46,14 @@ const applyModified = (modified, existing) => {
     const category = modifiedOpening.src === "interpolated" ? "IN" : modifiedOpening.eco[0];
     const existingJson = getCategoryJson(category, existing);
 
-    hardAssert(existingJson[fen], "Cannot find record to modify!");
+    let existingFen = fen;
+    if (!existingJson[fen]) {
+      // Position-only fallback — turn/castling/ep may differ
+      const posOnly = fen.split(" ")[0];
+      existingFen = Object.keys(existingJson).find((k) => k.split(" ")[0] === posOnly);
+      hardAssert(existingFen, `Cannot find record to modify: ${fen.slice(0,50)}...`);
+    }
+    if (existingFen !== fen) delete existingJson[existingFen];
     existingJson[fen] = modifiedOpening;
   }
 };
@@ -59,8 +66,13 @@ const applyModified = (modified, existing) => {
  */
 const removeFormerInterpolated = (formerInterpolated, interpolated) => {
   for (const fen of formerInterpolated) {
-    hardAssert(interpolated[fen], "Cannot find old interpolated opening!");
-    delete interpolated[fen];
+    let existingFen = fen;
+    if (!interpolated[fen]) {
+      const posOnly = fen.split(" ")[0];
+      existingFen = Object.keys(interpolated).find((k) => k.split(" ")[0] === posOnly);
+      hardAssert(existingFen, `Cannot find old interpolated opening: ${fen.slice(0,50)}...`);
+    }
+    delete interpolated[existingFen];
   }
 };
 
