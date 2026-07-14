@@ -1,6 +1,6 @@
 {
   "name": "eco.json.tooling",
-  "version": "1.6.1",
+  "version": "2.0.0",
   "description": "Tooling for maintaining eco.json ",
   "main": "index.js",
   "type": "module",

@@ -3,7 +3,10 @@ output
 input
 errors
 parsers/*/opening.json
+parsers/*/openingMinusEco.json
+parsers/*/output/
 parsers/.source-cache.json
+diff-report/
 debugNotes.txt
 protoTests
 temp
