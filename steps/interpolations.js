@@ -1,8 +1,18 @@
-import { Chess } from 'chess.js';
+import { ChessPGN } from '@chess-pgn/chess-pgn';
 import { chunker } from '../utils.js';
 import { allOpenings } from './incoming.js';
 
-const chess = new Chess();
+const chess = new ChessPGN();
+
+const posOnly = (fen) => fen.split(' ')[0];
+
+// Build position-only index of all known openings for transposition-aware lookup.
+const positionIndex = {};
+for (const [fen, entry] of Object.entries(allOpenings)) {
+    const pos = posOnly(fen);
+    if (!positionIndex[pos]) positionIndex[pos] = [];
+    positionIndex[pos].push({ fen, entry });
+}
 
 /**
  * Updates interpolated openings by modifying their names and root sources.
@@ -71,6 +81,15 @@ const movesFromHistory = (history) => {
  * @returns {Array} Line of descent for the orphan.
  */
 export const lineOfDescent = (orphanFen, added) => {
+    // Extend position index with newly added openings for this pipeline run.
+    const localIndex = { ...positionIndex };
+    const indexPos = (fen, entry) => {
+        const pos = posOnly(fen);
+        if (!localIndex[pos]) localIndex[pos] = [];
+        localIndex[pos].push({ fen, entry });
+    };
+    for (const [fen, entry] of Object.entries(added)) indexPos(fen, entry);
+
     let orphan = added[orphanFen];
     const lineOfDescent = [orphan];
 
@@ -89,7 +108,8 @@ export const lineOfDescent = (orphanFen, added) => {
     const checkForParent = () => {
         chess.undo();
         const parentFen = chess.fen();
-        return allOpenings[parentFen];
+        // Exact match first, then position-only fallback
+        return allOpenings[parentFen] ?? added[parentFen] ?? localIndex[posOnly(parentFen)]?.[0]?.entry ?? null;
     };
 
     chess.loadPgn(orphan.moves);

@@ -53,8 +53,9 @@ const applyModified = (modified, existing) => {
       existingFen = Object.keys(existingJson).find((k) => k.split(" ")[0] === posOnly);
       hardAssert(existingFen, `Cannot find record to modify: ${fen.slice(0,50)}...`);
     }
-    if (existingFen !== fen) delete existingJson[existingFen];
-    existingJson[fen] = modifiedOpening;
+    // Preserve the existing FEN key so fromTo edges remain valid.
+    // Only the content changes (name, eco, aliases, etc.), not the position.
+    Object.assign(existingJson[existingFen], modifiedOpening);
   }
 };
 

@@ -1,7 +1,9 @@
-import { Chess } from 'chess.js';
+import { ChessPGN } from '@chess-pgn/chess-pgn';
 import { allOpenings } from './incoming.js';
 
-const chess = new Chess();
+const chess = new ChessPGN();
+
+const posOnly = (fen) => fen.split(' ')[0];
 
 /**
  * Finds continuations from newly added openings.
@@ -12,6 +14,17 @@ const chess = new Chess();
 export const addedContinuations = (added) => {
     const continuations = [];
 
+    // Build position-only index of all known openings (existing + newly added).
+    // Maps position-only FEN → array of { fen, data } for transposition-aware lookup.
+    const positionIndex = {};
+    const indexPos = (fen, data) => {
+        const pos = posOnly(fen);
+        if (!positionIndex[pos]) positionIndex[pos] = [];
+        positionIndex[pos].push({ fen, data });
+    };
+    for (const [fen, data] of Object.entries(allOpenings)) indexPos(fen, data);
+    for (const [fen, data] of Object.entries(added)) indexPos(fen, data);
+
     Object.keys(added).forEach((fen) => {
         try {
             chess.load(fen);
@@ -21,12 +34,18 @@ export const addedContinuations = (added) => {
                 chess.move(move);
                 const to = chess.fen();
 
-                if (allOpenings[to] || added[to]) {
+                // Try exact match first, then position-only fallback
+                const toData = allOpenings[to] ?? added[to] ?? positionIndex[posOnly(to)]?.[0]?.data;
+                const toFen = allOpenings[to] || added[to]
+                    ? to
+                    : positionIndex[posOnly(to)]?.[0]?.fen ?? to;
+
+                if (toData) {
                     continuations.push({
                         from: fen,
-                        to,
+                        to: toFen,
                         fromData: added[fen],
-                        toData: allOpenings[to] ?? added[to],
+                        toData,
                     });
                 }
 
