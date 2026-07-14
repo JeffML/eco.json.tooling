@@ -51,7 +51,7 @@ const applyModified = (modified, existing) => {
       // Position-only fallback — turn/castling/ep may differ
       const posOnly = fen.split(" ")[0];
       existingFen = Object.keys(existingJson).find((k) => k.split(" ")[0] === posOnly);
-      hardAssert(existingFen, `Cannot find record to modify: ${fen.slice(0,50)}...`);
+      hardAssert(existingFen, `Cannot find record to modify: ${fen.slice(0, 50)}...`);
     }
     // Preserve the existing FEN key so fromTo edges remain valid.
     // Only the content changes (name, eco, aliases, etc.), not the position.
@@ -71,7 +71,7 @@ const removeFormerInterpolated = (formerInterpolated, interpolated) => {
     if (!interpolated[fen]) {
       const posOnly = fen.split(" ")[0];
       existingFen = Object.keys(interpolated).find((k) => k.split(" ")[0] === posOnly);
-      hardAssert(existingFen, `Cannot find old interpolated opening: ${fen.slice(0,50)}...`);
+      hardAssert(existingFen, `Cannot find old interpolated opening: ${fen.slice(0, 50)}...`);
     }
     delete interpolated[existingFen];
   }

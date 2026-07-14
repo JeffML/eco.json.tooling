@@ -1,17 +1,17 @@
-import { ChessPGN } from '@chess-pgn/chess-pgn';
-import { chunker } from '../utils.js';
-import { allOpenings } from './incoming.js';
+import { ChessPGN } from "@chess-pgn/chess-pgn";
+import { chunker } from "../utils.js";
+import { allOpenings } from "./incoming.js";
 
 const chess = new ChessPGN();
 
-const posOnly = (fen) => fen.split(' ')[0];
+const posOnly = (fen) => fen.split(" ")[0];
 
 // Build position-only index of all known openings for transposition-aware lookup.
 const positionIndex = {};
 for (const [fen, entry] of Object.entries(allOpenings)) {
-    const pos = posOnly(fen);
-    if (!positionIndex[pos]) positionIndex[pos] = [];
-    positionIndex[pos].push({ fen, entry });
+  const pos = posOnly(fen);
+  if (!positionIndex[pos]) positionIndex[pos] = [];
+  positionIndex[pos].push({ fen, entry });
 }
 
 /**
@@ -25,40 +25,40 @@ for (const [fen, entry] of Object.entries(allOpenings)) {
  * @returns {number} Count of updated openings.
  */
 export const updateInterpolated = (toRemove, added, modified, existing) => {
-    const fromTo = existing.FT.json;
-    const interpolated = existing.IN.json;
+  const fromTo = existing.FT.json;
+  const interpolated = existing.IN.json;
 
-    // Index `fromTo` for quick lookup
-    const fromToIndexed = fromTo.reduce((acc, [from, to]) => {
-        acc[from] ??= [];
-        acc[from].push(to);
-        return acc;
-    }, {});
+  // Index `fromTo` for quick lookup
+  const fromToIndexed = fromTo.reduce((acc, [from, to]) => {
+    acc[from] ??= [];
+    acc[from].push(to);
+    return acc;
+  }, {});
 
-    let updatedCount = 0;
+  let updatedCount = 0;
 
-    const updateContinuations = (fen, src, name, visited = new Set()) => {
-        if (visited.has(fen)) return; // Prevent infinite recursion
-        visited.add(fen);
+  const updateContinuations = (fen, src, name, visited = new Set()) => {
+    if (visited.has(fen)) return; // Prevent infinite recursion
+    visited.add(fen);
 
-        const continuations = fromToIndexed[fen] || [];
-        for (const continuationFen of continuations) {
-            const interpolatedOpening = interpolated[continuationFen];
-            if (interpolatedOpening) {
-                const rootSrc = interpolatedOpening.rootSrc === 'eco_tsv' ? interpolatedOpening.rootSrc : src;
-                modified[continuationFen] = { ...interpolatedOpening, rootSrc, name };
-                updatedCount++;
-                updateContinuations(continuationFen, src, name, visited);
-            }
-        }
-    };
-
-    for (const fen of toRemove) {
-        const { src, name } = added[fen];
-        updateContinuations(fen, src, name);
+    const continuations = fromToIndexed[fen] || [];
+    for (const continuationFen of continuations) {
+      const interpolatedOpening = interpolated[continuationFen];
+      if (interpolatedOpening) {
+        const rootSrc = interpolatedOpening.rootSrc === "eco_tsv" ? interpolatedOpening.rootSrc : src;
+        modified[continuationFen] = { ...interpolatedOpening, rootSrc, name };
+        updatedCount++;
+        updateContinuations(continuationFen, src, name, visited);
+      }
     }
+  };
 
-    return updatedCount;
+  for (const fen of toRemove) {
+    const { src, name } = added[fen];
+    updateContinuations(fen, src, name);
+  }
+
+  return updatedCount;
 };
 
 /**
@@ -68,9 +68,9 @@ export const updateInterpolated = (toRemove, added, modified, existing) => {
  * @returns {string} PGN string of moves.
  */
 const movesFromHistory = (history) => {
-    return chunker(history, 2)
-        .map((twoPly, i) => `${i + 1}. ${twoPly.join(' ')}`)
-        .join(' ');
+  return chunker(history, 2)
+    .map((twoPly, i) => `${i + 1}. ${twoPly.join(" ")}`)
+    .join(" ");
 };
 
 /**
@@ -81,47 +81,47 @@ const movesFromHistory = (history) => {
  * @returns {Array} Line of descent for the orphan.
  */
 export const lineOfDescent = (orphanFen, added) => {
-    // Extend position index with newly added openings for this pipeline run.
-    const localIndex = { ...positionIndex };
-    const indexPos = (fen, entry) => {
-        const pos = posOnly(fen);
-        if (!localIndex[pos]) localIndex[pos] = [];
-        localIndex[pos].push({ fen, entry });
+  // Extend position index with newly added openings for this pipeline run.
+  const localIndex = { ...positionIndex };
+  const indexPos = (fen, entry) => {
+    const pos = posOnly(fen);
+    if (!localIndex[pos]) localIndex[pos] = [];
+    localIndex[pos].push({ fen, entry });
+  };
+  for (const [fen, entry] of Object.entries(added)) indexPos(fen, entry);
+
+  let orphan = added[orphanFen];
+  const lineOfDescent = [orphan];
+
+  const makeInterpolated = (opening) => {
+    const moves = movesFromHistory(chess.history());
+    const { fen, src, ...rest } = opening;
+    return {
+      ...rest,
+      src: "interpolated",
+      moves, // Overwrites orphan moves
+      name: "TBD",
+      rootSrc: "TBD",
     };
-    for (const [fen, entry] of Object.entries(added)) indexPos(fen, entry);
+  };
 
-    let orphan = added[orphanFen];
-    const lineOfDescent = [orphan];
+  const checkForParent = () => {
+    chess.undo();
+    const parentFen = chess.fen();
+    // Exact match first, then position-only fallback
+    return allOpenings[parentFen] ?? added[parentFen] ?? localIndex[posOnly(parentFen)]?.[0]?.entry ?? null;
+  };
 
-    const makeInterpolated = (opening) => {
-        const moves = movesFromHistory(chess.history());
-        const { fen, src, ...rest } = opening;
-        return {
-            ...rest,
-            src: 'interpolated',
-            moves, // Overwrites orphan moves
-            name: 'TBD',
-            rootSrc: 'TBD',
-        };
-    };
+  chess.loadPgn(orphan.moves);
+  let parent = checkForParent();
 
-    const checkForParent = () => {
-        chess.undo();
-        const parentFen = chess.fen();
-        // Exact match first, then position-only fallback
-        return allOpenings[parentFen] ?? added[parentFen] ?? localIndex[posOnly(parentFen)]?.[0]?.entry ?? null;
-    };
+  while (!parent) {
+    const interpolated = makeInterpolated(orphan);
+    lineOfDescent.push(interpolated);
+    orphan = interpolated;
+    parent = checkForParent();
+  }
 
-    chess.loadPgn(orphan.moves);
-    let parent = checkForParent();
-
-    while (!parent) {
-        const interpolated = makeInterpolated(orphan);
-        lineOfDescent.push(interpolated);
-        orphan = interpolated;
-        parent = checkForParent();
-    }
-
-    lineOfDescent.push(parent);
-    return lineOfDescent;
+  lineOfDescent.push(parent);
+  return lineOfDescent;
 };
