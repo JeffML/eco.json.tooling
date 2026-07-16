@@ -216,6 +216,16 @@ if (FLAG_APPLY) {
   } catch {
     writeln("⚠ Sanity check found issues — review above before submitting PR.");
   }
+
+  // Generate fromToPositionIndexed.json (downloaded by fensterchess + npm package)
+  writeln("\n→ Generating fromToPositionIndexed.json...");
+  const ftpiScript = path.resolve(ROOT, "fromToPositionIndexed.js");
+  execSync(`node "${ftpiScript}"`, { stdio: "inherit" });
+  // Move output into toMerge so it's included in the PR
+  const ftpiOut = path.resolve(ROOT, "output", "fromToPositionIndexed.json");
+  if (fs.existsSync(ftpiOut)) {
+    fs.copyFileSync(ftpiOut, path.join(toMergeDir, "fromToPositionIndexed.json"));
+  }
 }
 
 writeln(`
