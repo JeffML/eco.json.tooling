@@ -74,7 +74,7 @@ npm run check-sources
 node scripts/run-parser.js <name>
 # Or, for parsers not yet wired into run-parser.js, run them directly:
 #   node parsers/chessGraph/chess-graph.js
-#   node parsers/chronos/chronos.js
+#   node parsers/kent-eco/kent-eco.js
 #   node parsers/chessTempo/parseChessTempo.js
 #   node parsers/wikiGambits/parseWikiGambits.js
 
@@ -125,7 +125,7 @@ node scripts/sanity-check.js output/toMerge  # checks pending merge
 | icsbot      | `run-parser.js icsbot`                         | Local file | TSV format                             |
 | chessTempo  | `node parsers/chessTempo/parseChessTempo.js`   | Local JSON | Download input from chesstempo.com     |
 | chessGraph  | `node parsers/chessGraph/chess-graph.js`       | Local CSV  | CSV from Destaq/chess-graph            |
-| chronos     | `node parsers/chronos/chronos.js`              | Local PGN  | PGN from cs.kent.ac.uk pgn-extract     |
+| kent-eco    | `node parsers/kent-eco/kent-eco.js`            | Local PGN  | PGN from cs.kent.ac.uk pgn-extract     |
 | wikiGambits | `node parsers/wikiGambits/parseWikiGambits.js` | Local HTML | Wikipedia "List of chess gambits" page |
 | ~~arasan~~  | (removed)                                      | —          | Mirrors lichess — redundant            |
 

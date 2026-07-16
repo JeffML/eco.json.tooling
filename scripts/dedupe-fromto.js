@@ -51,7 +51,7 @@ const SOURCE_PRIORITY = {
   wiki_b: 5,
   ct: 5,
   chessGraph: 5,
-  chronos: 5,
+  kentEco: 5,
   icsbot: 5,
   fics: 5,
   pgn: 3,

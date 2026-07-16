@@ -8,9 +8,15 @@ import leven from "leven";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const chess = new ChessPGN();
 
-const pgn = fs.readFileSync(path.resolve(__dirname, "chronos.pgn"), "utf8");
+const ECO_URL = "https://www.cs.kent.ac.uk/people/staff/djb/pgn-extract/eco.pgn";
 
-const openings = [{ src: "chronos", url: "https://www.cs.kent.ac.uk/people/staff/djb/pgn-extract/eco.pgn" }];
+console.log(`Fetching eco.pgn from ${ECO_URL}...`);
+const response = await fetch(ECO_URL);
+if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+const pgn = await response.text();
+console.log(`Fetched ${pgn.length.toLocaleString()} bytes.`);
+
+const openings = [{ src: "kent-eco", url: ECO_URL }];
 
 for (const game of pgn.split(/\*|1-0|0-1/)) {
   try {
@@ -32,10 +38,11 @@ for (const game of pgn.split(/\*|1-0|0-1/)) {
 
   if (pgnName && obName && leven(obName, pgnName) > 3) {
     const moves = game.substring(game.indexOf("1. "));
-    openings.push({ src: "chronos", name: pgnName, moves, eco: ecoTag, fen });
+    openings.push({ src: "kent-eco", name: pgnName, moves, eco: ecoTag, fen });
   }
 }
 
 const outDir = path.resolve(__dirname, "output");
 fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(path.join(outDir, "opening.json"), JSON.stringify(openings, null, 2));
+console.log(`Wrote ${openings.length - 1} openings to output/opening.json`);

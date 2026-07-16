@@ -41,7 +41,7 @@ const KNOWN_SOURCES = new Set([
   "fics",
   "ct",
   "chessGraph",
-  "chronos",
+  "kent-eco",
   "icsbot",
   "pgn",
   "interpolated",

@@ -31,7 +31,7 @@ const SEED_DATES = {
   lichess: "2025-06-08", // eco.json commit: "latest eco_tsv"
   arasan: "2025-06-15", // tooling git: parsers/arasan/added.json committed
   chessGraph: "2025-06-15", // eco.json commit: "chessGraph"
-  chronos: "2025-06-15", // eco.json commit: "chronos eco.pgn"
+  "kent-eco": "2025-06-15", // eco.json commit: "kent-eco eco.pgn"
   icsbot: "2025-06-16", // eco.json commit: "icsbot data"
   wikiCrawler: "2025-08-04", // tooling git: parsers/wikiChessOpeningTheoryCrawler/aliases.txt committed
 };
@@ -51,8 +51,8 @@ const SOURCES = [
   },
   {
     name: "chessGraph",
-    method: "file",
-    inputFiles: ["parsers/chessGraph/chess-graph.csv"],
+    method: "remote",
+    urls: ["https://raw.githubusercontent.com/Destaq/chess-graph/master/elo_reading/openings_sheet.csv"],
   },
   {
     name: "chessTempo",
@@ -60,9 +60,9 @@ const SOURCES = [
     inputFiles: ["parsers/chessTempo/input/chessTempo.json"],
   },
   {
-    name: "chronos",
-    method: "file",
-    inputFiles: ["parsers/chronos/chronos.pgn"],
+    name: "kent-eco",
+    method: "remote",
+    urls: ["https://www.cs.kent.ac.uk/people/staff/djb/pgn-extract/eco.pgn"],
   },
   {
     name: "wikiGambits",

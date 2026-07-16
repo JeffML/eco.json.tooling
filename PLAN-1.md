@@ -162,7 +162,7 @@ node scripts/run-parser.js arasan [--force]
 
 ## Follow-on plans — RE-EVALUATED 2026-07-10
 
-- **PLAN-2** — parser adapter interface. **Still valid.** `run-parser.js` works via subprocess for arasan+icsbot but other parsers (lichess, chessGraph, chronos) need their entry scripts verified. Adapter would unify. Priority: medium (not blocking).
+- **PLAN-2** — parser adapter interface. **Still valid.** `run-parser.js` works via subprocess for arasan+icsbot but other parsers (lichess, chessGraph, kent-eco) need their entry scripts verified. Adapter would unify. Priority: medium (not blocking).
 
 - **PLAN-3** — wiki cleanup. **Still valid, highest priority.** Wiki is the only CHANGED source per check-sources. Docker dependency + path bug need fixing first. `--verify-output` correctly reports it as "CHANGED (not parsed)".
 

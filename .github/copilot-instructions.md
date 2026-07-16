@@ -153,8 +153,8 @@ present, path blocked, king would be in check).
 - Recursive tree walker
 - Risk: JSON structure changes in chessTempo API
 
-### chronos
-- Input: `chronos.pgn` (PGN file)
+### kent-eco
+- Input: `eco.pgn` (PGN file from cs.kent.ac.uk pgn-extract)
 - Cross-references against existing eco.json to find new names
 - Risk: PGN parsing edge cases, large file size
 

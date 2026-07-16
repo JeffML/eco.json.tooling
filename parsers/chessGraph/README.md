@@ -1,3 +1,9 @@
-The raw .csv file contains many errors ([duly reported](https://github.com/Destaq/chess-graph/issues/61)).
+# chessGraph parser
 
-However, there were some openings not already in eco.json, yet show up in chess.com (e.g. Ringelbach Gambit). Went ahead and merged what could be salvaged, along with aliases and interpolations.
+Fetches live CSV from [Destaq/chess-graph](https://github.com/Destaq/chess-graph/blob/master/elo_reading/openings_sheet.csv).
+
+Parses CSV lines (two formats: named rows and continuation rows), converts
+space-separated plies to SAN, groups duplicate positions to merge names, and
+strips trailing ECO codes from name fields.
+
+Run: `node parsers/chessGraph/chess-graph.js`
