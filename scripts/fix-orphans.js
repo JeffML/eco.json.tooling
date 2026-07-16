@@ -35,6 +35,7 @@ const writeJson = (p, data) => fs.writeFileSync(p, JSON.stringify(data, null, 2)
 
 const orphansPath = path.join(OUTPUT, "foundOrphans.json");
 const toMergeInterp = path.join(TO_MERGE, "eco_interpolated.json");
+const toMergeFromTo = path.join(TO_MERGE, "fromTo.json");
 
 if (!fs.existsSync(orphansPath)) {
   console.error("ERROR: output/foundOrphans.json not found. Run `generatePullRequest.js --apply` first.");
@@ -52,6 +53,9 @@ const preExisting = allOrphans.filter((o) => o.added === false);
 console.log(`Processing ${preExisting.length} pre-existing orphans (${allOrphans.length - preExisting.length} new-addition orphans skipped).\n`);
 
 const interpolated = loadJson(toMergeInterp);
+const fromTos = fs.existsSync(toMergeFromTo) ? loadJson(toMergeFromTo) : [];
+const newFromTos = [];
+
 const allPositions = new Set([
   ...Object.keys(book).map((f) => f.split(" ")[0]),
   ...Object.keys(interpolated).map((f) => f.split(" ")[0]),
@@ -96,12 +100,14 @@ for (const orphan of preExisting) {
 
   let added = 0;
   let collisions = 0;
+  const bridgeFens = []; // track FENs in order: [bridge1, bridge2, ..., orphan]
   for (const bridge of bridges) {
     // Get the FEN from moves
     try {
       chess.loadPgn(bridge.moves);
       const fen = chess.fen();
       const pos = fen.split(" ")[0];
+      bridgeFens.push(fen);
       if (allPositions.has(pos)) {
         collisions++;
       } else {
@@ -112,6 +118,22 @@ for (const orphan of preExisting) {
     } catch (e) {
       console.warn(`  WARN: could not resolve FEN for bridge "${bridge.moves}": ${e.message}`);
     }
+  }
+
+  // Add fromTo transitions: parent → bridges → orphan
+  const parentFen = parent.fen || Object.keys(parent).find((k) => k.includes("/"));
+  if (parentFen && bridgeFens.length > 0) {
+    // Parent → first bridge
+    newFromTos.push([parentFen, bridgeFens[0], parent.src, "interpolated"]);
+    // Bridge chain
+    for (let i = 0; i < bridgeFens.length - 1; i++) {
+      newFromTos.push([bridgeFens[i], bridgeFens[i + 1], "interpolated", "interpolated"]);
+    }
+    // Last bridge → orphan
+    newFromTos.push([bridgeFens[bridgeFens.length - 1], orphan.fen, "interpolated", orphan.src]);
+  } else if (parentFen && bridgeFens.length === 0) {
+    // No bridges needed — direct parent → orphan
+    newFromTos.push([parentFen, orphan.fen, parent.src, orphan.src]);
   }
 
   console.log(`  ${orphan.name}: +${added} bridge(s)${collisions > 0 ? `, ${collisions} skipped (already exists)` : ""} → parent: ${parent.name}`);
@@ -134,6 +156,13 @@ if (newCount > 0) {
   console.log(`\n✓ ${newCount} new interpolation(s) written to output/toMerge/eco_interpolated.json`);
 } else {
   console.log(`\n✓ No new interpolations needed.`);
+}
+
+// Write fromTo additions
+if (newFromTos.length > 0) {
+  const merged = [...fromTos, ...newFromTos];
+  writeJson(toMergeFromTo, merged);
+  console.log(`✓ ${newFromTos.length} new fromTo transition(s) appended to output/toMerge/fromTo.json`);
 }
 
 writeJson(path.join(OUTPUT, "orphanFixes.json"), {

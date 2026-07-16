@@ -56,8 +56,8 @@ const SOURCES = [
   },
   {
     name: "chessTempo",
-    method: "file",
-    inputFiles: ["parsers/chessTempo/input/chessTempo.json"],
+    method: "remote",
+    urls: ["https://chesstempo.com/json/openings-list.vers1.js"],
   },
   {
     name: "kent-eco",
