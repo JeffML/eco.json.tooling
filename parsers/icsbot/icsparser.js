@@ -1,34 +1,42 @@
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const ecox = /^[A-E]\d{2}/;
 
-import fs from 'fs';
-import readline from 'readline';
-import {hardAssert} from '../../utils.js'
+const ECO_URL = "https://raw.githubusercontent.com/seberg/icsbot/master/misc/eco.txt";
 
-const fileStream = fs.createReadStream('eco.txt');
+console.log(`Fetching icsbot eco.txt from ${ECO_URL}...`);
+const res = await fetch(ECO_URL);
+if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+const text = await res.text();
+console.log(`Fetched ${text.length.toLocaleString()} bytes.`);
 
-const rl = readline.createInterface({
-    input: fileStream,
-    crlfDelay: Infinity,
-});
+const opening = [{ src: "icsbot", url: "https://github.com/seberg/icsbot/blob/master/misc/eco.txt" }];
 
-const opening = [{src: "icsbot", url:"https://github.com/seberg/icsbot/blob/master/misc/eco.txt"}];
-
-rl.on('line', (line) => {
-    try {
-        if (line && line.length) {
-            const [eco, name, moves] = line.split(/\t+/);
-            // console.log({eco, name, moves})
-            hardAssert(eco.match(ecox), "invalid ECO: " + eco)
-            const ecoRepeat = name.match(ecox)
-            if (!ecoRepeat)
-                opening.push({ eco, name, moves });
-        }
-    } catch (e) {
-        console.error(line, e);
+for (const line of text.split("\n")) {
+  try {
+    if (line && line.trim().length) {
+      const [eco, name, moves] = line.split(/\t+/);
+      if (!eco.match(ecox)) continue; // skip malformed lines
+      const ecoRepeat = name.match(ecox);
+      if (!ecoRepeat) opening.push({ eco, name, moves });
     }
-});
+  } catch (e) {
+    console.error(line.substring(0, 60), e.message);
+  }
+}
 
-rl.on('close', () => {
-    console.log('Finished reading file');
-    fs.writeFileSync('opening.json', JSON.stringify(opening.filter(o=>o.name!==""), null, 2))
-});
+const outDir = path.resolve(__dirname, "output");
+fs.mkdirSync(outDir, { recursive: true });
+fs.writeFileSync(
+  path.join(outDir, "opening.json"),
+  JSON.stringify(
+    opening.filter((o) => o.name !== ""),
+    null,
+    2,
+  ),
+);
+console.log(`Wrote ${opening.length - 1} openings to output/opening.json`);

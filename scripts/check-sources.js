@@ -46,8 +46,8 @@ const SOURCES = [
   },
   {
     name: "icsbot",
-    method: "file",
-    inputFiles: ["parsers/icsbot/eco.txt"],
+    method: "remote",
+    urls: ["https://raw.githubusercontent.com/seberg/icsbot/master/misc/eco.txt"],
   },
   {
     name: "chessGraph",
