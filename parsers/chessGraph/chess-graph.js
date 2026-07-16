@@ -38,8 +38,9 @@ for (const rawLine of lines) {
 
   lineCt++;
   if (!eco) console.log("!", line);
-  else if (!lastName) { /* skip — no name set yet */ }
-  else {
+  else if (!lastName) {
+    /* skip — no name set yet */
+  } else {
     pass1.push({ eco, name: lastName, plies });
     parseCt++;
   }

@@ -139,7 +139,7 @@ const checkDuplicateFromTo = (fromTos) => {
 /** 9. Interpolated openings have from/to in the fromTo graph */
 const checkInterpolatedConnectivity = (interpolated, fromTos) => {
   const hasFrom = new Set(); // FENs that are a "to" target in fromTo
-  const hasTo = new Set();   // FENs that are a "from" source in fromTo
+  const hasTo = new Set(); // FENs that are a "from" source in fromTo
   for (const [from, to] of fromTos) {
     hasFrom.add(to);
     hasTo.add(from);
@@ -157,7 +157,9 @@ const checkInterpolatedConnectivity = (interpolated, fromTos) => {
   }
   if (missingFrom === 0) {
     const leafNote = missingTo > 0 ? ` (${missingTo} leaf nodes with no "to")` : "";
-    console.log(`  ✓ interp-connect: all ${Object.keys(interpolated).length} interpolated entries connected in fromTo graph${leafNote}`);
+    console.log(
+      `  ✓ interp-connect: all ${Object.keys(interpolated).length} interpolated entries connected in fromTo graph${leafNote}`,
+    );
   }
 };
 
@@ -219,16 +221,21 @@ const checkNoOrphans = (ecoFiles, interpolated, allFens, addedData = {}) => {
       if (!allPositions.has(parentPos)) {
         orphans.push({ fen, name: entry.name, moves: entry.moves, parentPos, src: entry.src, added: fen in addedData });
       }
-    } catch { /* skip unparseable moves */ }
+    } catch {
+      /* skip unparseable moves */
+    }
   }
   // Sort: added=true first, then by name
-  orphans.sort((a, b) => (b.added - a.added) || a.name.localeCompare(b.name));
+  orphans.sort((a, b) => b.added - a.added || a.name.localeCompare(b.name));
   if (orphans.length === 0) {
     console.log(`  ✓ no-orphan: all ${Object.keys(allData).length} openings have a parent in the database`);
   } else {
     for (let i = 0; i < Math.min(orphans.length, 10); i++) {
       const o = orphans[i];
-      fail("no-orphan", `Orphan: ${o.name || "?"} (${o.moves?.slice(0, 40)}...) — parent ${o.parentPos.slice(0, 30)}... not found`);
+      fail(
+        "no-orphan",
+        `Orphan: ${o.name || "?"} (${o.moves?.slice(0, 40)}...) — parent ${o.parentPos.slice(0, 30)}... not found`,
+      );
     }
     if (orphans.length > 10) fail("no-orphan", `... and ${orphans.length - 10} more orphans`);
   }
@@ -241,7 +248,8 @@ const main = () => {
   const args = process.argv.slice(2);
   const addedFlag = args.indexOf("--added");
   const addedPath = addedFlag >= 0 ? args[addedFlag + 1] : null;
-  const targetDir = args.filter((a, i) => a !== "--added" && i !== addedFlag + 1)[0] || path.resolve(ROOT, "output", "toMerge");
+  const targetDir =
+    args.filter((a, i) => a !== "--added" && i !== addedFlag + 1)[0] || path.resolve(ROOT, "output", "toMerge");
 
   console.log(`Sanity-checking eco.json data in: ${targetDir}\n`);
 

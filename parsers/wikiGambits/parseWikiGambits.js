@@ -103,7 +103,9 @@ function qualifyName(gambitName, parentName) {
 }
 
 function enrichGambits(gambits, openings) {
-  let enriched = 0, unchanged = 0, noParent = 0;
+  let enriched = 0,
+    unchanged = 0,
+    noParent = 0;
   const output = [{ src: "eco_wikip.g" }];
 
   for (const g of gambits) {

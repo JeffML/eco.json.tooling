@@ -31,9 +31,7 @@ if (!toMerge && !explicitPath) {
   process.exit(1);
 }
 
-const fromToPath = toMerge
-  ? path.resolve(ROOT, "output", "toMerge", "fromTo.json")
-  : explicitPath;
+const fromToPath = toMerge ? path.resolve(ROOT, "output", "toMerge", "fromTo.json") : explicitPath;
 
 if (!fs.existsSync(fromToPath)) {
   console.error(`ERROR: ${fromToPath} not found.`);
