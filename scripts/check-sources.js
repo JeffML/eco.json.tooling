@@ -34,6 +34,7 @@ const SEED_DATES = {
   "kent-eco": "2025-06-15", // eco.json commit: "kent-eco eco.pgn"
   icsbot: "2025-06-16", // eco.json commit: "icsbot data"
   wikiCrawler: "2025-08-04", // tooling git: parsers/wikiChessOpeningTheoryCrawler/aliases.txt committed
+  scid: "2025-06-15", // eco.json commit: scid eco data
 };
 
 // ── Source registry ──────────────────────────────────────────────────────────
@@ -74,6 +75,11 @@ const SOURCES = [
     method: "mediawiki",
     apiUrl:
       "https://en.wikibooks.org/w/api.php?action=query&titles=Chess_Opening_Theory&prop=revisions&rvlimit=1&format=json",
+  },
+  {
+    name: "scid",
+    method: "remote",
+    urls: ["https://sourceforge.net/p/scid/code/ci/v4.3/tree/scid.eco?format=raw"],
   },
   {
     name: "lichess",
