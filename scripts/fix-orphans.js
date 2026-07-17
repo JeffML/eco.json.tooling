@@ -50,7 +50,9 @@ if (!fs.existsSync(toMergeInterp)) {
 
 const allOrphans = loadJson(orphansPath);
 const preExisting = allOrphans.filter((o) => o.added === false);
-console.log(`Processing ${preExisting.length} pre-existing orphans (${allOrphans.length - preExisting.length} new-addition orphans skipped).\n`);
+console.log(
+  `Processing ${preExisting.length} pre-existing orphans (${allOrphans.length - preExisting.length} new-addition orphans skipped).\n`,
+);
 
 const interpolated = loadJson(toMergeInterp);
 const fromTos = fs.existsSync(toMergeFromTo) ? loadJson(toMergeFromTo) : [];
@@ -88,7 +90,13 @@ for (const orphan of preExisting) {
 
   if (bridges.length === 0) {
     console.log(`  OK: ${orphan.name} — parent found directly (no bridges needed)`);
-    summary.push({ orphan: orphan.name, moves: orphan.moves, bridgesAdded: 0, parent: parent.name, parentSrc: parent.src });
+    summary.push({
+      orphan: orphan.name,
+      moves: orphan.moves,
+      bridgesAdded: 0,
+      parent: parent.name,
+      parentSrc: parent.src,
+    });
     continue;
   }
 
@@ -136,7 +144,9 @@ for (const orphan of preExisting) {
     newFromTos.push([parentFen, orphan.fen, parent.src, orphan.src]);
   }
 
-  console.log(`  ${orphan.name}: +${added} bridge(s)${collisions > 0 ? `, ${collisions} skipped (already exists)` : ""} → parent: ${parent.name}`);
+  console.log(
+    `  ${orphan.name}: +${added} bridge(s)${collisions > 0 ? `, ${collisions} skipped (already exists)` : ""} → parent: ${parent.name}`,
+  );
   summary.push({
     orphan: orphan.name,
     moves: orphan.moves,
