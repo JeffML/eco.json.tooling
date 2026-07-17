@@ -2,6 +2,7 @@
 output
 input
 errors
+docs
 parsers/*/opening.json
 parsers/*/openingMinusEco.json
 parsers/*/output/
